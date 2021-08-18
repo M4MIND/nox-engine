@@ -1,4 +1,4 @@
-import { Behavior } from '../Behavior';
+import {Behavior} from "../Behavior";
 
 export class CameraComponent extends Behavior {
 

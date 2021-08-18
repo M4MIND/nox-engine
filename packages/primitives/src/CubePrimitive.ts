@@ -1,5 +1,5 @@
-import { MeshRendererComponent } from './../../component/mesh/MeshRendererComponent';
-import { MeshFilterComponent } from './../../component/mesh/MeshFilterComponent';
+import { MeshRendererComponent } from '../../component/mesh/MeshRendererComponent';
+import { MeshFilterComponent } from '../../component/mesh/MeshFilterComponent';
 import { GameObject } from "../GameObject";
 import { Scene } from '../../sceneManagment/Scene';
 
