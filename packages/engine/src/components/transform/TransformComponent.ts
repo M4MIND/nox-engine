@@ -1,5 +1,6 @@
-import {Quaternion, Vector3} from "@gengine/mathf";
 import {Component} from "../Component";
+import {Vector3} from "../../mathf/Vector3";
+import {Quaternion} from "../../mathf/Quaternion";
 
 export class TransformComponent extends Component {
     public position: Vector3 = new Vector3();

@@ -1,5 +1,4 @@
-import {Object} from "@gengine/engine/src/object/Object";
-import {GameObject} from "@gengine/engine/src/object/GameObject";
+import {GameObject} from "../object/GameObject";
 
 export class Component extends Object {
     public readonly gameObject: GameObject;

@@ -1,3 +1,3 @@
 export class Object {
-    private name: string = "";
+    public name: string = "";
 }

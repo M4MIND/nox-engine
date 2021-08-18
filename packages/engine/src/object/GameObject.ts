@@ -1,16 +1,11 @@
-import { TransformComponent } from '../component/transform/TransformComponent';
-import { Object } from "./Object";
-import { Component } from "../component/Component";
-import { Scene } from '../sceneManagment/Scene';
-
-
-interface ComponentCollection {
-    [index: string]: Component;
-}
+import {Object} from "./Object";
+import {Scene} from '../sceneManagment/Scene';
+import {Component} from "../components/Component";
+import {TransformComponent} from "../components/transform/TransformComponent";
 
 export class GameObject extends Object {
     public tag: string = "";
-    private components: ComponentCollection = {};
+    private components: { [index: string]: Component } = {};
     private parent: GameObject | null = null;
     private children: GameObject[] = [];
     public readonly scene: Scene;
@@ -46,6 +41,6 @@ export class GameObject extends Object {
     }
 
     hashComponent<T extends Component>(component: new (...args: any) => T): boolean {
-        return this.components[component.name] ? true : false;
+        return !!this.components[component.name];
     }
 }

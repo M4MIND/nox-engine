@@ -3,9 +3,5 @@
   "version": "1.0.0",
   "main": "index.ts",
   "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "@gengine/mathf": "*",
-    "@gengine/mesh": "*"
-  }
+  "private": true
 }

@@ -1,9 +1,9 @@
-import { CubePrimitive } from './object/primitive/CubePrimitive';
-import { SceneManager } from './sceneManagment/SceneManager';
-import { Canvas } from "./renderer/Canvas";
-import { Renderer } from "./renderer/Renderer";
-import { WebGl } from "./renderer/WebGl";
-import { Camera } from './camera/Camera';
+import {Renderer} from "./renderer/Renderer";
+import {SceneManager} from "./sceneManagment/SceneManager";
+import {Canvas} from "./renderer/Canvas";
+import {WebGl} from "./renderer/WebGl";
+import {Camera} from "./camera/Camera";
+import {CubePrimitive} from "./primitives/CubePrimitive";
 
 export class Engine {
     public readonly renderer: Renderer;
@@ -13,8 +13,8 @@ export class Engine {
         this.renderer = new Renderer(new WebGl(canvas));
         this.sceneManager = new SceneManager();
 
-        this.sceneManager.getActiveScene().addObject<Camera>(Camera);
-        this.sceneManager.getActiveScene().addObject<CubePrimitive>(CubePrimitive);
+        this.sceneManager.getActiveScene().addObject(Camera).name = "Main camera";
+        this.sceneManager.getActiveScene().addObject(CubePrimitive).name = "Cube";
 
         console.dir(this);
     }

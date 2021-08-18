@@ -13,12 +13,14 @@
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
     "workbox-webpack-plugin": "^6.2.4",
-    "@gengine/engine": "*"
+    "@gengine/engine": "*",
+    "@gengine/components": "*",
+    "@gengine/primitives": "*"
   },
   "description": "My webpack project",
   "scripts": {
     "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
+    "build:dev": "webpack --mode=development --stats-error-details",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
     "serve": "webpack serve"
