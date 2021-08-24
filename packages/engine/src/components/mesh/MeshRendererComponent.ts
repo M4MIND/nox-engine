@@ -31,10 +31,10 @@ export class MeshRendererComponent extends Component {
                 /// Матрица проекции
                 Matrix.projection((90 * Math.PI / 180), renderer.webgl.canvas.width / renderer.webgl.canvas.height, 1, 2000),
                 /// Матрицы камеры
-                Matrix.xRotation(0 * Math.PI / 180),
+                Matrix.xRotation(20 * Math.PI / 180),
                 Matrix.yRotation(0 * Math.PI / 180),
                 Matrix.zRotation(0 * Math.PI / 180),
-                Matrix.translate(new Vector3(0.5, 0.5, -12)),
+                Matrix.translate(new Vector3(0.5, -30, -60)),
                 /// Матрицы объекта
                 Matrix.translate(this.gameObject.transform.position),
                 Matrix.xRotation(this.gameObject.transform.rotation.x * Math.PI / 180),

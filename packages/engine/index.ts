@@ -16,6 +16,9 @@ import { CubePrimitive } from "./src/primitives/CubePrimitive";
 import { CylinderPrimitive } from "./src/primitives/CylinderPrimitive";
 import { SuzanneMesh } from "./src/meshes/SuzanneMesh";
 import { SuzannePrimitive } from "./src/primitives/SuzannePrimitive";
+import { PlanaPrimitive } from "./src/primitives/PlanePrimitive";
+import { PlaneMesh } from "./src/meshes/PlaneMesh";
+
 
 export {
     Engine,
@@ -35,5 +38,7 @@ export {
     CubePrimitive,
     CylinderPrimitive,
     SuzanneMesh,
-    SuzannePrimitive
+    SuzannePrimitive,
+    PlanaPrimitive,
+    PlaneMesh
 }

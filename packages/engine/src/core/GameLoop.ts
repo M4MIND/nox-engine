@@ -1,7 +1,7 @@
-import {Engine} from "../Engine";
+import { Engine } from "../Engine";
 
 export class GameLoop {
-    constructor(private readonly core: Engine) {}
+    constructor(private readonly core: Engine) { }
 
     start() {
         for (let objects of this.core.sceneManager.getActiveScene().getAllObjects()) {
@@ -13,6 +13,12 @@ export class GameLoop {
 
     loop() {
         window.requestAnimationFrame(() => {
+            for (let objects of this.core.sceneManager.getActiveScene().getAllObjects()) {
+                for (let component of objects.getComponents()) {
+                    component.onPhysics();
+                }
+            } 
+            
             for (let objects of this.core.sceneManager.getActiveScene().getAllObjects()) {
                 for (let component of objects.getComponents()) {
                     component.update(this.core.sceneManager);
