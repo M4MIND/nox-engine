@@ -1,6 +1,6 @@
-import {Component} from "../Component";
 import {Vector3} from "../../mathf/Vector3";
 import {Quaternion} from "../../mathf/Quaternion";
+import {Component} from "../../core/component/Component";
 
 export class TransformComponent extends Component {
     public position: Vector3 = new Vector3();

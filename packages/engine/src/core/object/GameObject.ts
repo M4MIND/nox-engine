@@ -1,20 +1,17 @@
-import {Object} from "./Object";
+import {CoreObject} from "./CoreObject";
 import {Scene} from '../sceneManagment/Scene';
-import {Component} from "../components/Component";
-import {TransformComponent} from "../components/transform/TransformComponent";
+import {TransformComponent} from "../../components/transform/TransformComponent";
+import {Component} from "../component/Component";
 
-export class GameObject extends Object {
+export class GameObject extends CoreObject {
     public tag: string = "";
     private components: { [index: string]: Component } = {};
     private parent: GameObject | null = null;
     private children: GameObject[] = [];
-    public readonly scene: Scene;
     public readonly transform: TransformComponent;
 
-    constructor(scene: Scene) {
+    constructor() {
         super();
-
-        this.scene = scene;
         this.transform = this.addComponent<TransformComponent>(TransformComponent);
     }
 
@@ -38,6 +35,10 @@ export class GameObject extends Object {
         }
 
         return null;
+    }
+
+    getComponents(): Component[] {
+        return Object.values(this.components);
     }
 
     hashComponent<T extends Component>(component: new (...args: any) => T): boolean {

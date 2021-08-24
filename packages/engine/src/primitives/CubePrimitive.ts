@@ -1,12 +1,12 @@
-import {GameObject} from "../object/GameObject";
+import {GameObject} from "../core/object/GameObject";
 import {MeshFilterComponent} from "../components/mesh/MeshFilterComponent";
 import {MeshRendererComponent} from "../components/mesh/MeshRendererComponent";
 import {CubeMesh} from "../meshes/CubeMesh";
-import {Scene} from "../sceneManagment/Scene";
+import {Scene} from "../core/sceneManagment/Scene";
 
 export class CubePrimitive extends GameObject {
-    constructor(scene: Scene) {
-        super(scene);
+    constructor() {
+        super();
 
         this.addComponent<MeshFilterComponent>(MeshFilterComponent).mesh = new CubeMesh();
         this.addComponent<MeshRendererComponent>(MeshRendererComponent);

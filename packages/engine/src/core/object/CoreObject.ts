@@ -1,3 +1,3 @@
-export class Object {
+export class CoreObject {
     public name: string = "";
 }
