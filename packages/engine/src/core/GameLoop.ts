@@ -22,11 +22,11 @@ export class GameLoop {
 
             for (let objects of this.core.sceneManager.getActiveScene().getAllObjects()) {
                 for (let component of objects.getComponents()) {
-                    component.onRenderObject();
+                    component.onRenderObject(this.core.renderer);
                 }
             }
 
-            this.core.renderer.webgl.draw();
+            //this.core.renderer.webgl.draw();
 
             this.loop()
         })
