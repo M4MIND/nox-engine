@@ -1,29 +1,8 @@
-import { GameObject } from "../object/GameObject";
-import { CoreObject } from "../object/CoreObject";
-import { SceneManager } from "../sceneManagment/SceneManager";
-import { Renderer } from "../renderer/Renderer";
+import _Object from "../object/_Object";
+import GameObject from "../object/GameObject";
 
-export class Component extends CoreObject {
+export class Component extends _Object {
     constructor(public readonly gameObject: GameObject) {
         super();
-    }
-
-    onPhysics(): void {
-
-    }
-
-    onRenderer(): void {
-
-    }
-
-    onRenderObject(renderer: Renderer): void {
-    }
-
-    start(sceneManager: SceneManager): void {
-
-    }
-
-    update(sceneManager: SceneManager): void {
-
     }
 }

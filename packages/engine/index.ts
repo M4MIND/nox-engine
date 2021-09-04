@@ -1,44 +1,52 @@
-import { Engine } from "./src/Engine";
-import { Canvas } from "./src/core/renderer/Canvas";
-import { GameObject } from "./src/core/object/GameObject";
-import { Scene } from "./src/core/sceneManagment/Scene";
-import { SceneManager } from "./src/core/sceneManagment/SceneManager";
-import { TransformComponent } from "./src/components/transform/TransformComponent";
-import { ScriptComponent } from "./src/components/scripting/ScriptComponent";
-import { Mesh } from "./src/components/mesh/Mesh";
-import { MeshFilterComponent } from "./src/components/mesh/MeshFilterComponent";
-import { MeshRendererComponent } from "./src/components/mesh/MeshRendererComponent";
-import { Vector3 } from "./src/mathf/Vector3";
-import { Camera } from "./src/core/camera/Camera";
-import { CameraComponent } from "./src/components/rendering/CameraComponent";
-import { RigidBodyComponent } from "./src/components/physics/RigidBodyComponent";
-import { CubePrimitive } from "./src/primitives/CubePrimitive";
-import { CylinderPrimitive } from "./src/primitives/CylinderPrimitive";
-import { SuzanneMesh } from "./src/meshes/SuzanneMesh";
-import { SuzannePrimitive } from "./src/primitives/SuzannePrimitive";
-import { PlanaPrimitive } from "./src/primitives/PlanePrimitive";
-import { PlaneMesh } from "./src/meshes/PlaneMesh";
+import Matrix4 from "./src/mathf/Matrix4";
+import Vector3 from "./src/mathf/Vector3";
+import Vector4 from "./src/mathf/Vector4";
 
+import RendererServer from "./src/server/renderer/RendererServer";
+import CanvasManager from "./src/server/renderer/canvas/CanvasManager";
+import Canvas from "./src/server/renderer/canvas/Canvas";
+import ContextManager from "./src/server/renderer/context/ContextManager";
+import Material from "./src/server/renderer/material/Material";
+import Shader from "./src/server/renderer/material/shader/Shader";
+import ShaderWrapper from "./src/server/renderer/material/shader/ShaderWrapper";
+import VertexShader from "./src/server/renderer/material/shader/VertexShader";
+import FragmentShader from "./src/server/renderer/material/shader/FragmentShader";
+import ShaderUniform from "./src/server/renderer/material/shader/uniform/ShaderUniform";
+import UniformMat4fv from "./src/server/renderer/material/shader/uniform/UniformMat4fv";
+import ArrayFloat32Attribute from "./src/server/renderer/material/shader/attribute/ArrayFloat32Attribute";
+import ElementArrayBuffer from "./src/server/renderer/material/shader/attribute/ElementArrayBuffer";
+import ShaderAttribute from "./src/server/renderer/material/shader/attribute/ShaderAttribute";
+import ProgramManager from "./src/server/renderer/program/ProgramManager";
+import Program from "./src/server/renderer/program/Program";
+import Engine from "./src/Engine";
+import GameObject from "./src/core/object/GameObject";
+import _Object from "./src/core/object/_Object";
+import TransformComponent from "./src/core/component/transform/TransformComponent";
+import ScriptComponent from "./src/core/component/behavior/ScriptComponent";
 
 export {
-    Engine,
+    Matrix4,
+    Vector3,
+    Vector4,
+    RendererServer,
+    CanvasManager,
     Canvas,
+    ContextManager,
+    Material,
+    Shader,
+    ShaderWrapper,
+    VertexShader,
+    FragmentShader,
+    ShaderUniform,
+    UniformMat4fv,
+    ArrayFloat32Attribute,
+    ElementArrayBuffer,
+    ShaderAttribute,
+    ProgramManager,
+    Program,
+    Engine,
     GameObject,
-    Scene,
-    SceneManager,
     TransformComponent,
     ScriptComponent,
-    Mesh,
-    MeshRendererComponent,
-    MeshFilterComponent,
-    Vector3,
-    Camera,
-    CameraComponent,
-    RigidBodyComponent,
-    CubePrimitive,
-    CylinderPrimitive,
-    SuzanneMesh,
-    SuzannePrimitive,
-    PlanaPrimitive,
-    PlaneMesh
+    _Object
 }

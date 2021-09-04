@@ -1,17 +1,17 @@
-import {CoreObject} from "./CoreObject";
-import {Scene} from '../sceneManagment/Scene';
-import {TransformComponent} from "../../components/transform/TransformComponent";
+import _Object from "./_Object";
 import {Component} from "../component/Component";
+import TransformComponent from "../component/transform/TransformComponent";
 
-export class GameObject extends CoreObject {
-    public tag: string = "";
+export default class GameObject extends _Object {
+    private tag: string = "Example Tag";
     private components: { [index: string]: Component } = {};
     private parent: GameObject | null = null;
     private children: GameObject[] = [];
-    public readonly transform: TransformComponent;
+    private transform: TransformComponent;
 
     constructor() {
         super();
+
         this.transform = this.addComponent<TransformComponent>(TransformComponent);
     }
 

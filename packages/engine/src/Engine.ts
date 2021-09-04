@@ -1,24 +1,17 @@
-import {GameLoop} from './core/GameLoop';
-import {Renderer} from "./core/renderer/Renderer";
-import {SceneManager} from "./core/sceneManagment/SceneManager";
-import {Canvas} from "./core/renderer/Canvas";
-import {WebGl} from "./core/renderer/WebGl";
+import RendererServer from "./server/renderer/RendererServer";
+import Canvas from "./server/renderer/canvas/Canvas";
+import SceneServer from "./server/scene/SceneServer";
+import Scene from "./server/scene/Scene";
 
-export class Engine {
-    public readonly renderer: Renderer;
-    public readonly sceneManager: SceneManager;
-    public readonly gameLoop: GameLoop;
+export default class Engine {
+    public readonly canvas: Canvas;
+    public readonly scene: Scene;
 
-    constructor(readonly canvas: Canvas) {
-        this.renderer = new Renderer(new WebGl(canvas));
-        this.sceneManager = new SceneManager();
-        this.gameLoop = new GameLoop(this);
-    }
+    constructor(canvas: HTMLCanvasElement) {
+        RendererServer.startUp(canvas);
+        SceneServer.startUp();
 
-    start(): void {
-
-        this.gameLoop.start();
-
-        this.gameLoop.loop();
+        this.canvas = RendererServer.canvasManager.canvas;
+        this.scene = SceneServer.sceneManager.activeScene;
     }
 }
