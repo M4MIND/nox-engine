@@ -6,9 +6,8 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-
 const config = {
-    devtool: "source-map",
+    devtool: 'source-map',
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -49,10 +48,8 @@ const config = {
 module.exports = () => {
     if (isProduction) {
         config.mode = 'production';
-        
-        
+
         config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
-        
     } else {
         config.mode = 'development';
     }
