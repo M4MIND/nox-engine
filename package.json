@@ -1,16 +1,18 @@
 {
-  "name": "GEngine",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/M4MIND/GEngine.git",
-  "author": "Egor Sysoev <m4mindscape@gmail.com>",
-  "license": "MIT",
-  "private": true,
-  "devDependencies": {
-    "lerna": "^4.0.0"
-  },
-  "workspaces": [
-    "packages/**",
-    "previews/**"
-  ]
+    "name": "GEngine",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/M4MIND/GEngine.git",
+    "author": "Egor Sysoev <m4mindscape@gmail.com>",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "lerna": "^4.0.0",
+        "prettier": "^2.4.1",
+        "@trivago/prettier-plugin-sort-imports": "^2.0.4"
+    },
+    "workspaces": [
+        "packages/**",
+        "previews/**"
+    ]
 }

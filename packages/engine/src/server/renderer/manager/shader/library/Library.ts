@@ -1,20 +1,16 @@
+import RendererServer from '../../../RendererServer';
+
 export default class Library {
     private chunks: { [index: string]: string } = {};
 
     public add(code: string) {
-        // Finding @export chunks
-        code.replace(new RegExp('@export (.+?);([\\s|\\S|\\n|.]+?)@end;', 'gm'), (substring: string, ...args: string[]): string => {
-            let name = args[0].trim();
-            if (name) {
+        RendererServer.shaderManager.parser.getExport(code, (name: string, code: string) => {
+            if (this.has(name)) {
                 this.remove(name);
             }
 
-            this.chunks[name] = args[1].trim();
-
-            return '';
+            this.chunks[name] = code;
         });
-
-        console.dir(this.chunks);
     }
 
     public get(name: string): string | null {

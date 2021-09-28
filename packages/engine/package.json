@@ -1,6 +1,6 @@
 {
-  "name": "@gengine/engine",
-  "version": "0.0.0",
-  "main": "index.ts",
-  "license": "MIT"
+    "name": "@gengine/engine",
+    "version": "0.0.0",
+    "main": "index.ts",
+    "license": "MIT"
 }
