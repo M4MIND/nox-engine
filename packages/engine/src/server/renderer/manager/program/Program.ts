@@ -7,7 +7,7 @@ export default class Program {
     public attachShader(shader: WebGLShader): boolean {
         RendererServer.contextManager.context.attachShader(this.program, shader);
 
-        if (this.getProgramParameter(GL_ATTACHED_SHADERS)) {
+        if (!this.getProgramParameter(GL_ATTACHED_SHADERS)) {
             console.error(`Program status: ${this.getProgramInfoLog()}`);
 
             return false;
@@ -26,6 +26,10 @@ export default class Program {
         }
 
         return true;
+    }
+
+    public use(): void {
+        RendererServer.contextManager.context.useProgram(this.program);
     }
 
     public getProgramParameter(code: typeof GL_LINK_STATUS): boolean {

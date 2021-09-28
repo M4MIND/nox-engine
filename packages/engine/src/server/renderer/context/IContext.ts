@@ -32,4 +32,6 @@ export interface IContext {
     getProgramInfoLog(program: WebGLProgram): string | null;
 
     getShaderSource(shader: WebGLShader): void;
+
+    useProgram(program: WebGLProgram | null): void;
 }

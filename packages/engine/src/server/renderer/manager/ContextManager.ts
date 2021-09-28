@@ -1,4 +1,4 @@
-import { GL_COMPILE_STATUS, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../_webgl_consts';
+import { GL_COMPILE_STATUS, GL_FRAGMENT_SHADER, GL_VERTEX_SHADER } from '../_webgl_consts';
 import { IContext } from '../context/IContext';
 import Program from './program/Program';
 
@@ -45,44 +45,30 @@ export default class ContextManager {
     }
 
     createProgram(vertex: string, fragment: string): Program | null {
-        let vertexShader = this.compileVertexShader(vertex);
+        let program = this.context.createProgram();
 
-        if (!vertexShader) {
+        if (!program) {
             return null;
         }
 
-        let fragmentShader = this.compileFragmentShader(fragment);
+        let programInstance = new Program(program);
 
-        if (!fragmentShader) {
+        let [vertexShader, fragmentShader] = [this.compileVertexShader(vertex), this.compileFragmentShader(fragment)];
+
+        if (!vertexShader || !fragmentShader) {
             return null;
         }
 
-        let webGlProgram = this.context.createProgram();
-
-        if (!webGlProgram) {
+        if (!programInstance.attachShader(vertexShader)) {
             return null;
         }
 
-        let program = new Program(webGlProgram);
-
-        if (!program.attachShader(vertexShader)) {
-            program.delete();
-
+        if (!programInstance.attachShader(fragmentShader)) {
             return null;
         }
 
-        if (!program.attachShader(fragmentShader)) {
-            program.delete();
+        programInstance.link();
 
-            return null;
-        }
-
-        if (!program.link()) {
-            program.delete();
-
-            return null;
-        }
-
-        return program;
+        return programInstance;
     }
 }

@@ -16,7 +16,14 @@ export default class ProgramManager {
             return this.programs[key];
         }
 
-        return RendererServer.contextManager.createProgram(vertex, fragment);
+        let program = RendererServer.contextManager.createProgram(vertex, fragment);
+
+        if (!program) {
+            return null;
+        }
+
+        this.programs[key] = program;
+        return program;
     }
 
     public has(key: string | number) {

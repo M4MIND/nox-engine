@@ -9,7 +9,9 @@ export default class WebGL2Context implements IContext {
         this.api = RendererServer.canvasManager.canvas.getContext('webgl2') as WebGL2RenderingContext;
     }
 
-    public attachShader(program: WebGLProgram, shader: WebGLShader): void {}
+    public attachShader(program: WebGLProgram, shader: WebGLShader): void {
+        this.api.attachShader(program, shader);
+    }
 
     public clear(type: GLenum): void {
         this.api.clear(type);
@@ -55,6 +57,10 @@ export default class WebGL2Context implements IContext {
         return this.api.getShaderParameter(shader, param);
     }
 
+    public getShaderSource(shader: WebGLShader): void {
+        console.dir(this.api.getShaderSource(shader));
+    }
+
     public linkProgram(program: WebGLProgram): void {
         this.api.linkProgram(program);
     }
@@ -63,11 +69,11 @@ export default class WebGL2Context implements IContext {
         this.api.shaderSource(shader, code);
     }
 
-    public viewPort(x0: number, y0: number, x1: number, y1: number): void {
-        this.api.viewport(x0, y0, x1, y1);
+    public useProgram(program: WebGLProgram | null): void {
+        this.api.useProgram(program);
     }
 
-    public getShaderSource(shader: WebGLShader): void {
-        console.dir(this.api.getShaderSource(shader));
+    public viewPort(x0: number, y0: number, x1: number, y1: number): void {
+        this.api.viewport(x0, y0, x1, y1);
     }
 }
