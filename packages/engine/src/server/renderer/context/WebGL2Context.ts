@@ -1,5 +1,5 @@
 import RendererServer from '../RendererServer';
-import { GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../_webgl_consts';
+import { GL_ARRAY_BUFFER, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../_webgl_consts';
 import { IContext } from './IContext';
 
 export default class WebGL2Context implements IContext {
@@ -13,6 +13,14 @@ export default class WebGL2Context implements IContext {
         this.api.attachShader(program, shader);
     }
 
+    public bindBuffer(type: typeof GL_ARRAY_BUFFER, buffer: WebGLBuffer | null): void {
+        this.api.bindBuffer(type, buffer);
+    }
+
+    public bufferData(target: GLenum, srcData: BufferSource | null, usage: GLenum) {
+        this.api.bufferData(target, srcData, usage);
+    }
+
     public clear(type: GLenum): void {
         this.api.clear(type);
     }
@@ -23,6 +31,10 @@ export default class WebGL2Context implements IContext {
 
     public compileShader(shader: WebGLShader): void {
         return this.api.compileShader(shader);
+    }
+
+    public createBuffer(): WebGLBuffer | null {
+        return this.api.createBuffer();
     }
 
     public createProgram(): WebGLProgram | null {
@@ -39,6 +51,18 @@ export default class WebGL2Context implements IContext {
 
     public deleteShader(shader: WebGLShader | null): void {
         this.api.deleteShader(shader);
+    }
+
+    public drawArrays(mode: GLenum, first: GLint, count: GLsizei) {
+        this.api.drawArrays(mode, first, count);
+    }
+
+    public enableVertexAttribArray(index: GLenum): void {
+        this.api.enableVertexAttribArray(index);
+    }
+
+    public getAttribLocation(program: WebGLProgram, name: string): GLenum {
+        return this.api.getAttribLocation(program, name);
     }
 
     public getProgramInfoLog(program: WebGLProgram): string | null {
@@ -71,6 +95,17 @@ export default class WebGL2Context implements IContext {
 
     public useProgram(program: WebGLProgram | null): void {
         this.api.useProgram(program);
+    }
+
+    public vertexAttribPointer(
+        index: GLuint,
+        size: GLint,
+        type: GLenum,
+        normalized: GLboolean,
+        stride: GLsizei,
+        offset: GLintptr,
+    ): void {
+        this.api.vertexAttribPointer(index, size, type, normalized, stride, offset);
     }
 
     public viewPort(x0: number, y0: number, x1: number, y1: number): void {

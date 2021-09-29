@@ -1,4 +1,4 @@
-import { GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../_webgl_consts';
+import { GL_ARRAY_BUFFER, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../_webgl_consts';
 
 export interface IContext {
     createShader(type: typeof GL_VERTEX_SHADER | typeof GL_FRAGMENT_SHADER): WebGLShader | null;
@@ -34,4 +34,25 @@ export interface IContext {
     getShaderSource(shader: WebGLShader): void;
 
     useProgram(program: WebGLProgram | null): void;
+
+    createBuffer(): WebGLBuffer | null;
+
+    bindBuffer(type: typeof GL_ARRAY_BUFFER, buffer: WebGLBuffer | null): void;
+
+    bufferData(target: GLenum, srcData: BufferSource | null, usage: GLenum): void;
+
+    enableVertexAttribArray(index: GLenum): void;
+
+    getAttribLocation(program: WebGLProgram, name: string): GLenum;
+
+    vertexAttribPointer(
+        index: GLuint,
+        size: GLint,
+        type: GLenum,
+        normalized: GLboolean,
+        stride: GLsizei,
+        offset: GLintptr,
+    ): void;
+
+    drawArrays(mode: GLenum, first: GLint, count: GLsizei): void;
 }

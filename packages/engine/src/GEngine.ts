@@ -13,14 +13,18 @@ let baseShader = `
 @import @gengine.header.webgl2;
 // an attribute is an input (in) to a vertex shader.
 // It will receive data from a buffer
-in vec4 a_position;
+in vec4 Position;
+in vec4 Color;
+
+out vec4 v_color;
  
 // all shaders have a main function
 void main() {
  
   // gl_Position is a special variable a vertex shader
   // is responsible for setting
-  gl_Position = a_position;
+  gl_Position = Position;
+  v_color = vec4(Color);
 }
 @end;
 
@@ -31,11 +35,12 @@ void main() {
 precision highp float;
  
 // we need to declare an output for the fragment shader
+in vec4 v_color;
 out vec4 outColor;
  
 void main() {
   // Just set the output to a constant reddish-purple
-  outColor = vec4(1, 0, 0.5, 1);
+  outColor = v_color;
 }
 @end;
 `;

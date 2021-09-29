@@ -1,73 +1,84 @@
-import Vector3 from '../../../mathf/Vector3';
 import VertexAttributeDescriptor, {
-    VertexAttribute,
+    TypeDraw,
     VertexAttributeFormat,
+    VertexAttributeLocation,
 } from '../shader/attribute/VertexAttributeDescriptor';
+import WebGLBuffer from '../shader/buffer/WebGLBuffer';
+import IndicesDescriptor from '../shader/index/IndicesDescriptor';
 
 export default class Mesh {
-    private attributes: { [index: string]: VertexAttributeDescriptor } = {};
-    private _vertices: Vector3[] = [];
-    private _triangles: number[] = [];
+    public readonly vertexAttributeDescriptors: { [index: string]: VertexAttributeDescriptor } = {};
+    public indicesDescriptor: IndicesDescriptor | null = null;
+    public readonly buffers: { [index: string]: WebGLBuffer } = {};
 
-    public get vertices(): Vector3[] {
-        return this._vertices;
+    constructor() {}
+
+    public setIndicesDescriptor(descriptor: IndicesDescriptor) {
+        this.indicesDescriptor = descriptor;
     }
 
-    public set vertices(value: Vector3[]) {
-        this._vertices = value;
+    public createIndicesDescriptor(type: VertexAttributeFormat, draw: TypeDraw) {
+        this.setIndicesDescriptor(new IndicesDescriptor(type, draw));
     }
 
-    public get triangles(): number[] {
-        return this._triangles;
-    }
-
-    public set triangles(value: number[]) {
-        this._triangles = value;
-    }
-
-    constructor() {
-        this.createAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3);
-    }
-
-    public setAttribute(attribute: VertexAttributeDescriptor): VertexAttributeDescriptor {
-        if (this.hasAttributeDescriptor(attribute.name)) {
-            this.removeAttributeDescriptor(attribute.name);
+    public setAttributeDescriptor(descriptor: VertexAttributeDescriptor): VertexAttributeDescriptor {
+        if (this.hasAttributeDescriptor(descriptor.name)) {
+            this.removeAttributeDescriptor(descriptor.name);
         }
 
-        this.attributes[attribute.name] = attribute;
+        this.vertexAttributeDescriptors[descriptor.name] = descriptor;
 
-        return attribute;
+        return descriptor;
     }
 
-    public setVertices(v: Vector3[]): this {
-        this._vertices = v;
-
-        return this;
+    public createAttributeDescriptor(
+        name: string | VertexAttributeLocation,
+        type: VertexAttributeFormat,
+        size: 1 | 2 | 3 | 4,
+        typeDraw: TypeDraw,
+    ) {
+        return this.setAttributeDescriptor(new VertexAttributeDescriptor(name, type, size, typeDraw));
     }
 
-    public setTriangles(v: number[]): this {
-        this.triangles = v;
-
-        return this;
+    public removeAttributeDescriptor(name: string | VertexAttributeLocation): void {
+        delete this.vertexAttributeDescriptors[name];
     }
 
-    public createAttributeDescriptor(name: string | VertexAttribute, type: VertexAttributeFormat, size: 1 | 2 | 3 | 4) {
-        return this.setAttribute(new VertexAttributeDescriptor(name, type, size));
+    public hasAttributeDescriptor(name: string | VertexAttributeLocation): boolean {
+        return !!this.vertexAttributeDescriptors[name];
     }
 
-    public removeAttributeDescriptor(name: string | VertexAttribute): void {
-        delete this.attributes[name];
-    }
-
-    public hasAttributeDescriptor(name: string | VertexAttribute): boolean {
-        return !!this.attributes[name];
-    }
-
-    public getAttributeDescriptor(name: string | VertexAttribute): VertexAttributeDescriptor | null {
-        return this.attributes[name];
+    public getAttributeDescriptor(name: string | VertexAttributeLocation): VertexAttributeDescriptor | null {
+        return this.vertexAttributeDescriptors[name];
     }
 
     public getAttributeDescriptors() {
-        return Object.keys(this.attributes);
+        return Object.values(this.vertexAttributeDescriptors);
+    }
+
+    setBuffer(buffer: WebGLBuffer): WebGLBuffer {
+        if (this.hasBuffer(buffer.name)) {
+            this.removeBuffer(buffer.name);
+        }
+
+        this.buffers[buffer.name] = buffer;
+
+        return buffer;
+    }
+
+    public createBuffer(name: string): WebGLBuffer {
+        return this.setBuffer(new WebGLBuffer(name));
+    }
+
+    public getBuffer(name: string): WebGLBuffer | null {
+        return this.buffers[name];
+    }
+
+    public hasBuffer(name: string) {
+        return !!this.buffers[name];
+    }
+
+    public removeBuffer(name: string): void {
+        delete this.buffers[name];
     }
 }

@@ -14,4 +14,14 @@ export default class Shader {
     public static find(name: string): string | null {
         return RendererServer.shaderManager.library.get(name);
     }
+
+    use(): boolean {
+        if (this.program) {
+            this.program.use();
+
+            return true;
+        }
+
+        return false;
+    }
 }

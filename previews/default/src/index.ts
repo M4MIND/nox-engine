@@ -1,4 +1,9 @@
-import { GEngine, Material, Mesh, RendererServer, Shader, Vector3, WebGL2Context } from '@gengine/engine';
+import { GEngine, Material, Mesh, RendererServer, Shader, WebGL2Context } from '@gengine/engine';
+import {
+    TypeDraw,
+    VertexAttributeFormat,
+    VertexAttributeLocation,
+} from '@gengine/engine/src/server/renderer/shader/attribute/VertexAttributeDescriptor';
 
 declare global {
     interface Window {
@@ -24,25 +29,26 @@ new GEngine({
 
 let mesh = new Mesh();
 
-mesh.setVertices([
-    new Vector3(0, 0, 0),
-    new Vector3(1, 0, 0),
-    new Vector3(1, 1, 0),
-    new Vector3(0, 1, 0),
-    new Vector3(0, 1, 1),
-    new Vector3(1, 1, 1),
-    new Vector3(1, 0, 1),
-    new Vector3(0, 0, 1),
-]).setTriangles([
-    0, 2, 1, 0, 3, 2, 2, 3, 4, 2, 4, 5, 1, 2, 5, 1, 5, 6, 0, 7, 4, 0, 4, 3, 5, 4, 7, 5, 7, 6, 0, 6, 7, 0, 1, 6,
-]);
-
-RendererServer.drawMesh(
-    mesh,
-    new Material(
-        new Shader(
-            RendererServer.shaderManager.get('@gengine.base.vertex'),
-            RendererServer.shaderManager.get('@gengine.base.fragment'),
-        ),
-    ),
+mesh.createAttributeDescriptor(
+    VertexAttributeLocation.Position,
+    VertexAttributeFormat.Float32,
+    3,
+    TypeDraw.STATIC_DRAW,
 );
+mesh.createAttributeDescriptor(VertexAttributeLocation.Color, VertexAttributeFormat.Float32, 3, TypeDraw.STATIC_DRAW);
+
+mesh.createBuffer(VertexAttributeLocation.Position).set([0, 0, 0, 0, 0.5, 0, 0.7, 0, 0]);
+mesh.createBuffer(VertexAttributeLocation.Color).set([0, 0, 0, 0.5, 0.7, 0, 0.5, 0.7, 0]);
+
+setInterval(() => {
+    RendererServer.clear();
+    RendererServer.drawMesh(
+        mesh,
+        new Material(
+            new Shader(
+                RendererServer.shaderManager.get('@gengine.base.vertex'),
+                RendererServer.shaderManager.get('@gengine.base.fragment'),
+            ),
+        ),
+    );
+}, 1000 / 60);

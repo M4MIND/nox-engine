@@ -16,7 +16,7 @@ export default class ProgramManager {
             return this.programs[key];
         }
 
-        let program = RendererServer.contextManager.createProgram(vertex, fragment);
+        let program = RendererServer.contextManager.createProgram(key, vertex, fragment);
 
         if (!program) {
             return null;

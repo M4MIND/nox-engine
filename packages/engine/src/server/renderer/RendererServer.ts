@@ -1,4 +1,4 @@
-import { GL_COLOR_BUFFER_BIT } from './_webgl_consts';
+import { GL_COLOR_BUFFER_BIT, GL_DATA_FLOAT, GL_DEPTH_BUFFER_BIT, GL_TRIANGLES } from './_webgl_consts';
 import CanvasManager, { ICanvasManagerSettings } from './manager/CanvasManager';
 import ContextManager, { IContextManagerSettings } from './manager/ContextManager';
 import ProgramManager from './manager/ProgramManager';
@@ -41,17 +41,50 @@ export default class RendererServer {
         this._shaderManager = new ShaderManager(settings.shaderManager);
     }
 
-    public static drawMesh(mesh: Mesh, material: Material) {
+    public static clear() {
         this.contextManager.context.viewPort(0, 0, this.canvasManager.width, this.canvasManager.height);
         this.contextManager.context.clearColor(0, 0, 0, 0);
-        this.contextManager.context.clear(GL_COLOR_BUFFER_BIT);
+        this.contextManager.context.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
 
-        if (!material.shader.program) {
-            return;
+    public static drawMesh(mesh: Mesh, material: Material) {
+        material.use();
+
+        for (let attributeDescriptor of mesh.getAttributeDescriptors()) {
+            let buffer = mesh.getBuffer(attributeDescriptor.name);
+
+            if (!buffer) {
+                continue;
+            }
+
+            buffer.bind(attributeDescriptor.target);
+
+            if (buffer.isActive) {
+                continue;
+            }
+
+            buffer.updateBuffer(attributeDescriptor.target, attributeDescriptor.type, attributeDescriptor.usage);
+
+            if (!material.shader.program) {
+                return;
+            }
+
+            let attributeLocation = material.shader.program.getAttributeLocation(attributeDescriptor.name);
+
+            if (attributeLocation >= 0) {
+                RendererServer.contextManager.context.enableVertexAttribArray(attributeLocation);
+                RendererServer.contextManager.context.vertexAttribPointer(
+                    attributeLocation,
+                    attributeDescriptor.size,
+                    GL_DATA_FLOAT,
+                    false,
+                    0,
+                    0,
+                );
+            }
         }
 
-        for (const attr of mesh.getAttributeDescriptors()) {
-            console.dir(attr);
-        }
+        RendererServer.contextManager.context.drawArrays(GL_TRIANGLES, 0, 3);
+        // Bind buffers from mesh
     }
 }

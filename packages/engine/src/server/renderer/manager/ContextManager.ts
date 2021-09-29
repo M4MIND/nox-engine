@@ -44,14 +44,14 @@ export default class ContextManager {
         return this.compileShader(GL_FRAGMENT_SHADER, code);
     }
 
-    createProgram(vertex: string, fragment: string): Program | null {
+    createProgram(key: number, vertex: string, fragment: string): Program | null {
         let program = this.context.createProgram();
 
         if (!program) {
             return null;
         }
 
-        let programInstance = new Program(program);
+        let programInstance = new Program(key, program);
 
         let [vertexShader, fragmentShader] = [this.compileVertexShader(vertex), this.compileFragmentShader(fragment)];
 
