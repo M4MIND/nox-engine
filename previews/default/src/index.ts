@@ -1,9 +1,16 @@
-import { GEngine, Material, Matrix4x4, Mesh, RendererServer, Shader, Vector3, WebGL2Context } from '@gengine/engine';
 import {
+    GEngine,
+    Material,
+    Matrix4x4,
+    Mesh,
+    RendererServer,
+    Shader,
+    Vector3,
     VertexAttributeLocation,
     VertexAttributeSrcData,
     VertexTypeUsage,
-} from '@gengine/engine/src/server/renderer/shader/attribute/VertexAttributeDescriptor';
+    WebGL2Context,
+} from '@gengine/engine';
 
 declare global {
     interface Window {
@@ -135,8 +142,8 @@ function a() {
         rY += 180 * delta;
         rZ += 180 * delta;
 
-        POSITION.x += 0 * delta;
-        POSITION.y += 0 * delta;
+        POSITION.x += 0;
+        POSITION.y += 0;
         POSITION.z += -3 * delta;
 
         material.setMatrix('_POSITION', Matrix4x4.translate(POSITION));

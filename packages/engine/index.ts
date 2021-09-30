@@ -7,7 +7,12 @@ import WebGL2Context from './src/server/renderer/context/WebGL2Context';
 import Material from './src/server/renderer/material/Material';
 import Mesh from './src/server/renderer/mesh/Mesh';
 import Shader from './src/server/renderer/shader/Shader';
-import VertexAttributeDescriptor from './src/server/renderer/shader/attribute/VertexAttributeDescriptor';
+import VertexAttributeDescriptor, {
+    VertexAttributeLocation,
+    VertexAttributeSrcData,
+    VertexTargetAttribute,
+    VertexTypeUsage,
+} from './src/server/renderer/shader/attribute/VertexAttributeDescriptor';
 import Hash from './src/utils/Hash';
 
 export {
@@ -22,4 +27,8 @@ export {
     VertexAttributeDescriptor,
     Material,
     Shader,
+    VertexAttributeLocation,
+    VertexTargetAttribute,
+    VertexTypeUsage,
+    VertexAttributeSrcData,
 };
