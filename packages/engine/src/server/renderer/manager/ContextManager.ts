@@ -27,6 +27,7 @@ export default class ContextManager {
 
         if (!this.context.getShaderParameter(shader, GL_COMPILE_STATUS)) {
             console.error(this.context.getShaderInfoLog(shader));
+            console.error(code);
 
             this.context.deleteShader(shader);
 

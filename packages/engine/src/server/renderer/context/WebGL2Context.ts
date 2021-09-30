@@ -57,6 +57,14 @@ export default class WebGL2Context implements IContext {
         this.api.drawArrays(mode, first, count);
     }
 
+    public drawElements(mode: GLenum, count: GLsizei, type: GLenum, offset: GLintptr): void {
+        this.api.drawElements(mode, count, type, offset);
+    }
+
+    public enable(cap: GLenum): void {
+        this.api.enable(cap);
+    }
+
     public enableVertexAttribArray(index: GLenum): void {
         this.api.enableVertexAttribArray(index);
     }
@@ -85,12 +93,20 @@ export default class WebGL2Context implements IContext {
         console.dir(this.api.getShaderSource(shader));
     }
 
+    public getUniformLocation(program: WebGLProgram, name: string): WebGLUniformLocation | null {
+        return this.api.getUniformLocation(program, name);
+    }
+
     public linkProgram(program: WebGLProgram): void {
         this.api.linkProgram(program);
     }
 
     public shaderSource(shader: WebGLShader, code: string): void {
         this.api.shaderSource(shader, code);
+    }
+
+    public uniformMatrix4fv(index: WebGLUniformLocation, serialized: boolean, value: number[]): void {
+        this.api.uniformMatrix4fv(index, serialized, value);
     }
 
     public useProgram(program: WebGLProgram | null): void {

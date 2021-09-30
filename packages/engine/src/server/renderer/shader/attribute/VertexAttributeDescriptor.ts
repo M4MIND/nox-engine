@@ -1,4 +1,4 @@
-import { GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW } from '../../_webgl_consts';
+import { GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW } from '../../_webgl_consts';
 
 export enum VertexAttributeLocation {
     Position = 'Position',
@@ -18,8 +18,7 @@ export enum VertexAttributeLocation {
     Indices = 'Indices',
 }
 
-export enum VertexAttributeFormat {
-    Float16,
+export enum VertexAttributeSrcData {
     Float32,
     UNorm8,
     SNorm8,
@@ -33,28 +32,29 @@ export enum VertexAttributeFormat {
     SInt32,
 }
 
-export enum TargetAttribute {
+export enum VertexTargetAttribute {
     ArrayAttribute = GL_ARRAY_BUFFER,
     ElementArrayBuffer = GL_ELEMENT_ARRAY_BUFFER,
 }
 
-export enum TypeDraw {
+export enum VertexTypeUsage {
     STATIC_DRAW = GL_STATIC_DRAW,
+    DYNAMIC_DRAW = GL_DYNAMIC_DRAW,
 }
 
 export const ARRAY_CLASSES: { [index: number]: new (v: number[]) => ArrayBufferView } = {
-    [VertexAttributeFormat.Float32]: Float32Array,
-    [VertexAttributeFormat.UInt8]: Uint8Array,
-    [VertexAttributeFormat.UInt16]: Uint16Array,
-    [VertexAttributeFormat.UInt32]: Uint32Array,
+    [VertexAttributeSrcData.Float32]: Float32Array,
+    [VertexAttributeSrcData.UInt8]: Uint8Array,
+    [VertexAttributeSrcData.UInt16]: Uint16Array,
+    [VertexAttributeSrcData.UInt32]: Uint32Array,
 };
 
 export default class VertexAttributeDescriptor {
-    get name(): string | VertexAttributeLocation {
-        return this._name;
+    get index(): string | VertexAttributeLocation {
+        return this._index;
     }
 
-    get type(): VertexAttributeFormat {
+    get type(): VertexAttributeSrcData {
         return this._type;
     }
 
@@ -62,19 +62,22 @@ export default class VertexAttributeDescriptor {
         return this._size;
     }
 
-    get usage(): TypeDraw {
+    get usage(): VertexTypeUsage {
         return this._usage;
     }
 
-    get target(): TargetAttribute {
+    get target(): VertexTargetAttribute {
         return this._target;
     }
 
     constructor(
-        private _name: string | VertexAttributeLocation,
-        private _type: VertexAttributeFormat,
+        private _index: string | VertexAttributeLocation,
+        private _type: VertexAttributeSrcData,
         private _size: 1 | 2 | 3 | 4,
-        private _usage: TypeDraw,
-        private _target: TargetAttribute = TargetAttribute.ArrayAttribute,
+        private _usage: VertexTypeUsage,
+        private _target: VertexTargetAttribute = VertexTargetAttribute.ArrayAttribute,
+        private normalized: boolean = false,
+        private stride: number = 0,
+        private offset: number = 0,
     ) {}
 }

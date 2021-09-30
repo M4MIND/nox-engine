@@ -6,6 +6,7 @@ export default class Program {
         public readonly name: number,
         public readonly webGLProgram: WebGLProgram,
         private readonly attributesLocation: { [index: string]: number } = {},
+        private readonly uniformsLocation: { [index: string]: WebGLUniformLocation | null } = {},
     ) {}
 
     public attachShader(shader: WebGLShader): boolean {
@@ -29,6 +30,17 @@ export default class Program {
         }
 
         return this.attributesLocation[name];
+    }
+
+    public getUniformLocation(name: string): WebGLUniformLocation | null {
+        if (!this.uniformsLocation[name]) {
+            this.uniformsLocation[name] = RendererServer.contextManager.context.getUniformLocation(
+                this.webGLProgram,
+                name,
+            );
+        }
+
+        return this.uniformsLocation[name];
     }
 
     public link(): boolean {

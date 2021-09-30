@@ -1,5 +1,10 @@
-import { TypeDraw, VertexAttributeFormat } from '../attribute/VertexAttributeDescriptor';
+import { VertexAttributeSrcData, VertexTargetAttribute, VertexTypeUsage } from '../attribute/VertexAttributeDescriptor';
 
 export default class IndicesDescriptor {
-    constructor(public readonly type: VertexAttributeFormat, public readonly typeDraw: TypeDraw) {}
+    constructor(
+        public readonly index: string,
+        public readonly type: VertexAttributeSrcData,
+        public readonly typeDraw: VertexTypeUsage,
+        public readonly target: VertexTargetAttribute = VertexTargetAttribute.ElementArrayBuffer,
+    ) {}
 }

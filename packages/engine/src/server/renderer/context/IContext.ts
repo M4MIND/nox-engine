@@ -55,4 +55,12 @@ export interface IContext {
     ): void;
 
     drawArrays(mode: GLenum, first: GLint, count: GLsizei): void;
+
+    drawElements(mode: GLenum, count: GLsizei, type: GLenum, offset: GLintptr): void;
+
+    enable(cap: GLenum): void;
+
+    getUniformLocation(program: WebGLProgram, name: string): WebGLUniformLocation | null;
+
+    uniformMatrix4fv(index: WebGLUniformLocation, serialized: boolean, value: number[]): void;
 }

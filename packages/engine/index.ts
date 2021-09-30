@@ -1,5 +1,5 @@
 import GEngine from './src/GEngine';
-import Matrix4 from './src/mathf/Matrix4';
+import Matrix4x4 from './src/mathf/Matrix4x4';
 import Vector3 from './src/mathf/Vector3';
 import Vector4 from './src/mathf/Vector4';
 import RendererServer from './src/server/renderer/RendererServer';
@@ -12,7 +12,7 @@ import Hash from './src/utils/Hash';
 
 export {
     GEngine,
-    Matrix4,
+    Matrix4x4,
     Vector3,
     Vector4,
     RendererServer,

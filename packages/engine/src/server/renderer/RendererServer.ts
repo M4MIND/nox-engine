@@ -1,10 +1,20 @@
-import { GL_COLOR_BUFFER_BIT, GL_DATA_FLOAT, GL_DEPTH_BUFFER_BIT, GL_TRIANGLES } from './_webgl_consts';
+import {
+    GL_COLOR_BUFFER_BIT,
+    GL_CULL_FACE,
+    GL_DATA_FLOAT,
+    GL_DATA_UNSIGNED_SHORT,
+    GL_DEPTH,
+    GL_DEPTH_BUFFER_BIT,
+    GL_DEPTH_TEST,
+    GL_TRIANGLES,
+} from './_webgl_consts';
 import CanvasManager, { ICanvasManagerSettings } from './manager/CanvasManager';
 import ContextManager, { IContextManagerSettings } from './manager/ContextManager';
 import ProgramManager from './manager/ProgramManager';
 import ShaderManager, { IShaderManagerSettings } from './manager/ShaderManager';
 import Material from './material/Material';
 import Mesh from './mesh/Mesh';
+import { VertexTypeUsage } from './shader/attribute/VertexAttributeDescriptor';
 
 export interface IRendererServerSettings {
     canvasManager: ICanvasManagerSettings;
@@ -43,15 +53,18 @@ export default class RendererServer {
 
     public static clear() {
         this.contextManager.context.viewPort(0, 0, this.canvasManager.width, this.canvasManager.height);
-        this.contextManager.context.clearColor(0, 0, 0, 0);
+        this.contextManager.context.clearColor(0, 1, 1, 1);
         this.contextManager.context.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        this.contextManager.context.enable(GL_DEPTH_TEST);
+        this.contextManager.context.enable(GL_CULL_FACE);
     }
 
     public static drawMesh(mesh: Mesh, material: Material) {
         material.use();
 
+        // Bind attribute buffers
         for (let attributeDescriptor of mesh.getAttributeDescriptors()) {
-            let buffer = mesh.getBuffer(attributeDescriptor.name);
+            let buffer = mesh.getBuffer(attributeDescriptor.index);
 
             if (!buffer) {
                 continue;
@@ -69,7 +82,7 @@ export default class RendererServer {
                 return;
             }
 
-            let attributeLocation = material.shader.program.getAttributeLocation(attributeDescriptor.name);
+            let attributeLocation = material.shader.program.getAttributeLocation(attributeDescriptor.index);
 
             if (attributeLocation >= 0) {
                 RendererServer.contextManager.context.enableVertexAttribArray(attributeLocation);
@@ -84,7 +97,34 @@ export default class RendererServer {
             }
         }
 
-        RendererServer.contextManager.context.drawArrays(GL_TRIANGLES, 0, 3);
-        // Bind buffers from mesh
+        // Bind Indices buffer
+        if (mesh.indicesDescriptor) {
+            let buffer = mesh.getBuffer(mesh.indicesDescriptor.index);
+
+            if (buffer) {
+                buffer.bind(mesh.indicesDescriptor.target);
+
+                if (!buffer.isActive) {
+                    buffer.updateBuffer(
+                        mesh.indicesDescriptor.target,
+                        mesh.indicesDescriptor.type,
+                        VertexTypeUsage.STATIC_DRAW,
+                    );
+                }
+            }
+        }
+
+        // Set uniforms
+        for (let matrix of Object.keys(material.matrix)) {
+            let un = material.shader.program?.getUniformLocation(matrix);
+
+            if (!un) {
+                continue;
+            }
+
+            RendererServer.contextManager.context.uniformMatrix4fv(un, false, material.matrix[matrix]);
+        }
+
+        RendererServer.contextManager.context.drawElements(GL_TRIANGLES, 36, GL_DATA_UNSIGNED_SHORT, 0);
     }
 }
