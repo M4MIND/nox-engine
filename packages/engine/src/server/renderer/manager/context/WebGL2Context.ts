@@ -108,6 +108,9 @@ export default class WebGL2Context implements IContext {
     public uniformMatrix4fv(index: WebGLUniformLocation, serialized: boolean, value: number[]): void {
         this.api.uniformMatrix4fv(index, serialized, value);
     }
+    public uniform4fv(index: WebGLUniformLocation, value: number[]) {
+        this.api.uniform4fv(index, value);
+    }
 
     public useProgram(program: WebGLProgram | null): void {
         this.api.useProgram(program);

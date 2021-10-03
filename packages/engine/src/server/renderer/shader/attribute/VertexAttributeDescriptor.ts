@@ -36,8 +36,8 @@ export default class VertexAttributeDescriptor {
         return this._index;
     }
 
-    get type(): VertexAttributeSrcData {
-        return this._type;
+    get srcType(): VertexAttributeSrcData {
+        return this._srcType;
     }
 
     get size(): number {
@@ -66,7 +66,7 @@ export default class VertexAttributeDescriptor {
 
     constructor(
         private _index: string,
-        private _type: VertexAttributeSrcData,
+        private _srcType: VertexAttributeSrcData,
         private _size: 1 | 2 | 3 | 4,
         private _usage: VertexTypeUsage,
         private _target: VertexTargetAttribute = VertexTargetAttribute.ArrayAttribute,

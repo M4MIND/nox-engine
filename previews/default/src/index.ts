@@ -10,6 +10,7 @@ import {
     VertexTypeUsage,
     WebGL2Context,
 } from '@gengine/engine';
+import { UniformType } from '@gengine/engine/src/server/renderer/shader/uniform/IUniform';
 
 declare global {
     interface Window {
@@ -107,37 +108,37 @@ let rZ = 0;
 let time = Date.now();
 
 let fps = document.createElement('div');
-let POSITION = new Vector3();
-
 fps.style.position = 'fixed';
 fps.style.top = '1em';
 fps.style.left = '1em';
 
 document.body.appendChild(fps);
 
+material.createUniform('_TRANSLATION', UniformType.Matrix4x4).set(Matrix4x4.translate(new Vector3(0, 0, -3)));
+material.createUniform('_ROTATION_X', UniformType.Matrix4x4).set(Matrix4x4.xRotation(0));
+material.createUniform('_ROTATION_Y', UniformType.Matrix4x4).set(Matrix4x4.yRotation(0));
+material.createUniform('_ROTATION_Z', UniformType.Matrix4x4).set(Matrix4x4.zRotation(0));
+material
+    .createUniform('_PROJECTION', UniformType.Matrix4x4)
+    .set(
+        Matrix4x4.projection(
+            (3.14 / 180) * 90,
+            RendererServer.canvasManager.width / RendererServer.canvasManager.height,
+        ),
+    );
+
+material.createUniform('_COLOR', UniformType.Fv4).set([0.5, 0.5, 0.5, 1]);
+
 function a() {
     window.requestAnimationFrame(() => {
         let delta = (Date.now() - time) / 1000;
-        rX += 180 * delta;
-        rY += 180 * delta;
-        rZ += 180 * delta;
+        rX += 10 * delta;
+        rY += 10 * delta;
+        rZ += 10 * delta;
 
-        POSITION.x += 0;
-        POSITION.y += 0;
-        POSITION.z += -3 * delta;
-
-        material.setMatrix('_POSITION', Matrix4x4.translate(POSITION));
-        material.setMatrix('_SCALE', Matrix4x4.scale(new Vector3(0.5, 0.5, 0.5)));
-        material.setMatrix('_ROTATION_X', Matrix4x4.xRotation((3.14 / 180) * rX));
-        material.setMatrix('_ROTATION_Y', Matrix4x4.yRotation((3.14 / 180) * rY));
-        material.setMatrix('_ROTATION_Z', Matrix4x4.zRotation((3.14 / 180) * rZ));
-        material.setMatrix(
-            '_PROJECTION',
-            Matrix4x4.projection(
-                (3.14 / 180) * 90,
-                RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,
-            ),
-        );
+        material.getUniform('_ROTATION_X')?.set(Matrix4x4.xRotation((3.14 / 180) * rX));
+        material.getUniform('_ROTATION_Y')?.set(Matrix4x4.yRotation((3.14 / 180) * rY));
+        material.getUniform('_ROTATION_Z')?.set(Matrix4x4.zRotation((3.14 / 180) * rZ));
 
         RendererServer.clear();
         RendererServer.rendererManager.drawMesh(mesh, material);

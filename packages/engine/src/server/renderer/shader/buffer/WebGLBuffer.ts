@@ -7,15 +7,15 @@ import {
 } from '../attribute/VertexAttributeDescriptor';
 
 export default class WebGLBuffer {
-    get isActive(): boolean {
-        return this._isActive;
+    get isUpdate(): boolean {
+        return this._isUpdate;
     }
 
     constructor(
         public readonly name: string,
         private values: number[] = [],
         private webGlBuffer = RendererServer.contextManager.context.createBuffer(),
-        private _isActive: boolean = false,
+        private _isUpdate: boolean = false,
     ) {}
 
     public updateBuffer(target: VertexTargetAttribute, srcData: VertexAttributeSrcData, usage: VertexTypeUsage) {
@@ -28,7 +28,7 @@ export default class WebGLBuffer {
 
     public set(v: number[]) {
         this.values = v;
-        this._isActive = false;
+        this._isUpdate = false;
     }
 
     public get() {

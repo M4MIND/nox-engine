@@ -63,4 +63,6 @@ export default interface IContext {
     getUniformLocation(program: WebGLProgram, name: string): WebGLUniformLocation | null;
 
     uniformMatrix4fv(index: WebGLUniformLocation, serialized: boolean, value: number[]): void;
+
+    uniform4fv(index: WebGLUniformLocation, value: number[]): void;
 }

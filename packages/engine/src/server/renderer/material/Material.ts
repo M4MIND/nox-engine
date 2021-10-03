@@ -1,35 +1,53 @@
-import Matrix4x4 from '../../../mathf/Matrix4x4';
 import Shader from '../shader/Shader';
+import { UNIFORM_CLASSES, UniformType } from '../shader/uniform/IUniform';
+import UniformBase from '../shader/uniform/UniformBase';
 
 export default class Material {
-    public readonly matrix: { [index: string]: Matrix4x4 } = {};
+    public readonly shader: Shader;
+    private readonly uniforms: { [index: string]: UniformBase };
 
-    constructor(public readonly shader: Shader) {}
+    constructor(shader: Shader) {
+        this.shader = shader;
+        this.uniforms = {};
+    }
+
+    public createUniform(name: string, type: UniformType, serialized: boolean = false): UniformBase {
+        return this.setUniform(new UNIFORM_CLASSES[type](name, serialized));
+    }
+
+    public setUniform(uniform: UniformBase): UniformBase {
+        if (this.hasUniform(uniform.index)) {
+            this.removeUniform(uniform.index);
+        }
+
+        this.uniforms[uniform.index] = uniform;
+
+        return uniform;
+    }
+
+    public hasUniform(name: string) {
+        return !!this.uniforms[name];
+    }
+
+    public getUniform(name: string): UniformBase | null {
+        return this.uniforms[name] ?? null;
+    }
+
+    public removeUniform(name: string) {
+        if (this.hasUniform(name)) {
+            delete this.uniforms[name];
+        }
+    }
+
+    public getUniformNames(): string[] {
+        return Object.keys(this.uniforms);
+    }
+
+    public getUniforms(): UniformBase[] {
+        return Object.values(this.uniforms);
+    }
 
     public use() {
         this.shader.use();
-    }
-
-    setMatrix(name: string, matrix: number[]): this;
-    setMatrix(name: string, matrix: Matrix4x4): this {
-        if (this.hasMatrix(name)) {
-            this.removeMatrix(name);
-        }
-
-        this.matrix[name] = matrix;
-
-        return this;
-    }
-
-    getMatrix(name: string): Matrix4x4 {
-        return this.matrix[name];
-    }
-
-    removeMatrix(name: string): void {
-        delete this.matrix[name];
-    }
-
-    hasMatrix(name: string): boolean {
-        return !!this.matrix[name];
     }
 }

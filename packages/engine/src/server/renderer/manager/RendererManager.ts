@@ -18,11 +18,11 @@ export default class RendererManager {
 
             buffer.bind(attributeDescriptor.target);
 
-            if (buffer.isActive) {
+            if (buffer.isUpdate) {
                 continue;
             }
 
-            buffer.updateBuffer(attributeDescriptor.target, attributeDescriptor.type, attributeDescriptor.usage);
+            buffer.updateBuffer(attributeDescriptor.target, attributeDescriptor.srcType, attributeDescriptor.usage);
 
             if (!material.shader.program) {
                 return;
@@ -36,9 +36,9 @@ export default class RendererManager {
                     attributeLocation,
                     attributeDescriptor.size,
                     GL_DATA_FLOAT,
-                    false,
-                    0,
-                    0,
+                    attributeDescriptor.normalized,
+                    attributeDescriptor.stride,
+                    attributeDescriptor.offset,
                 );
             }
         }
@@ -50,7 +50,7 @@ export default class RendererManager {
             if (buffer) {
                 buffer.bind(mesh.indicesDescriptor.target);
 
-                if (!buffer.isActive) {
+                if (!buffer.isUpdate) {
                     buffer.updateBuffer(
                         mesh.indicesDescriptor.target,
                         mesh.indicesDescriptor.type,
@@ -61,7 +61,7 @@ export default class RendererManager {
         }
 
         // Set uniforms
-        for (let matrix of Object.keys(material.matrix)) {
+        /*for (let matrix of Object.keys(material.matrix)) {
             let un = material.shader.program?.getUniformLocation(matrix);
 
             if (!un) {
@@ -69,6 +69,14 @@ export default class RendererManager {
             }
 
             RendererServer.contextManager.context.uniformMatrix4fv(un, false, material.matrix[matrix]);
+        }*/
+
+        for (let uniform of material.getUniforms()) {
+            let uniformLocation = material.shader.program?.getUniformLocation(uniform.index);
+
+            if (uniformLocation) {
+                uniform.bind(uniformLocation);
+            }
         }
 
         RendererServer.contextManager.context.drawElements(GL_TRIANGLES, 36, GL_DATA_UNSIGNED_SHORT, 0);

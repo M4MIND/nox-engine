@@ -17,12 +17,14 @@ in vec4 Position;
 in vec4 Color;
 in vec3 Normal;
 
-uniform mat4 _POSITION;
+uniform mat4 _TRANSLATION;
 uniform mat4 _ROTATION_X;
 uniform mat4 _ROTATION_Y;
 uniform mat4 _ROTATION_Z;
 uniform mat4 _SCALE;
 uniform mat4 _PROJECTION;
+
+uniform vec4 _COLOR;
 
 out vec4 v_color;
 out vec3 v_normal;
@@ -32,9 +34,10 @@ void main() {
  
   // gl_Position is a special variable a vertex shader
   // is responsible for setting
-  gl_Position = _PROJECTION * _POSITION *_ROTATION_Z *_ROTATION_Y * _ROTATION_X * Position;
+  // gl_Position = _PROJECTION * _POSITION *_ROTATION_Z *_ROTATION_Y * _ROTATION_X * Position;
+  gl_Position = _PROJECTION * _TRANSLATION * _ROTATION_Z * _ROTATION_Y * _ROTATION_X * Position;
 
-  v_color = Color;
+  v_color = _COLOR;
 }
 @end;
 
