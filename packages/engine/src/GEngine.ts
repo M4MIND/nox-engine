@@ -1,4 +1,5 @@
 import RendererServer, { IRendererServerSettings } from './server/renderer/RendererServer';
+import SceneServer from './server/scene/SceneServer';
 
 export interface IGEngineSettings {
     rendererServer: IRendererServerSettings;
@@ -17,11 +18,11 @@ in vec4 Position;
 in vec4 Color;
 in vec3 Normal;
 
-uniform mat4 _TRANSLATION;
+uniform mat4 _TRANSLATE;
+uniform mat4 _SCALE;
 uniform mat4 _ROTATION_X;
 uniform mat4 _ROTATION_Y;
 uniform mat4 _ROTATION_Z;
-uniform mat4 _SCALE;
 uniform mat4 _PROJECTION;
 
 uniform vec4 _COLOR;
@@ -35,7 +36,7 @@ void main() {
   // gl_Position is a special variable a vertex shader
   // is responsible for setting
   // gl_Position = _PROJECTION * _POSITION *_ROTATION_Z *_ROTATION_Y * _ROTATION_X * Position;
-  gl_Position = _PROJECTION * _TRANSLATION * _ROTATION_Z * _ROTATION_Y * _ROTATION_X * Position;
+  gl_Position = _PROJECTION * _TRANSLATE * _ROTATION_Z * _ROTATION_Y * _ROTATION_X * _SCALE * Position;
 
   v_color = _COLOR;
 }
@@ -61,6 +62,7 @@ void main() {
 
 export default class GEngine {
     constructor(settings: IGEngineSettings) {
+        SceneServer.startUp();
         RendererServer.startUp(Object.assign(settings.rendererServer));
         RendererServer.shaderManager.add(baseShader);
     }

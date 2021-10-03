@@ -43,7 +43,9 @@ export default class Mesh {
         stride: number = 0,
         offset: number = 0,
     ) {
-        return this.setAttributeDescriptor(new VertexAttributeDescriptor(index, type, size, typeDraw));
+        return this.setAttributeDescriptor(
+            new VertexAttributeDescriptor(index, type, size, typeDraw, normalized, stride, offset),
+        );
     }
 
     public removeAttributeDescriptor(name: string): void {

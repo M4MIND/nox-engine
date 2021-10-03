@@ -45,12 +45,4 @@ export default class RendererServer {
         this._shaderManager = new ShaderManager(settings.shaderManager);
         this._rendererManager = new RendererManager();
     }
-
-    public static clear() {
-        this.contextManager.context.viewPort(0, 0, this.canvasManager.width, this.canvasManager.height);
-        this.contextManager.context.clearColor(0, 1, 1, 1);
-        this.contextManager.context.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        this.contextManager.context.enable(GL_DEPTH_TEST);
-        this.contextManager.context.enable(GL_CULL_FACE);
-    }
 }

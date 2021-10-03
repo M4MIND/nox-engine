@@ -12,6 +12,7 @@ import VertexAttributeDescriptor, {
     VertexTargetAttribute,
     VertexTypeUsage,
 } from './src/server/renderer/shader/attribute/VertexAttributeDescriptor';
+import { UniformType } from './src/server/renderer/shader/uniform/IUniform';
 import Hash from './src/utils/Hash';
 
 export {
@@ -29,4 +30,5 @@ export {
     VertexTargetAttribute,
     VertexTypeUsage,
     VertexAttributeSrcData,
+    UniformType,
 };
