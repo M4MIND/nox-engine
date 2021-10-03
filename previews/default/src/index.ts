@@ -140,7 +140,7 @@ function a() {
         );
 
         RendererServer.clear();
-        RendererServer.drawMesh(mesh, material);
+        RendererServer.rendererManager.drawMesh(mesh, material);
 
         fps.innerText = `${(1 / delta).toFixed()}`;
 

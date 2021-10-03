@@ -52,14 +52,26 @@ export default class VertexAttributeDescriptor {
         return this._target;
     }
 
+    get normalized(): boolean {
+        return this._normalized;
+    }
+
+    get stride(): number {
+        return this._stride;
+    }
+
+    get offset(): number {
+        return this._offset;
+    }
+
     constructor(
         private _index: string,
         private _type: VertexAttributeSrcData,
         private _size: 1 | 2 | 3 | 4,
         private _usage: VertexTypeUsage,
         private _target: VertexTargetAttribute = VertexTargetAttribute.ArrayAttribute,
-        private normalized: boolean = false,
-        private stride: number = 0,
-        private offset: number = 0,
+        private _normalized: boolean = false,
+        private _stride: number = 0,
+        private _offset: number = 0,
     ) {}
 }
