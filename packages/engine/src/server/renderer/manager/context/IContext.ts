@@ -1,6 +1,6 @@
-import { GL_ARRAY_BUFFER, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../_webgl_consts';
+import { GL_ARRAY_BUFFER, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../../_webgl_consts';
 
-export interface IContext {
+export default interface IContext {
     createShader(type: typeof GL_VERTEX_SHADER | typeof GL_FRAGMENT_SHADER): WebGLShader | null;
 
     compileShader(shader: WebGLShader): void;

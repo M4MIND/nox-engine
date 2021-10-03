@@ -1,5 +1,5 @@
 import { GL_COMPILE_STATUS, GL_FRAGMENT_SHADER, GL_VERTEX_SHADER } from '../_webgl_consts';
-import { IContext } from '../context/IContext';
+import IContext from './context/IContext';
 import Program from './program/Program';
 
 export interface IContextManagerSettings {

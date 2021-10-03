@@ -6,7 +6,6 @@ import {
     RendererServer,
     Shader,
     Vector3,
-    VertexAttributeLocation,
     VertexAttributeSrcData,
     VertexTypeUsage,
     WebGL2Context,
@@ -53,42 +52,23 @@ for (let j = 0; j < faceColors.length; ++j) {
 
 let mesh = new Mesh();
 
-mesh.createAttributeDescriptor(
-    VertexAttributeLocation.Position,
-    VertexAttributeSrcData.Float32,
-    3,
-    VertexTypeUsage.STATIC_DRAW,
-);
+mesh.createAttributeDescriptor('Position', VertexAttributeSrcData.Float32, 3, VertexTypeUsage.STATIC_DRAW);
 
-mesh.createAttributeDescriptor(
-    VertexAttributeLocation.Color,
-    VertexAttributeSrcData.Float32,
-    4,
-    VertexTypeUsage.STATIC_DRAW,
-);
+mesh.createAttributeDescriptor('Color', VertexAttributeSrcData.Float32, 4, VertexTypeUsage.STATIC_DRAW);
 
-mesh.createAttributeDescriptor(
-    VertexAttributeLocation.Normal,
-    VertexAttributeSrcData.Float32,
-    3,
-    VertexTypeUsage.STATIC_DRAW,
-);
+mesh.createAttributeDescriptor('Normal', VertexAttributeSrcData.Float32, 3, VertexTypeUsage.STATIC_DRAW);
 
-mesh.createIndicesDescriptor(
-    VertexAttributeLocation.Indices,
-    VertexAttributeSrcData.UInt16,
-    VertexTypeUsage.STATIC_DRAW,
-);
+mesh.createIndicesDescriptor('Indices', VertexAttributeSrcData.UInt16, VertexTypeUsage.STATIC_DRAW);
 
-mesh.createBuffer(VertexAttributeLocation.Position).set([
+mesh.createBuffer('Position').set([
     -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5,
     0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5,
     0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5,
     -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5,
 ]);
-mesh.createBuffer(VertexAttributeLocation.Color).set(colors);
+mesh.createBuffer('Color').set(colors);
 
-mesh.createBuffer(VertexAttributeLocation.Normal).set([
+mesh.createBuffer('Normal').set([
     // Front
     0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
 
@@ -108,7 +88,7 @@ mesh.createBuffer(VertexAttributeLocation.Normal).set([
     -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0,
 ]);
 
-mesh.createBuffer(VertexAttributeLocation.Indices).set([
+mesh.createBuffer('Indices').set([
     0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12, 13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22,
     20, 22, 23, 20, 21, 22, 20, 22, 23,
 ]);

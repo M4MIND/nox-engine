@@ -1,5 +1,4 @@
 import VertexAttributeDescriptor, {
-    VertexAttributeLocation,
     VertexAttributeSrcData,
     VertexTypeUsage,
 } from '../shader/attribute/VertexAttributeDescriptor';
@@ -36,7 +35,7 @@ export default class Mesh {
     }
 
     public createAttributeDescriptor(
-        index: string | VertexAttributeLocation,
+        index: string,
         type: VertexAttributeSrcData,
         size: 1 | 2 | 3 | 4,
         typeDraw: VertexTypeUsage,
@@ -47,15 +46,15 @@ export default class Mesh {
         return this.setAttributeDescriptor(new VertexAttributeDescriptor(index, type, size, typeDraw));
     }
 
-    public removeAttributeDescriptor(name: string | VertexAttributeLocation): void {
+    public removeAttributeDescriptor(name: string): void {
         delete this.vertexAttributeDescriptors[name];
     }
 
-    public hasAttributeDescriptor(name: string | VertexAttributeLocation): boolean {
+    public hasAttributeDescriptor(name: string): boolean {
         return !!this.vertexAttributeDescriptors[name];
     }
 
-    public getAttributeDescriptor(name: string | VertexAttributeLocation): VertexAttributeDescriptor | null {
+    public getAttributeDescriptor(name: string): VertexAttributeDescriptor | null {
         return this.vertexAttributeDescriptors[name];
     }
 
@@ -63,7 +62,7 @@ export default class Mesh {
         return Object.values(this.vertexAttributeDescriptors);
     }
 
-    setBuffer(buffer: WebGLBuffer): WebGLBuffer {
+    public setBuffer(buffer: WebGLBuffer): WebGLBuffer {
         if (this.hasBuffer(buffer.name)) {
             this.removeBuffer(buffer.name);
         }
@@ -73,7 +72,7 @@ export default class Mesh {
         return buffer;
     }
 
-    public createBuffer(name: string | VertexAttributeLocation): WebGLBuffer {
+    public createBuffer(name: string): WebGLBuffer {
         return this.setBuffer(new WebGLBuffer(name));
     }
 

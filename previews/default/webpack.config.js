@@ -13,16 +13,13 @@ const config = {
         path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
-        open: true,
+        open: false,
         host: 'localhost',
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
         }),
-
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
     ],
     module: {
         rules: [

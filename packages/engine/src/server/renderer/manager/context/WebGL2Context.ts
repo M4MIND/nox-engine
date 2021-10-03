@@ -1,6 +1,6 @@
-import RendererServer from '../RendererServer';
-import { GL_ARRAY_BUFFER, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../_webgl_consts';
-import { IContext } from './IContext';
+import RendererServer from '../../RendererServer';
+import { GL_ARRAY_BUFFER, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER } from '../../_webgl_consts';
+import IContext from './IContext';
 
 export default class WebGL2Context implements IContext {
     private api: WebGL2RenderingContext;

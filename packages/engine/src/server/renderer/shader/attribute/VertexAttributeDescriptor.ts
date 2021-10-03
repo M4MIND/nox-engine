@@ -1,23 +1,5 @@
 import { GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW } from '../../_webgl_consts';
 
-export enum VertexAttributeLocation {
-    Position = 'Position',
-    Normal = 'Normal',
-    Tangent = 'Tangent',
-    Color = 'Color',
-    TexCoord0 = 'TexCoord0',
-    TexCoord1 = 'TexCoord1',
-    TexCoord2 = 'TexCoord2',
-    TexCoord3 = 'TexCoord3',
-    TexCoord4 = 'TexCoord4',
-    TexCoord5 = 'TexCoord5',
-    TexCoord6 = 'TexCoord6',
-    TexCoord7 = 'TexCoord7',
-    BlendWeight = 'BlendWeight',
-    BlendIndices = 'BlendIndices',
-    Indices = 'Indices',
-}
-
 export enum VertexAttributeSrcData {
     Float32,
     UNorm8,
@@ -50,7 +32,7 @@ export const ARRAY_CLASSES: { [index: number]: new (v: number[]) => ArrayBufferV
 };
 
 export default class VertexAttributeDescriptor {
-    get index(): string | VertexAttributeLocation {
+    get index(): string {
         return this._index;
     }
 
@@ -71,7 +53,7 @@ export default class VertexAttributeDescriptor {
     }
 
     constructor(
-        private _index: string | VertexAttributeLocation,
+        private _index: string,
         private _type: VertexAttributeSrcData,
         private _size: 1 | 2 | 3 | 4,
         private _usage: VertexTypeUsage,
