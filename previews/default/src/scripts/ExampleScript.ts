@@ -1,19 +1,34 @@
-import { MeshRendererComponent, ScriptComponent, UniformType, Vector3 } from '@gengine/engine';
+import CubeScript from './CubeScripte';
+import {
+    Color,
+    GameObject,
+    Material,
+    MeshRendererComponent,
+    PrimitiveType,
+    ScriptComponent,
+    Vector3,
+} from '@gengine/engine';
 
 export default class ExampleScript extends ScriptComponent {
+    private material: Material | undefined;
+    private startTime: number = Date.now();
+
     public onStart() {
-        this.gameObject.transform.position.x = Math.random() > 0.5 ? Math.random() * -30 : Math.random() * 30;
-        this.gameObject.transform.position.y = Math.random() > 0.5 ? Math.random() * -20 : Math.random() * 20;
-        this.gameObject.transform.position.z = -60;
+        for (let x = -48; x < 48; x++) {
+            for (let z = -32; z > -96; z--) {
+                let gm = GameObject.createPrimitive(PrimitiveType.Cube);
+                gm.addComponent<CubeScript>(CubeScript);
 
-        this.gameObject
-            .getComponent<MeshRendererComponent>(MeshRendererComponent)
-            ?.material?.createUniform('_U_Color', UniformType.Fv4)
-            .set([Math.random(), Math.random(), Math.random(), 1]);
+                let material = gm.getComponent<MeshRendererComponent>(MeshRendererComponent)?.material;
+
+                if (material) {
+                    material.color = new Color((x + 48) / 96, (64 - (96 - z)) / 64, 0.5);
+                }
+
+                gm.transform.position = new Vector3(x, -24, z);
+            }
+        }
     }
 
-    public onUpdate() {
-        this.gameObject.transform.position.x += Math.random() > 0.5 ? Math.random() : -Math.random();
-        this.gameObject.transform.position.y += Math.random() > 0.5 ? Math.random() : -Math.random();
-    }
+    public onUpdate() {}
 }

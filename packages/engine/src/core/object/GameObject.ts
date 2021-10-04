@@ -1,5 +1,12 @@
+import { RendererServer } from '../../../index';
+import BaseShader from '../../server/renderer/shader/BaseShader';
+import SceneServer from '../../server/scene/SceneServer';
 import { BaseComponent } from '../component/BaseComponent';
+import MeshFilterComponent from '../component/mesh/MeshFilterComponent';
+import MeshRendererComponent from '../component/mesh/MeshRendererComponent';
 import TransformComponent from '../component/transform/TransformComponent';
+import Material from '../material/Material';
+import { PrimitiveClasses, PrimitiveType } from '../mesh/primitive/PrimitiveType';
 import CoreObject from './CoreObject';
 
 export default class GameObject extends CoreObject {
@@ -13,7 +20,21 @@ export default class GameObject extends CoreObject {
         this.transform = this.addComponent<TransformComponent>(TransformComponent);
     }
 
-    addComponent<T extends BaseComponent>(component: new (...args: any) => T): T {
+    public static createPrimitive(type: PrimitiveType): GameObject {
+        let object = SceneServer.sceneManager.getActiveScene().addObject(new GameObject());
+
+        object.addComponent<MeshFilterComponent>(MeshFilterComponent).mesh = new PrimitiveClasses[type]();
+        object.addComponent<MeshRendererComponent>(MeshRendererComponent).material = new Material(
+            new BaseShader(
+                RendererServer.shaderManager.get('@gengine.base.vertex'),
+                RendererServer.shaderManager.get('@gengine.base.fragment'),
+            ),
+        );
+
+        return object;
+    }
+
+    public addComponent<T extends BaseComponent>(component: new (...args: any) => T): T {
         if (!this.components[component.name]) {
             this.components[component.name] = new component(this);
         }
@@ -21,13 +42,13 @@ export default class GameObject extends CoreObject {
         return this.components[component.name] as T;
     }
 
-    removeComponent<T extends BaseComponent>(component: new (...args: any) => T): void {
+    public removeComponent<T extends BaseComponent>(component: new (...args: any) => T): void {
         if (this.components[component.name]) {
             delete this.components[component.name];
         }
     }
 
-    getComponent<T extends BaseComponent>(component: new (...args: any) => T): T | null {
+    public getComponent<T extends BaseComponent>(component: new (...args: any) => T): T | null {
         if (this.hashComponent(component)) {
             return this.components[component.name] as T;
         }
@@ -35,11 +56,11 @@ export default class GameObject extends CoreObject {
         return null;
     }
 
-    getComponents(): BaseComponent[] {
+    public getComponents(): BaseComponent[] {
         return Object.values(this.components);
     }
 
-    hashComponent<T extends BaseComponent>(component: new (...args: any) => T): boolean {
+    public hashComponent<T extends BaseComponent>(component: new (...args: any) => T): boolean {
         return !!this.components[component.name];
     }
 }

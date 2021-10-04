@@ -10,27 +10,20 @@ export default class MeshFilterComponent extends BaseComponent {
     constructor(gameObject: GameObject) {
         super(gameObject);
 
-        EventServer.eventManager.subscribe('onWillRendererObject', this.onWillRendererObject);
+        EventServer.eventManager.subscribe('onWillRendererObject', this.onWillRendererObject.bind(this));
     }
 
-    public onWillRendererObject = () => {
+    public onWillRendererObject() {
         if (!this.mesh) {
             return;
         }
 
         if (!this.update) {
-            let temp = [];
-
-            for (let v of this.mesh.vertices) {
-                temp.push(v.x);
-                temp.push(v.y);
-                temp.push(v.z);
-            }
-
-            this.mesh.getBuffer('Position')?.set(temp);
+            this.mesh.getBuffer('Position')?.set(this.mesh.vertices.flat());
+            this.mesh.getBuffer('Normals')?.set(this.mesh.normals.flat());
             this.mesh.getBuffer('Indices')?.set(this.mesh.indices);
         }
 
         this.update = true;
-    };
+    }
 }

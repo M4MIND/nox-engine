@@ -17,6 +17,7 @@ let baseShader = `
 // an attribute is an input (in) to a vertex shader.
 // It will receive data from a buffer
 in vec4 Position;
+in vec3 Normals;
 
 uniform mat4 _U_Translate;
 uniform mat4 _U_Projection;
@@ -24,13 +25,15 @@ uniform mat4 _U_Scale;
 uniform vec4 _U_Color;
  
 out vec4 _F_Color; 
+out vec3 _F_Normal;
+
 // all shaders have a main function
 void main() {
- 
   // gl_Position is a special variable a vertex shader
   // is responsible for setting
   // gl_Position = _PROJECTION * _POSITION *_ROTATION_Z *_ROTATION_Y * _ROTATION_X * Position;
   gl_Position = _U_Projection * _U_Translate * _U_Scale * Position;
+  _F_Normal = Normals;
   _F_Color = _U_Color;
 }
 @end;
@@ -43,10 +46,17 @@ precision highp float;
  
 // we need to declare an output for the fragment shader
 in vec4 _F_Color;
+in vec3 _F_Normal;
 out vec4 outColor;
  
 void main() {
+  vec3 normal = normalize(_F_Normal);
+  
+  float light = dot(normal, normalize(vec3(0.7, 0.7, 0.0)));
+
   outColor = _F_Color;
+  
+  outColor.rgb *= light + vec3(0.8,0.8,0.8);
 }
 @end;
 `;
@@ -71,9 +81,9 @@ export default class GEngine {
 
     private loop() {
         window.requestAnimationFrame(() => {
-            EventServer.eventManager.dispatch('onUpdate');
-
             RendererServer.rendererManager.clear();
+
+            EventServer.eventManager.dispatch('onUpdate');
             EventServer.eventManager.dispatch('onWillRendererObject');
             EventServer.eventManager.dispatch('onRenderer');
 

@@ -1,10 +1,14 @@
 // import {
+import ExampleScript from './scripts/ExampleScript';
+import { GameObject, GEngine, RendererServer, WebGL2Context } from '@gengine/engine';
+import { PrimitiveType } from '@gengine/engine/src/core/mesh/primitive/PrimitiveType';
+
 //     GEngine,
-//     Material,
+//     BaseMaterial,
 //     Matrix4x4,
 //     BaseMesh,
 //     RendererServer,
-//     Shader,
+//     BaseShader,
 //     UniformType,
 //     Vector3,
 //     VertexAttributeSrcData,
@@ -74,10 +78,10 @@
 //     20, 22, 23, 20, 21, 22, 20, 22, 23,
 // ]);
 //
-// let material = new Material(
-//     new Shader(
-//         RendererServer.shaderManager.get('@gengine.base.vertex'),
-//         RendererServer.shaderManager.get('@gengine.base.fragment'),
+// let material = new BaseMaterial(
+//     new BaseShader(
+//         RendererServer.shaderManager.get('@gengine.primitive.vertex'),
+//         RendererServer.shaderManager.get('@gengine.primitive.fragment'),
 //     ),
 // );
 //
@@ -108,18 +112,6 @@
 // }
 //
 // a();
-import ExampleScript from './scripts/ExampleScript';
-import {
-    GameObject,
-    GEngine,
-    Material,
-    MeshFilterComponent,
-    MeshRendererComponent,
-    RendererServer,
-    Shader,
-    WebGL2Context,
-} from '@gengine/engine';
-import Cube from '@gengine/engine/src/core/mesh/base/Cube';
 
 let canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
@@ -137,19 +129,10 @@ let app = new GEngine({
     },
 });
 
-for (let i = 0; i < 4000; i++) {
-    let baseObject = new GameObject();
+window.addEventListener('resize', () => {
+    RendererServer.canvasManager.setViewport(window.innerWidth, window.innerHeight);
+});
 
-    baseObject.addComponent<ExampleScript>(ExampleScript);
-    baseObject.addComponent<MeshFilterComponent>(MeshFilterComponent).mesh = new Cube();
-    baseObject.addComponent<MeshRendererComponent>(MeshRendererComponent).material = new Material(
-        new Shader(
-            RendererServer.shaderManager.get('@gengine.base.vertex'),
-            RendererServer.shaderManager.get('@gengine.base.fragment'),
-        ),
-    );
-
-    app.addGameObject(baseObject);
-}
+app.addGameObject(new GameObject().addComponent<ExampleScript>(ExampleScript).gameObject);
 
 app.run();

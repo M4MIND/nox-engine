@@ -1,14 +1,13 @@
-import Shader from '../shader/Shader';
+import BaseShader from '../shader/BaseShader';
 import { UNIFORM_CLASSES, UniformType } from '../shader/uniform/IUniform';
 import UniformBase from '../shader/uniform/UniformBase';
 
-export default class Material {
-    public readonly shader: Shader;
-    private readonly uniforms: { [index: string]: UniformBase };
+export default class BaseMaterial {
+    public readonly shader: BaseShader;
+    private readonly uniforms: { [index: string]: UniformBase } = {};
 
-    constructor(shader: Shader) {
+    constructor(shader: BaseShader) {
         this.shader = shader;
-        this.uniforms = {};
     }
 
     public createUniform(name: string, type: UniformType, serialized: boolean = false): UniformBase {

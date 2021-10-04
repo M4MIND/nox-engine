@@ -1,7 +1,7 @@
 import RendererServer from '../RendererServer';
 import Program from '../manager/program/Program';
 
-export default class Shader {
+export default class BaseShader {
     public readonly program: Program | null = null;
 
     constructor(vertex: string | null, fragment: string | null) {

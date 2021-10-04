@@ -8,7 +8,7 @@ import {
     GL_DEPTH_TEST,
     GL_TRIANGLES,
 } from '../_webgl_consts';
-import Material from '../material/Material';
+import BaseMaterial from '../material/BaseMaterial';
 import BaseMesh from '../mesh/BaseMesh';
 import { VertexTypeUsage } from '../shader/attribute/VertexAttributeDescriptor';
 import IContext from './context/IContext';
@@ -24,13 +24,13 @@ export default class RendererManager {
 
     public clear() {
         this.context.viewPort(0, 0, RendererServer.canvasManager.width, RendererServer.canvasManager.height);
-        this.context.clearColor(0, 1, 1, 1);
+        this.context.clearColor(1, 1, 1, 1);
         this.context.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         this.context.enable(GL_DEPTH_TEST);
         this.context.enable(GL_CULL_FACE);
     }
 
-    public drawMesh(mesh: BaseMesh, material: Material) {
+    public drawMesh(mesh: BaseMesh, material: BaseMaterial) {
         if (!this.enable) {
             material.use();
 
