@@ -1,3 +1,4 @@
+import GameObject from '../../../core/object/GameObject';
 import Scene from './scene/Scene';
 
 export default class SceneManager {
@@ -5,5 +6,9 @@ export default class SceneManager {
 
     public getActiveScene(): Scene {
         return this.scene;
+    }
+
+    public addObjectToActiveScene(gameObject: GameObject): GameObject {
+        return this.scene.addObject(gameObject);
     }
 }

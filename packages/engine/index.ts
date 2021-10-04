@@ -1,11 +1,15 @@
 import GEngine from './src/GEngine';
+import MeshFilterComponent from './src/core/component/mesh/MeshFilterComponent';
+import MeshRendererComponent from './src/core/component/mesh/MeshRendererComponent';
+import ScriptComponent from './src/core/component/script/ScriptComponent';
+import GameObject from './src/core/object/GameObject';
 import Matrix4x4 from './src/mathf/Matrix4x4';
 import Vector3 from './src/mathf/Vector3';
 import Vector4 from './src/mathf/Vector4';
 import RendererServer from './src/server/renderer/RendererServer';
 import WebGL2Context from './src/server/renderer/manager/context/WebGL2Context';
 import Material from './src/server/renderer/material/Material';
-import Mesh from './src/server/renderer/mesh/Mesh';
+import BaseMesh from './src/server/renderer/mesh/BaseMesh';
 import Shader from './src/server/renderer/shader/Shader';
 import VertexAttributeDescriptor, {
     VertexAttributeSrcData,
@@ -23,7 +27,7 @@ export {
     RendererServer,
     WebGL2Context,
     Hash,
-    Mesh,
+    BaseMesh,
     VertexAttributeDescriptor,
     Material,
     Shader,
@@ -31,4 +35,8 @@ export {
     VertexTypeUsage,
     VertexAttributeSrcData,
     UniformType,
+    GameObject,
+    MeshRendererComponent,
+    MeshFilterComponent,
+    ScriptComponent,
 };

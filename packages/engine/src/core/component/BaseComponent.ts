@@ -6,7 +6,13 @@ export class BaseComponent extends CoreObject {
         super();
     }
 
+    onStart(): void {}
+
+    onUpdate(): void {}
+
     onPhysics(): void {}
+
+    onWillRendererObject(): void {}
 
     onRenderer(): void {}
 

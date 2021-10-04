@@ -9,15 +9,17 @@ import {
     GL_TRIANGLES,
 } from '../_webgl_consts';
 import Material from '../material/Material';
-import Mesh from '../mesh/Mesh';
+import BaseMesh from '../mesh/BaseMesh';
 import { VertexTypeUsage } from '../shader/attribute/VertexAttributeDescriptor';
 import IContext from './context/IContext';
 
 export default class RendererManager {
     private context: IContext;
+    private enable: boolean;
 
     constructor() {
         this.context = RendererServer.contextManager.context;
+        this.enable = false;
     }
 
     public clear() {
@@ -28,8 +30,12 @@ export default class RendererManager {
         this.context.enable(GL_CULL_FACE);
     }
 
-    public drawMesh(mesh: Mesh, material: Material) {
-        material.use();
+    public drawMesh(mesh: BaseMesh, material: Material) {
+        if (!this.enable) {
+            material.use();
+
+            this.enable = true;
+        }
 
         // Bind attribute buffers
         for (let attributeDescriptor of mesh.getAttributeDescriptors()) {

@@ -5,7 +5,7 @@ import VertexAttributeDescriptor, {
 import WebGLBuffer from '../shader/buffer/WebGLBuffer';
 import IndicesDescriptor from '../shader/index/IndicesDescriptor';
 
-export default class Mesh {
+export default class BaseMesh {
     private readonly vertexAttributeDescriptors: { [index: string]: VertexAttributeDescriptor } = {};
     private readonly buffers: { [index: string]: WebGLBuffer } = {};
     private _indicesDescriptor: IndicesDescriptor | null = null;

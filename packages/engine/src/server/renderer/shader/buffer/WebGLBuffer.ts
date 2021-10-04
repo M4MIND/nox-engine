@@ -20,6 +20,8 @@ export default class WebGLBuffer {
 
     public updateBuffer(target: VertexTargetAttribute, srcData: VertexAttributeSrcData, usage: VertexTypeUsage) {
         RendererServer.contextManager.context.bufferData(target, new ARRAY_CLASSES[srcData](this.values), usage);
+
+        this._isUpdate = true;
     }
 
     public bind(target: VertexTargetAttribute) {
