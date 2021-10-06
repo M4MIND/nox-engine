@@ -2,6 +2,7 @@ import GameObject from './core/object/GameObject';
 import EventServer from './server/event/EventServer';
 import RendererServer, { IRendererServerSettings } from './server/renderer/RendererServer';
 import SceneServer from './server/scene/SceneServer';
+import TimeServer from './server/time/TimeServer';
 
 export interface IGEngineSettings {
     rendererServer: IRendererServerSettings;
@@ -19,10 +20,10 @@ let baseShader = `
 in vec4 Position;
 in vec3 Normals;
 
-uniform mat4 _U_Translate;
 uniform mat4 _U_Projection;
-uniform mat4 _U_Scale;
 uniform vec4 _U_Color;
+
+uniform mat4 _U_Object;
  
 out vec4 _F_Color; 
 out vec3 _F_Normal;
@@ -32,7 +33,7 @@ void main() {
   // gl_Position is a special variable a vertex shader
   // is responsible for setting
   // gl_Position = _PROJECTION * _POSITION *_ROTATION_Z *_ROTATION_Y * _ROTATION_X * Position;
-  gl_Position = _U_Projection * _U_Translate * _U_Scale * Position;
+  gl_Position = _U_Object * Position;
   _F_Normal = Normals;
   _F_Color = _U_Color;
 }
@@ -52,7 +53,7 @@ out vec4 outColor;
 void main() {
   vec3 normal = normalize(_F_Normal);
   
-  float light = dot(normal, normalize(vec3(0.7, 0.7, 0.0)));
+  float light = dot(normal, normalize(vec3(1.0, 1.0, 0)));
 
   outColor = _F_Color;
   
@@ -64,6 +65,7 @@ void main() {
 export default class GEngine {
     constructor(settings: IGEngineSettings) {
         EventServer.startUp();
+        TimeServer.startUp();
         SceneServer.startUp();
         RendererServer.startUp(Object.assign(settings.rendererServer));
         RendererServer.shaderManager.add(baseShader);
@@ -83,9 +85,12 @@ export default class GEngine {
         window.requestAnimationFrame(() => {
             RendererServer.rendererManager.clear();
 
+            EventServer.eventManager.dispatch('onFixedUpdate');
             EventServer.eventManager.dispatch('onUpdate');
+            EventServer.eventManager.dispatch('onLateUpdate');
             EventServer.eventManager.dispatch('onWillRendererObject');
             EventServer.eventManager.dispatch('onRenderer');
+            EventServer.eventManager.dispatch('onFinish');
 
             this.loop();
         });

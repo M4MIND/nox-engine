@@ -8,11 +8,14 @@ import MeshFilterComponent from './MeshFilterComponent';
 
 export default class MeshRendererComponent extends BaseComponent {
     public material: Material | null = null;
+    public matrix: Matrix4x4 = Matrix4x4.projection(
+        (3.14 / 180) * 90,
+        RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,
+    );
 
     constructor(gameObject: GameObject) {
         super(gameObject);
 
-        EventServer.eventManager.subscribe('onWillRendererObject', this.onWillRendererObject.bind(this));
         EventServer.eventManager.subscribe('onRenderer', this.onRenderer.bind(this));
     }
 
@@ -20,19 +23,19 @@ export default class MeshRendererComponent extends BaseComponent {
         let mesh = this.gameObject.getComponent<MeshFilterComponent>(MeshFilterComponent)?.mesh;
 
         if (mesh && this.material) {
-            this.material.getUniform('_U_Translate')?.set(Matrix4x4.translate(this.gameObject.transform.position));
-
-            this.material.getUniform('_U_Scale')?.set(Matrix4x4.scale(this.gameObject.transform.scale));
-
             this.material.getUniform('_U_Color')?.set(this.material.color);
 
             this.material
-                .getUniform('_U_Projection')
+                .getUniform('_U_Object')
                 ?.set(
-                    Matrix4x4.projection(
-                        (3.14 / 180) * 90,
-                        RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,
-                    ),
+                    Matrix4x4.multiplyFromArray([
+                        this.matrix,
+                        Matrix4x4.translate(this.gameObject.transform.position),
+                        Matrix4x4.zRotation((3.14 / 180) * 0),
+                        Matrix4x4.yRotation((3.14 / 180) * 0),
+                        Matrix4x4.xRotation((3.14 / 180) * 0),
+                        Matrix4x4.scale(this.gameObject.transform.scale),
+                    ]),
                 );
 
             RendererServer.rendererManager.drawMesh(mesh, this.material);

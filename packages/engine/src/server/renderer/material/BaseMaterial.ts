@@ -4,7 +4,7 @@ import UniformBase from '../shader/uniform/UniformBase';
 
 export default class BaseMaterial {
     public readonly shader: BaseShader;
-    private readonly uniforms: { [index: string]: UniformBase } = {};
+    private readonly uniforms: Map<string, UniformBase> = new Map<string, UniformBase>();
 
     constructor(shader: BaseShader) {
         this.shader = shader;
@@ -19,31 +19,28 @@ export default class BaseMaterial {
             this.removeUniform(uniform.index);
         }
 
-        this.uniforms[uniform.index] = uniform;
-
+        this.uniforms.set(uniform.index, uniform);
         return uniform;
     }
 
     public hasUniform(name: string) {
-        return !!this.uniforms[name];
+        return this.uniforms.has(name);
     }
 
-    public getUniform(name: string): UniformBase | null {
-        return this.uniforms[name] ?? null;
+    public getUniform(name: string): UniformBase | undefined {
+        return this.uniforms.get(name);
     }
 
     public removeUniform(name: string) {
-        if (this.hasUniform(name)) {
-            delete this.uniforms[name];
-        }
+        this.uniforms.delete(name);
     }
 
-    public getUniformNames(): string[] {
-        return Object.keys(this.uniforms);
+    public getUniformNames(): IterableIterator<string> {
+        return this.uniforms.keys();
     }
 
-    public getUniforms(): UniformBase[] {
-        return Object.values(this.uniforms);
+    public getUniforms(): IterableIterator<UniformBase> {
+        return this.uniforms.values();
     }
 
     public use() {

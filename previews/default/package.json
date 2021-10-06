@@ -21,5 +21,9 @@
         "build:prod": "webpack --mode=production --node-env=production",
         "watch": "webpack --watch",
         "serve": "webpack serve"
+    },
+    "dependencies": {
+        "perlin-noise": "^0.0.1",
+        "simplex-noise": "^3.0.0"
     }
 }

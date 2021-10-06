@@ -6,7 +6,10 @@ import WebGLBuffer from '../shader/buffer/WebGLBuffer';
 import IndicesDescriptor from '../shader/index/IndicesDescriptor';
 
 export default class BaseMesh {
-    private readonly vertexAttributeDescriptors: { [index: string]: VertexAttributeDescriptor } = {};
+    private readonly vertexAttributeDescriptors: Map<string, VertexAttributeDescriptor> = new Map<
+        string,
+        VertexAttributeDescriptor
+    >();
     private readonly buffers: { [index: string]: WebGLBuffer } = {};
     private _indicesDescriptor: IndicesDescriptor | null = null;
 
@@ -29,7 +32,7 @@ export default class BaseMesh {
             this.removeAttributeDescriptor(descriptor.index);
         }
 
-        this.vertexAttributeDescriptors[descriptor.index] = descriptor;
+        this.vertexAttributeDescriptors.set(descriptor.index, descriptor);
 
         return descriptor;
     }
@@ -49,19 +52,19 @@ export default class BaseMesh {
     }
 
     public removeAttributeDescriptor(name: string): void {
-        delete this.vertexAttributeDescriptors[name];
+        this.vertexAttributeDescriptors.delete(name);
     }
 
     public hasAttributeDescriptor(name: string): boolean {
-        return !!this.vertexAttributeDescriptors[name];
+        return this.vertexAttributeDescriptors.has(name);
     }
 
-    public getAttributeDescriptor(name: string): VertexAttributeDescriptor | null {
-        return this.vertexAttributeDescriptors[name];
+    public getAttributeDescriptor(name: string): VertexAttributeDescriptor | undefined {
+        return this.vertexAttributeDescriptors.get(name);
     }
 
     public getAttributeDescriptors() {
-        return Object.values(this.vertexAttributeDescriptors);
+        return this.vertexAttributeDescriptors.values();
     }
 
     public setBuffer(buffer: WebGLBuffer): WebGLBuffer {
