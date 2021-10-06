@@ -1,4 +1,4 @@
-import Cube from './Cube';
+import CubeScript from './CubeScript';
 import {
     Color,
     GameObject,
@@ -16,7 +16,7 @@ export default class ExampleScript extends ScriptComponent {
         for (let x = 0; x < 64; x++) {
             for (let z = 0; z < 64; z++) {
                 let gm = GameObject.createPrimitive(PrimitiveType.Cube);
-                gm.addComponent<Cube>(Cube);
+                gm.addComponent<CubeScript>(CubeScript);
 
                 let material = gm.getComponent<MeshRendererComponent>(MeshRendererComponent)?.material;
 
@@ -25,8 +25,9 @@ export default class ExampleScript extends ScriptComponent {
                 }
 
                 gm.transform.scale.x = 0.5;
+                gm.transform.scale.y = 0.5;
                 gm.transform.scale.z = 0.5;
-                gm.transform.position = new Vector3(x - 32, -50, z - 128);
+                gm.transform.position = new Vector3(x - 32, -20, z - 84);
             }
         }
 

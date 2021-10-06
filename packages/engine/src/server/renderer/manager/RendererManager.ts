@@ -28,7 +28,7 @@ export default class RendererManager {
         this.context.enable(GL_CULL_FACE);
     }
 
-    public drawMesh(mesh: BaseMesh, material: BaseMaterial) {
+    public drawMesh(mesh: BaseMesh, material: BaseMaterial, indicesCount: number) {
         if (!this.enable) {
             material.use();
 
@@ -95,6 +95,6 @@ export default class RendererManager {
             }
         }
 
-        this.context.drawElements(GL_TRIANGLES, 36, GL_DATA_UNSIGNED_SHORT, 0);
+        this.context.drawElements(GL_TRIANGLES, indicesCount, GL_DATA_UNSIGNED_SHORT, 0);
     }
 }

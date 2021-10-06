@@ -30,14 +30,14 @@ export default class MeshRendererComponent extends BaseComponent {
                             RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,
                         ),
                         Matrix4.translate(this.gameObject.transform.position),
-                        Matrix4.zRotation((3.14 / 180) * 0),
-                        Matrix4.yRotation((3.14 / 180) * 0),
-                        Matrix4.xRotation((3.14 / 180) * 0),
+                        Matrix4.zRotation((3.14 / 180) * this.gameObject.transform.z),
+                        Matrix4.yRotation((3.14 / 180) * this.gameObject.transform.y),
+                        Matrix4.xRotation((3.14 / 180) * this.gameObject.transform.x),
                         Matrix4.scale(this.gameObject.transform.scale),
                     ]),
                 );
 
-            RendererServer.rendererManager.drawMesh(mesh, this.material);
+            RendererServer.rendererManager.drawMesh(mesh, this.material, mesh.indices.length);
         }
     }
 
