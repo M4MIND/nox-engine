@@ -1,6 +1,13 @@
 import Cube from './Cube';
-import { Color, GameObject, MeshRendererComponent, PrimitiveType, ScriptComponent, Vector3 } from '@gengine/engine';
-import TimeServer from '@gengine/engine/src/server/time/TimeServer';
+import {
+    Color,
+    GameObject,
+    MeshRendererComponent,
+    PrimitiveType,
+    ScriptComponent,
+    TimeServer,
+    Vector3,
+} from '@gengine/engine';
 
 export default class ExampleScript extends ScriptComponent {
     private info: HTMLDivElement = document.createElement('div');
@@ -19,7 +26,7 @@ export default class ExampleScript extends ScriptComponent {
 
                 gm.transform.scale.x = 0.5;
                 gm.transform.scale.z = 0.5;
-                gm.transform.position = new Vector3(x - 32, -24, z - 96);
+                gm.transform.position = new Vector3(x - 32, -50, z - 128);
             }
         }
 

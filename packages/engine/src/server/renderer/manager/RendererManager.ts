@@ -14,11 +14,9 @@ import { VertexTypeUsage } from '../shader/attribute/VertexAttributeDescriptor';
 import IContext from './context/IContext';
 
 export default class RendererManager {
-    private context: IContext;
     private enable: boolean;
 
-    constructor() {
-        this.context = RendererServer.contextManager.context;
+    constructor(private context: IContext = RendererServer.contextManager.context) {
         this.enable = false;
     }
 

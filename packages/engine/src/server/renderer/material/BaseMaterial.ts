@@ -27,8 +27,8 @@ export default class BaseMaterial {
         return this.uniforms.has(name);
     }
 
-    public getUniform(name: string): UniformBase | undefined {
-        return this.uniforms.get(name);
+    public getUniform(name: string): UniformBase | null {
+        return this.uniforms.get(name) ?? null;
     }
 
     public removeUniform(name: string) {

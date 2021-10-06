@@ -6,11 +6,11 @@ import WebGLBuffer from '../shader/buffer/WebGLBuffer';
 import IndicesDescriptor from '../shader/index/IndicesDescriptor';
 
 export default class BaseMesh {
-    private readonly vertexAttributeDescriptors: Map<string, VertexAttributeDescriptor> = new Map<
+    private vertexAttributeDescriptors: Map<string, VertexAttributeDescriptor> = new Map<
         string,
         VertexAttributeDescriptor
     >();
-    private readonly buffers: { [index: string]: WebGLBuffer } = {};
+    private buffers: Map<string, WebGLBuffer> = new Map<string, WebGLBuffer>();
     private _indicesDescriptor: IndicesDescriptor | null = null;
 
     public get indicesDescriptor(): IndicesDescriptor | null {
@@ -19,7 +19,7 @@ export default class BaseMesh {
 
     constructor() {}
 
-    public setIndicesDescriptor(descriptor: IndicesDescriptor) {
+    public setIndicesDescriptor(descriptor: IndicesDescriptor): void {
         this._indicesDescriptor = descriptor;
     }
 
@@ -72,7 +72,7 @@ export default class BaseMesh {
             this.removeBuffer(buffer.name);
         }
 
-        this.buffers[buffer.name] = buffer;
+        this.buffers.set(buffer.name, buffer);
 
         return buffer;
     }
@@ -82,14 +82,14 @@ export default class BaseMesh {
     }
 
     public getBuffer(name: string): WebGLBuffer | null {
-        return this.buffers[name];
+        return this.buffers.get(name) ?? null;
     }
 
-    public hasBuffer(name: string) {
-        return !!this.buffers[name];
+    public hasBuffer(name: string): boolean {
+        return this.buffers.has(name);
     }
 
     public removeBuffer(name: string): void {
-        delete this.buffers[name];
+        this.buffers.delete(name);
     }
 }

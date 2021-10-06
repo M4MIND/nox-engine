@@ -1,6 +1,6 @@
 import Vector3 from './Vector3';
 
-export default class Matrix4x4 extends Array<number> {
+export default class Matrix4 extends Array<number> {
     constructor(
         public readonly m00: number = 1,
         public readonly m01: number = 0,
@@ -23,32 +23,32 @@ export default class Matrix4x4 extends Array<number> {
     }
 
     static translate(v: Vector3 = new Vector3(0, 0, 0)) {
-        return new Matrix4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, v.x, v.y, v.z);
+        return new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, v.x, v.y, v.z);
     }
 
     static scale(v: Vector3 = new Vector3(1, 1, 1)) {
-        return new Matrix4x4(v.x, 0, 0, 0, 0, v.y, 0, 0, 0, 0, v.z, 0, 0, 0, 0, 1);
+        return new Matrix4(v.x, 0, 0, 0, 0, v.y, 0, 0, 0, 0, v.z, 0, 0, 0, 0, 1);
     }
 
     public static xRotation(r: number) {
         let s = Math.sin(r);
         let c = Math.cos(r);
 
-        return new Matrix4x4(1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1);
+        return new Matrix4(1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1);
     }
 
     public static yRotation(r: number) {
         let s = Math.sin(r);
         let c = Math.cos(r);
 
-        return new Matrix4x4(c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1);
+        return new Matrix4(c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1);
     }
 
     public static zRotation(r: number) {
         let s = Math.sin(r);
         let c = Math.cos(r);
 
-        return new Matrix4x4(c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+        return new Matrix4(c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
     }
 
     public static projection(
@@ -56,11 +56,11 @@ export default class Matrix4x4 extends Array<number> {
         aspect: number = 0,
         near: number = 1,
         far: number = 1000,
-    ): Matrix4x4 {
+    ): Matrix4 {
         let f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
         let rangeInv = 1.0 / (near - far);
 
-        return new Matrix4x4(
+        return new Matrix4(
             f / aspect,
             0,
             0,
@@ -80,7 +80,7 @@ export default class Matrix4x4 extends Array<number> {
         );
     }
 
-    public static multiplyFromArray(a: Matrix4x4[]): Matrix4x4 {
+    public static multiplyFromArray(a: Matrix4[]): Matrix4 {
         let m = a[0];
 
         for (let i = 0; i < a.length - 1; i++) {
@@ -90,8 +90,8 @@ export default class Matrix4x4 extends Array<number> {
         return m;
     }
 
-    public static multiply(a: Matrix4x4, b: Matrix4x4): Matrix4x4 {
-        return new Matrix4x4(
+    public static multiply(a: Matrix4, b: Matrix4): Matrix4 {
+        return new Matrix4(
             b.m00 * a.m00 + b.m01 * a.m10 + b.m02 * a.m20 + b.m03 * a.m30,
             b.m00 * a.m01 + b.m01 * a.m11 + b.m02 * a.m21 + b.m03 * a.m31,
             b.m00 * a.m02 + b.m01 * a.m12 + b.m02 * a.m22 + b.m03 * a.m32,

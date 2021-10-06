@@ -1,16 +1,18 @@
 import RendererServer from '../../RendererServer';
 import { GL_ATTACHED_SHADERS, GL_LINK_STATUS } from '../../_webgl_consts';
+import IContext from '../context/IContext';
 
 export default class Program {
     constructor(
         public readonly name: number,
         public readonly webGLProgram: WebGLProgram,
-        private readonly attributesLocation: { [index: string]: number } = {},
-        private readonly uniformsLocation: { [index: string]: WebGLUniformLocation | null } = {},
+        private readonly attributesLocation: Map<string, GLenum> = new Map<string, GLenum>(),
+        private readonly uniformsLocation: Map<string, WebGLUniformLocation> = new Map<string, WebGLUniformLocation>(),
+        private readonly context: IContext = RendererServer.contextManager.context,
     ) {}
 
     public attachShader(shader: WebGLShader): boolean {
-        RendererServer.contextManager.context.attachShader(this.webGLProgram, shader);
+        this.context.attachShader(this.webGLProgram, shader);
 
         if (!this.getProgramParameter(GL_ATTACHED_SHADERS)) {
             console.error(`Program status: ${this.getProgramInfoLog()}`);
@@ -22,29 +24,41 @@ export default class Program {
     }
 
     public getAttributeLocation(name: string): number {
-        if (!this.attributesLocation[name]) {
-            this.attributesLocation[name] = RendererServer.contextManager.context.getAttribLocation(
-                this.webGLProgram,
-                name,
-            );
+        if (!this.hasAttributeLocation(name)) {
+            this.setAttributeLocation(name, this.context.getAttribLocation(this.webGLProgram, name));
         }
 
-        return this.attributesLocation[name];
+        return this.attributesLocation.get(name) as GLenum;
+    }
+
+    public setAttributeLocation(name: string, attribute: GLenum) {
+        this.attributesLocation.set(name, attribute);
+    }
+
+    public hasAttributeLocation(name: string) {
+        return this.attributesLocation.has(name);
     }
 
     public getUniformLocation(name: string): WebGLUniformLocation | null {
-        if (!this.uniformsLocation[name]) {
-            this.uniformsLocation[name] = RendererServer.contextManager.context.getUniformLocation(
-                this.webGLProgram,
-                name,
-            );
+        if (!this.hasUniformLocation(name)) {
+            this.setUniformLocation(name, this.context.getUniformLocation(this.webGLProgram, name));
         }
 
-        return this.uniformsLocation[name];
+        return this.uniformsLocation.get(name) as WebGLUniformLocation;
+    }
+
+    public hasUniformLocation(name: string): boolean {
+        return this.uniformsLocation.has(name);
+    }
+
+    public setUniformLocation(name: string, uniform: WebGLUniformLocation | null): WebGLUniformLocation | undefined {
+        if (uniform) {
+            return this.uniformsLocation.set(name, uniform);
+        }
     }
 
     public link(): boolean {
-        RendererServer.contextManager.context.linkProgram(this.webGLProgram);
+        this.context.linkProgram(this.webGLProgram);
 
         if (!this.getProgramParameter(GL_LINK_STATUS)) {
             console.error(`Program status: ${this.getProgramInfoLog()}`);
@@ -56,18 +70,18 @@ export default class Program {
     }
 
     public use(): void {
-        RendererServer.contextManager.context.useProgram(this.webGLProgram);
+        this.context.useProgram(this.webGLProgram);
     }
 
     public getProgramParameter(code: typeof GL_LINK_STATUS): boolean {
-        return RendererServer.contextManager.context.getProgramParameter(this.webGLProgram, code);
+        return this.context.getProgramParameter(this.webGLProgram, code);
     }
 
     public getProgramInfoLog(): string | null {
-        return RendererServer.contextManager.context.getProgramInfoLog(this.webGLProgram);
+        return this.context.getProgramInfoLog(this.webGLProgram);
     }
 
     public delete(): void {
-        RendererServer.contextManager.context.deleteProgram(this.webGLProgram);
+        this.context.deleteProgram(this.webGLProgram);
     }
 }

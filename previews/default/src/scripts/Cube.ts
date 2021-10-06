@@ -1,5 +1,4 @@
-import { ScriptComponent } from '@gengine/engine';
-import TimeServer from '@gengine/engine/src/server/time/TimeServer';
+import { ScriptComponent, TimeServer } from '@gengine/engine';
 
 export default class Cube extends ScriptComponent {
     public onUpdate() {

@@ -1,4 +1,4 @@
-import Matrix4x4 from '../../../mathf/Matrix4x4';
+import Matrix4 from '../../../mathf/Matrix4';
 import EventServer from '../../../server/event/EventServer';
 import RendererServer from '../../../server/renderer/RendererServer';
 import Material from '../../material/Material';
@@ -8,10 +8,6 @@ import MeshFilterComponent from './MeshFilterComponent';
 
 export default class MeshRendererComponent extends BaseComponent {
     public material: Material | null = null;
-    public matrix: Matrix4x4 = Matrix4x4.projection(
-        (3.14 / 180) * 90,
-        RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,
-    );
 
     constructor(gameObject: GameObject) {
         super(gameObject);
@@ -28,13 +24,16 @@ export default class MeshRendererComponent extends BaseComponent {
             this.material
                 .getUniform('_U_Object')
                 ?.set(
-                    Matrix4x4.multiplyFromArray([
-                        this.matrix,
-                        Matrix4x4.translate(this.gameObject.transform.position),
-                        Matrix4x4.zRotation((3.14 / 180) * 0),
-                        Matrix4x4.yRotation((3.14 / 180) * 0),
-                        Matrix4x4.xRotation((3.14 / 180) * 0),
-                        Matrix4x4.scale(this.gameObject.transform.scale),
+                    Matrix4.multiplyFromArray([
+                        Matrix4.projection(
+                            (3.14 / 180) * 90,
+                            RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,
+                        ),
+                        Matrix4.translate(this.gameObject.transform.position),
+                        Matrix4.zRotation((3.14 / 180) * 0),
+                        Matrix4.yRotation((3.14 / 180) * 0),
+                        Matrix4.xRotation((3.14 / 180) * 0),
+                        Matrix4.scale(this.gameObject.transform.scale),
                     ]),
                 );
 
