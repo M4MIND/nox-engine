@@ -179,29 +179,4 @@ export default class Matrix4 extends Array<number> {
             d * (tmp_22 * m22 + tmp_16 * m02 + tmp_21 * m12 - (tmp_20 * m12 + tmp_23 * m22 + tmp_17 * m02)),
         );
     }
-
-    public static lookAt(cameraPosition: Vector3, target: Vector3, up: Vector3) {
-        var zAxis = Vector3.normalize(Vector3.subtractVectors(cameraPosition, target));
-        var xAxis = Vector3.normalize(Vector3.cross(up, zAxis));
-        var yAxis = Vector3.normalize(Vector3.cross(zAxis, xAxis));
-
-        return new Matrix4(
-            xAxis[0],
-            xAxis[1],
-            xAxis[2],
-            0,
-            yAxis[0],
-            yAxis[1],
-            yAxis[2],
-            0,
-            zAxis[0],
-            zAxis[1],
-            zAxis[2],
-            0,
-            cameraPosition[0],
-            cameraPosition[1],
-            cameraPosition[2],
-            1,
-        );
-    }
 }
