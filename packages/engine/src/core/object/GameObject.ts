@@ -13,9 +13,10 @@ export default class GameObject extends CoreObject {
     public readonly transform: TransformComponent;
     private components: { [index: string]: BaseComponent } = {};
 
-    constructor() {
+    constructor(name: string = '') {
         super();
 
+        this.name = name;
         this.transform = this.addComponent<TransformComponent>(TransformComponent);
     }
 

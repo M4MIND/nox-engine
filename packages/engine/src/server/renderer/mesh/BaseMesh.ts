@@ -92,4 +92,6 @@ export default class BaseMesh {
     public removeBuffer(name: string): void {
         this.buffers.delete(name);
     }
+
+    public bind() {}
 }

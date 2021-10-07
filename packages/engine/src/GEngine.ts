@@ -1,4 +1,4 @@
-import CameraProjectionComponent from './core/component/rendering/CameraProjectionComponent';
+import CameraComponent from './core/component/rendering/CameraComponent';
 import GameObject from './core/object/GameObject';
 import Time from './core/time/Time';
 import CameraServer from './server/camera/CameraServer';
@@ -91,6 +91,7 @@ export default class GEngine {
             EventServer.eventManager.dispatch('onFixedUpdate');
             EventServer.eventManager.dispatch('onUpdate');
             EventServer.eventManager.dispatch('onLateUpdate');
+            EventServer.eventManager.dispatch('onCameraPreparation');
             EventServer.eventManager.dispatch('onWillRendererObject');
             EventServer.eventManager.dispatch('onRenderer');
             EventServer.eventManager.dispatch('onFinish');
