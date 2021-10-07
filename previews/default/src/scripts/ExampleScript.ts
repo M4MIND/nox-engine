@@ -5,7 +5,7 @@ import {
     MeshRendererComponent,
     PrimitiveType,
     ScriptComponent,
-    TimeServer,
+    Time,
     Vector3,
 } from '@gengine/engine';
 
@@ -13,8 +13,8 @@ export default class ExampleScript extends ScriptComponent {
     private info: HTMLDivElement = document.createElement('div');
 
     public onStart() {
-        for (let x = 0; x < 64; x++) {
-            for (let z = 0; z < 64; z++) {
+        for (let x = 0; x < 1; x++) {
+            for (let z = 0; z < 1; z++) {
                 let gm = GameObject.createPrimitive(PrimitiveType.Cube);
                 gm.addComponent<CubeScript>(CubeScript);
 
@@ -24,10 +24,7 @@ export default class ExampleScript extends ScriptComponent {
                     material.color = new Color(1 - x / 64, 1 - z / 64, (x + z) / 128);
                 }
 
-                gm.transform.scale.x = 0.5;
-                gm.transform.scale.y = 0.5;
-                gm.transform.scale.z = 0.5;
-                gm.transform.position = new Vector3(x - 32, -20, z - 84);
+                gm.transform.position = new Vector3(0, 0, 0);
             }
         }
 
@@ -41,6 +38,6 @@ export default class ExampleScript extends ScriptComponent {
     }
 
     public onUpdate() {
-        this.info.innerText = `${(1 / TimeServer.deltaTime).toFixed()} fps`;
+        this.info.innerText = `${(1 / Time.deltaTime).toFixed()} fps`;
     }
 }

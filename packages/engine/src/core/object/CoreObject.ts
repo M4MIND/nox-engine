@@ -1,3 +1,3 @@
 export default class CoreObject {
-    private name: string = '';
+    public name: string = '';
 }

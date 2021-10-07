@@ -11,7 +11,6 @@ import CoreObject from './CoreObject';
 
 export default class GameObject extends CoreObject {
     public readonly transform: TransformComponent;
-
     private components: { [index: string]: BaseComponent } = {};
 
     constructor() {

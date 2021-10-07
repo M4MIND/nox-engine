@@ -7,6 +7,7 @@ import Color from './src/core/material/color/Color';
 import Cube from './src/core/mesh/primitive/Cube';
 import { PrimitiveType } from './src/core/mesh/primitive/PrimitiveType';
 import GameObject from './src/core/object/GameObject';
+import Time from './src/core/time/Time';
 import Matrix4 from './src/mathf/Matrix4';
 import Vector3 from './src/mathf/Vector3';
 import Vector4 from './src/mathf/Vector4';
@@ -21,7 +22,6 @@ import VertexAttributeDescriptor, {
     VertexTypeUsage,
 } from './src/server/renderer/shader/attribute/VertexAttributeDescriptor';
 import { UniformType } from './src/server/renderer/shader/uniform/IUniform';
-import TimeServer from './src/server/time/TimeServer';
 import Hash from './src/utils/Hash';
 
 export {
@@ -48,5 +48,5 @@ export {
     VertexTargetAttribute,
     VertexTypeUsage,
     WebGL2Context,
-    TimeServer,
+    Time,
 };

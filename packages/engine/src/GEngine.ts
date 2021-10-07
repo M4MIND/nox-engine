@@ -1,8 +1,10 @@
+import CameraProjectionComponent from './core/component/rendering/CameraProjectionComponent';
 import GameObject from './core/object/GameObject';
+import Time from './core/time/Time';
+import CameraServer from './server/camera/CameraServer';
 import EventServer from './server/event/EventServer';
 import RendererServer, { IRendererServerSettings } from './server/renderer/RendererServer';
 import SceneServer from './server/scene/SceneServer';
-import TimeServer from './server/time/TimeServer';
 
 export interface IGEngineSettings {
     rendererServer: IRendererServerSettings;
@@ -65,7 +67,8 @@ void main() {
 export default class GEngine {
     constructor(settings: IGEngineSettings) {
         EventServer.startUp();
-        TimeServer.startUp();
+        Time.startUp();
+        CameraServer.startUp();
         SceneServer.startUp();
         RendererServer.startUp(Object.assign(settings.rendererServer));
         RendererServer.shaderManager.add(baseShader);

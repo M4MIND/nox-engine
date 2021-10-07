@@ -1,6 +1,6 @@
-import EventServer from '../event/EventServer';
+import EventServer from '../../server/event/EventServer';
 
-export default class TimeServer {
+export default class Time {
     private static _startTime: number = 0;
     private static _deltaTime: number = 0;
     private static _elapsedTime: number = 0;
@@ -19,7 +19,6 @@ export default class TimeServer {
 
     public static startUp() {
         this._startTime = Date.now();
-
         EventServer.eventManager.subscribe('onFixedUpdate', () => {
             this._deltaTime = (Date.now() - this._startTime) / 1000;
             this._elapsedTime += this._deltaTime;
