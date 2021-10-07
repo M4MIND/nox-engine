@@ -31,10 +31,10 @@ export default class MeshRendererComponent extends BaseComponent {
                     Matrix4.inverse(
                         Matrix4.multiplyFromArray([
                             //Matrix4.lookAt(new Vector3(0, 0, 20), new Vector3(0, 0, 0), new Vector3(0, 1, 0)),
-                            Matrix4.translate(new Vector3(0, 0, 20)),
+                            Matrix4.translate(new Vector3(32, 40, 128)),
                             Matrix4.zRotation((3.14 / 180) * 0),
                             Matrix4.yRotation((3.14 / 180) * 0),
-                            Matrix4.xRotation((3.14 / 180) * 0),
+                            Matrix4.xRotation((3.14 / 180) * -20),
                         ]),
                     ),
                     Matrix4.translate(this.gameObject.transform.position),

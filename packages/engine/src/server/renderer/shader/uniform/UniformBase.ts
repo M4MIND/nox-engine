@@ -3,7 +3,7 @@ import IContext from '../../manager/context/IContext';
 
 export default abstract class UniformBase {
     protected readonly _index: string;
-    protected values: number[] = [];
+    protected values: Float32Array = new Float32Array();
     protected readonly context: IContext;
     protected readonly _serialized: boolean;
 
@@ -21,12 +21,18 @@ export default abstract class UniformBase {
         this.context = RendererServer.contextManager.context;
     }
 
-    public get(): number[] {
+    public get(): Float32Array {
         return this.values;
     }
 
     public set(v: number[]): void {
-        this.values = v;
+        if (v.length !== this.values.length) {
+            this.values = new Float32Array(v);
+
+            return;
+        }
+
+        this.values.set(v);
     }
 
     public abstract bind(index: WebGLUniformLocation): void;

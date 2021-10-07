@@ -13,8 +13,8 @@ export default class ExampleScript extends ScriptComponent {
     private info: HTMLDivElement = document.createElement('div');
 
     public onStart() {
-        for (let x = 0; x < 1; x++) {
-            for (let z = 0; z < 1; z++) {
+        for (let x = 0; x < 64; x++) {
+            for (let z = 0; z < 64; z++) {
                 let gm = GameObject.createPrimitive(PrimitiveType.Cube);
                 gm.addComponent<CubeScript>(CubeScript);
 
@@ -24,7 +24,7 @@ export default class ExampleScript extends ScriptComponent {
                     material.color = new Color(1 - x / 64, 1 - z / 64, (x + z) / 128);
                 }
 
-                gm.transform.position = new Vector3(0, 0, 0);
+                gm.transform.position = new Vector3(x, 0, z);
             }
         }
 
