@@ -16,11 +16,11 @@
     },
     "description": "My webpack project",
     "scripts": {
-        "build": "webpack --mode=production --node-env=production",
-        "build:dev": "webpack --mode=development --stats-error-details",
-        "build:prod": "webpack --mode=production --node-env=production",
-        "watch": "webpack --watch",
-        "serve": "webpack serve"
+        "build": "node_modules/.bin/webpack --mode=production --node-env=production",
+        "build:dev": "node_modules/.bin/webpack --mode=development --stats-error-details",
+        "build:prod": "node_modules/.bin/webpack --mode=production --node-env=production",
+        "watch": "node_modules/.bin/webpack --watch",
+        "serve": "node_modules/.bin/webpack serve"
     },
     "dependencies": {
         "perlin-noise": "^0.0.1",
