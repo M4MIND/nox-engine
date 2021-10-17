@@ -1,10 +1,10 @@
 export default class BaseUniformDescriptor {
-    public readonly name: string;
-    private size: number;
-    private value: Float32Array;
+    public readonly index: string;
+    protected size: number;
+    protected value: Float32Array;
 
-    constructor(name: string, size: number) {
-        this.name = name;
+    constructor(index: string, size: number) {
+        this.index = index;
         this.size = size;
         this.value = new Float32Array(this.size);
     }
