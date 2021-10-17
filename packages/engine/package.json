@@ -1,5 +1,5 @@
 {
-    "name": "@gengine/engine",
+    "name": "@nox-engine/engine",
     "version": "0.0.0",
     "main": "index.ts",
     "license": "MIT"
