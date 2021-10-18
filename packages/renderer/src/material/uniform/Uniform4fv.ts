@@ -15,7 +15,7 @@ export default class Uniform4fv extends BaseUniformDescriptor {
     }
 
     public use() {
-        let uniformLocation = RendererServer.programManager.activeProgram?.getUniformLocation(this.index);
+        let uniformLocation = this.getUniformLocation();
 
         if (!uniformLocation) {
             return;

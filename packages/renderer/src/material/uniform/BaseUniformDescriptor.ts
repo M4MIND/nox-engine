@@ -1,3 +1,5 @@
+import RendererServer from '../../RendererServer';
+
 export default class BaseUniformDescriptor {
     public readonly index: string;
     protected size: number;
@@ -16,6 +18,10 @@ export default class BaseUniformDescriptor {
         } else {
             this.value.set(value);
         }
+    }
+
+    protected getUniformLocation(): WebGLUniformLocation | undefined | null {
+        return RendererServer.programManager.activeProgram?.getUniformLocation(this.index);
     }
 
     public use(): void {}

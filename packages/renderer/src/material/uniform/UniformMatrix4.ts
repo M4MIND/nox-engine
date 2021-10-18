@@ -1,3 +1,4 @@
+import RendererServer from '../../RendererServer';
 import BaseUniformDescriptor from './BaseUniformDescriptor';
 
 export default class UniformMatrix4 extends BaseUniformDescriptor {
@@ -15,5 +16,13 @@ export default class UniformMatrix4 extends BaseUniformDescriptor {
         return this;
     }
 
-    public use() {}
+    public use() {
+        let uniform = this.getUniformLocation();
+
+        if (!uniform) {
+            return;
+        }
+
+        RendererServer.contextManager.context.uniformMatrix4fv(uniform, false, this.value);
+    }
 }

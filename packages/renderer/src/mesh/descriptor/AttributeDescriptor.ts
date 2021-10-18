@@ -70,9 +70,9 @@ export default class AttributeDescriptor {
             this.data.set(value);
         }
 
-        this.buffer.bind(GL_BUFFERS_TARGET.ARRAY_BUFFER);
+        this.bind();
         this.buffer.setData(GL_BUFFERS_TARGET.ARRAY_BUFFER, this.data, GL_BUFFERS_USAGE.STATIC_DRAW);
-        this.buffer.unbind(GL_BUFFERS_TARGET.ARRAY_BUFFER);
+        this.unbind();
     }
 
     public bind() {

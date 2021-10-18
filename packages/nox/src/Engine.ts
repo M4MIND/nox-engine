@@ -9,4 +9,6 @@ export default class Engine {
     constructor(settings: IEngineSettings) {
         RendererServer.startUp(settings.rendererSettings);
     }
+
+    public run() {}
 }

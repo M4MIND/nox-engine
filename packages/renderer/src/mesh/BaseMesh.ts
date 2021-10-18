@@ -3,7 +3,11 @@ import IndicesDescriptor from './descriptor/IndicesDescriptor';
 
 export default class BaseMesh {
     private attributeDescriptors: Map<string, AttributeDescriptor> = new Map<string, AttributeDescriptor>();
-    private indicesDescriptor: IndicesDescriptor = new IndicesDescriptor();
+    private _indicesDescriptor: IndicesDescriptor = new IndicesDescriptor();
+
+    public get indicesDescriptor(): IndicesDescriptor {
+        return this._indicesDescriptor;
+    }
 
     public setAttributeDescriptor(attributeDescriptor: AttributeDescriptor) {
         if (!this.hasAttributeDescriptor(attributeDescriptor.index)) {
@@ -38,5 +42,7 @@ export default class BaseMesh {
             attr.vertexAttribPointer();
             attr.enableVertexAttribArray();
         }
+
+        this.indicesDescriptor.bind();
     }
 }

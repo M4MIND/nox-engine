@@ -1,5 +1,12 @@
 import RendererServer from '../RendererServer';
-import { GL_COLOR_BUFFER_BIT, GL_CULL_FACE, GL_DEPTH_BUFFER_BIT, GL_DEPTH_TEST, GL_TRIANGLES } from '../_webgl_consts';
+import {
+    GL_COLOR_BUFFER_BIT,
+    GL_CULL_FACE,
+    GL_DATA_UNSIGNED_SHORT,
+    GL_DEPTH_BUFFER_BIT,
+    GL_DEPTH_TEST,
+    GL_TRIANGLES,
+} from '../_webgl_consts';
 import BaseMaterial from '../material/BaseMaterial';
 import BaseMesh from '../mesh/BaseMesh';
 
@@ -23,6 +30,11 @@ export default class RendererManager {
         mesh.use();
         material.use();
 
-        RendererServer.contextManager.context.drawArrays(GL_TRIANGLES, 0, 3);
+        RendererServer.contextManager.context.drawElements(
+            GL_TRIANGLES,
+            mesh.indicesDescriptor.dataLength,
+            GL_DATA_UNSIGNED_SHORT,
+            0,
+        );
     }
 }
