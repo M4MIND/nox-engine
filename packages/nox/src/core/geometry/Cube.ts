@@ -1,4 +1,4 @@
-import Mesh from '../renderer/mesh/Mesh';
+import Mesh from '../graphics/mesh/Mesh';
 import { Vector3 } from '@nox-engine/mathf';
 
 export default class Cube extends Mesh {

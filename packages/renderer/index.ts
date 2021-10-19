@@ -4,7 +4,7 @@ import BaseMaterial from './src/material/BaseMaterial';
 import Uniform4fv from './src/material/uniform/Uniform4fv';
 import UniformMatrix4 from './src/material/uniform/UniformMatrix4';
 import BaseMesh from './src/mesh/BaseMesh';
-import { AttributeDescriptorFormat } from './src/mesh/descriptor/AttributeDescriptor';
+import { AttributeDescriptorFormat, AttributeDescriptorSrcStorage } from './src/mesh/descriptor/AttributeDescriptor';
 import BaseShader from './src/shader/BaseShader';
 
 export {
@@ -16,4 +16,5 @@ export {
     Uniform4fv,
     BaseMesh,
     AttributeDescriptorFormat,
+    AttributeDescriptorSrcStorage,
 };
