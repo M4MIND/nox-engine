@@ -1,0 +1,10 @@
+{
+  "name": "@nox-engine/engine",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@nox-engine/mathf": "^0.0.0",
+    "@nox-engine/renderer": "^0.0.0"
+  }
+}

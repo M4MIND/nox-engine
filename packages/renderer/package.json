@@ -1,0 +1,6 @@
+{
+  "name": "@nox-engine/renderer",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "license": "MIT"
+}
