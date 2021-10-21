@@ -1,6 +1,5 @@
 import MonkeyScript from './scripts/MonkeyScript';
-import { Color, Engine, GameObject, MeshRendererComponent } from '@nox-engine/engine';
-import { PrimitiveTypes } from '@nox-engine/engine/src/core/object/GameObject';
+import { Color, Engine, GameObject, MeshRendererComponent, PrimitiveTypes } from '@nox-engine/engine';
 import { WebGL2Context } from '@nox-engine/renderer';
 
 let canvas = document.createElement('canvas');

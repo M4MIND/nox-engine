@@ -12,11 +12,14 @@ import Material from './src/core/graphics/material/Material';
 import Color from './src/core/graphics/material/color/Color';
 import Mesh from './src/core/graphics/mesh/Mesh';
 import Shader from './src/core/graphics/shader/Shader';
-import GameObject from './src/core/object/GameObject';
+import GameObject, { PrimitiveTypes } from './src/core/object/GameObject';
 import Scene from './src/core/scene/Scene';
 import SceneManager from './src/core/scene/SceneManager';
+import Time from './src/core/time/Time';
 
 export {
+    PrimitiveTypes,
+    Time,
     CameraComponent,
     Color,
     Cone,

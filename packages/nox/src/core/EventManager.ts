@@ -1,7 +1,8 @@
 export enum EventManagerEvents {
-    START = 'start',
-    UPDATE = 'update',
-    ON_RENDERER_OBJECT = 'onRendererObject',
+    START = 'onStart',
+    UPDATE = 'onUpdate',
+    RENDERER_OBJECT = 'onRendererObject',
+    FIXED_UPDATE = 'onFixedUpdate',
 }
 
 export default class EventManager {

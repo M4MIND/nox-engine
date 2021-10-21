@@ -42,6 +42,6 @@ export default class MeshRendererComponent extends BaseComponent {
     }
 
     protected preparation(): void {
-        EventManager.subscribe(EventManagerEvents.ON_RENDERER_OBJECT, this.onRendererObject.bind(this));
+        EventManager.subscribe(EventManagerEvents.RENDERER_OBJECT, this.onRendererObject.bind(this));
     }
 }
