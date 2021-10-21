@@ -1,6 +1,0 @@
-{
-    "name": "@nox-engine/sdf",
-    "version": "0.0.0",
-    "main": "index.ts",
-    "license": "MIT"
-}
