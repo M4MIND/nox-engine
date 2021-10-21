@@ -15,7 +15,7 @@ export default class EventManager {
         this.subscribers.get(event)!.push(listener);
     }
 
-    public static dispatch(event: string): void {
+    public static dispatch(event: EventManagerEvents | string): void {
         if (!this.subscribers.has(event)) {
             return;
         }

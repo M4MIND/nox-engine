@@ -111,11 +111,16 @@ export default class WebGL2Context implements ICanvasContext {
         this.context.shaderSource(shader, code);
     }
 
-    public uniformMatrix4fv(index: WebGLUniformLocation, serialized: boolean, value: Float32Array): void {
-        this.context.uniformMatrix4fv(index, serialized, value);
+    public uniform3vf(index: WebGLUniformLocation, value: Float32Array): void {
+        this.context.uniform3fv(index, value);
     }
+
     public uniform4fv(index: WebGLUniformLocation, value: Float32Array) {
         this.context.uniform4fv(index, value);
+    }
+
+    public uniformMatrix4fv(index: WebGLUniformLocation, serialized: boolean, value: Float32Array): void {
+        this.context.uniformMatrix4fv(index, serialized, value);
     }
 
     public useProgram(program: WebGLProgram | null): void {

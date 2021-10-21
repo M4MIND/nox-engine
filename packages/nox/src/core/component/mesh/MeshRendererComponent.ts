@@ -12,6 +12,14 @@ export default class MeshRendererComponent extends BaseComponent {
 
     public onRendererObject() {
         if (this.hasComponent<MeshFilterComponent>(MeshFilterComponent) && this.material) {
+            let m_model = Matrix4.multiplyFromArray([
+                Matrix4.translate(this.transform.position),
+                Matrix4.zRotation(0.0174 * this.transform.rotateZ),
+                Matrix4.yRotation(0.0174 * this.transform.rotateY),
+                Matrix4.xRotation(0.0174 * this.transform.rotateX),
+                Matrix4.scale(this.transform.scale),
+            ]);
+
             this.material.getUniform('_U_Color')?.set(this.material.color);
             this.material
                 .getUniform('_U_Projection')
@@ -21,8 +29,10 @@ export default class MeshRendererComponent extends BaseComponent {
                         RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,
                     ),
                 );
-            this.material.getUniform('_U_View')?.set(Matrix4.translate(new Vector3(0, 0, -2)));
-            this.material.getUniform('_U_Model')?.set(Matrix4.translate(this.transform.position));
+
+            this.material.getUniform('_U_ModelInvertMatrix')?.set(Matrix4.transpose(Matrix4.inverse(m_model)));
+            this.material.getUniform('_U_View')?.set(Matrix4.translate(new Vector3(0, -10, -2)));
+            this.material.getUniform('_U_Model')?.set(m_model);
 
             Graphics.drawMesh(
                 this.getComponent<MeshFilterComponent>(MeshFilterComponent).mesh,

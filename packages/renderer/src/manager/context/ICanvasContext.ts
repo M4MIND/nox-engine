@@ -64,5 +64,7 @@ export interface ICanvasContext {
 
     uniformMatrix4fv(index: WebGLUniformLocation, serialized: boolean, value: Float32Array): void;
 
+    uniform3vf(index: WebGLUniformLocation, value: Float32Array): void;
+
     uniform4fv(index: WebGLUniformLocation, value: Float32Array): void;
 }

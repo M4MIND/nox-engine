@@ -28,18 +28,19 @@ in vec4 _F_Color;
 in vec3 _F_Normal;
 
 uniform vec4 _U_Color;
-uniform vec4 _U_Light_Position;
+uniform vec3 _U_LightDirectionColor;
+uniform vec3 _U_LightDirection;
+uniform vec3 _U_LightAmbient;
+uniform mat4 _U_ModelInvertMatrix;
 
 out vec4 outColor;
 
 void main() {
-    vec3 normal = normalize(_F_Normal);
-    
-    float light = dot(normal, vec3(1,1,0));
-
+    vec3 normal = normalize(vec3(_U_ModelInvertMatrix * vec4(_F_Normal, 1)));
+    float nDotL = max(dot(_U_LightDirection, normal), 0.0);
     outColor = _U_Color;
     
-    outColor.rgb *= light;
+    outColor.rgb *= (_U_LightAmbient + _U_LightDirectionColor) * nDotL;
 }
 `;
 

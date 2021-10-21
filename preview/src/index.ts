@@ -1,5 +1,5 @@
-import { Color, Engine, GameObject } from '@nox-engine/engine';
-import MeshRendererComponent from '@nox-engine/engine/src/core/component/mesh/MeshRendererComponent';
+import MonkeyScript from './scripts/MonkeyScript';
+import { Color, Engine, GameObject, MeshRendererComponent } from '@nox-engine/engine';
 import { PrimitiveTypes } from '@nox-engine/engine/src/core/object/GameObject';
 import { WebGL2Context } from '@nox-engine/renderer';
 
@@ -19,9 +19,18 @@ new Engine({
         },
     },
 }).run(() => {
-    let object = GameObject.createPrimitive(PrimitiveTypes.Monkey);
-    object.transform.position.z = -2;
-    object.getComponent<MeshRendererComponent>(MeshRendererComponent).material!.color = Color.gray;
+    for (let x = 0; x < 32; x++) {
+        for (let z = 0; z < 32; z++) {
+            let object = GameObject.createPrimitive(PrimitiveTypes.Cube);
+
+            object.addComponent(MonkeyScript);
+
+            object.transform.position.z = -16 - z * 2;
+            object.transform.position.x = x * 2 - 32;
+            object.transform.position.y = 0;
+            object.getComponent<MeshRendererComponent>(MeshRendererComponent).material.color = Color.yellow;
+        }
+    }
 });
 
 // let material = new BaseMaterial(new BaseShader(v.trim(), f.trim()));

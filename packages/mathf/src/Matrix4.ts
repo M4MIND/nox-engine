@@ -179,4 +179,25 @@ export default class Matrix4 extends Array<number> {
             d * (tmp_22 * m22 + tmp_16 * m02 + tmp_21 * m12 - (tmp_20 * m12 + tmp_23 * m22 + tmp_17 * m02)),
         );
     }
+
+    public static transpose(m: Matrix4) {
+        return new Matrix4(
+            m[0],
+            m[4],
+            m[8],
+            m[12],
+            m[1],
+            m[5],
+            m[9],
+            m[13],
+            m[2],
+            m[6],
+            m[10],
+            m[14],
+            m[3],
+            m[7],
+            m[11],
+            m[15],
+        );
+    }
 }

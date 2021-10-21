@@ -40,6 +40,10 @@ export default class ProgramManager {
             );
         }
 
-        return new GpuProgram(id, program);
+        let gpuProgram = new GpuProgram(id, program);
+
+        this.program.set(id, gpuProgram);
+
+        return gpuProgram;
     }
 }
