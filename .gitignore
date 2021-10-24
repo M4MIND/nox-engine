@@ -6,3 +6,4 @@ dist
 .vscode
 *.map
 *.js
+!webpack.config.js

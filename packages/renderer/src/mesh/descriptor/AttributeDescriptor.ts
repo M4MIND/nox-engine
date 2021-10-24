@@ -41,6 +41,8 @@ export default class AttributeDescriptor {
     private buffer: BufferWrapper;
     private readonly srcType: AttributeDescriptorFormat;
 
+    private enableVertexAttribute: boolean = false;
+
     private dataLength: number = 0;
 
     constructor(
@@ -84,6 +86,10 @@ export default class AttributeDescriptor {
     }
 
     public vertexAttribPointer() {
+        if (this.enableVertexAttribute) {
+            return;
+        }
+
         let attributeLocation = RendererServer.programManager.activeProgram?.getAttributeLocation(this.index);
 
         if (attributeLocation === undefined || attributeLocation < 0) {
@@ -101,6 +107,10 @@ export default class AttributeDescriptor {
     }
 
     public enableVertexAttribArray() {
+        if (this.enableVertexAttribute) {
+            return;
+        }
+
         let attributeLocation = RendererServer.programManager.activeProgram?.getAttributeLocation(this.index);
 
         if (attributeLocation === undefined || attributeLocation < 0) {
@@ -108,5 +118,7 @@ export default class AttributeDescriptor {
         }
 
         RendererServer.contextManager.context.enableVertexAttribArray(attributeLocation);
+
+        this.enableVertexAttribute = true;
     }
 }

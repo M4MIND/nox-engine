@@ -95,39 +95,40 @@ export default class Matrix4 extends Array<number> {
             b.m00 * a.m00 + b.m01 * a.m10 + b.m02 * a.m20 + b.m03 * a.m30,
             b.m00 * a.m01 + b.m01 * a.m11 + b.m02 * a.m21 + b.m03 * a.m31,
             b.m00 * a.m02 + b.m01 * a.m12 + b.m02 * a.m22 + b.m03 * a.m32,
-            b.m00 * a.m03 + b.m01 * a.m13 + b.m02 * a.m23 + b.m03 * a.m33,
+            0,
             b.m10 * a.m00 + b.m11 * a.m10 + b.m12 * a.m20 + b.m13 * a.m30,
             b.m10 * a.m01 + b.m11 * a.m11 + b.m12 * a.m21 + b.m13 * a.m31,
             b.m10 * a.m02 + b.m11 * a.m12 + b.m12 * a.m22 + b.m13 * a.m32,
-            b.m10 * a.m03 + b.m11 * a.m13 + b.m12 * a.m23 + b.m13 * a.m33,
+            0,
             b.m20 * a.m00 + b.m21 * a.m10 + b.m22 * a.m20 + b.m23 * a.m30,
             b.m20 * a.m01 + b.m21 * a.m11 + b.m22 * a.m21 + b.m23 * a.m31,
             b.m20 * a.m02 + b.m21 * a.m12 + b.m22 * a.m22 + b.m23 * a.m32,
-            b.m20 * a.m03 + b.m21 * a.m13 + b.m22 * a.m23 + b.m23 * a.m33,
+            0,
             b.m30 * a.m00 + b.m31 * a.m10 + b.m32 * a.m20 + b.m33 * a.m30,
             b.m30 * a.m01 + b.m31 * a.m11 + b.m32 * a.m21 + b.m33 * a.m31,
             b.m30 * a.m02 + b.m31 * a.m12 + b.m32 * a.m22 + b.m33 * a.m32,
-            b.m30 * a.m03 + b.m31 * a.m13 + b.m32 * a.m23 + b.m33 * a.m33,
+            1,
         );
     }
 
     public static inverse(m: Matrix4) {
-        let m00 = m[0];
-        let m01 = m[1];
-        let m02 = m[2];
-        let m03 = m[3];
-        let m10 = m[4];
-        let m11 = m[4 + 1];
-        let m12 = m[4 + 2];
-        let m13 = m[4 + 3];
-        let m20 = m[2 * 4];
-        let m21 = m[2 * 4 + 1];
-        let m22 = m[2 * 4 + 2];
-        let m23 = m[2 * 4 + 3];
-        let m30 = m[3 * 4];
-        let m31 = m[3 * 4 + 1];
-        let m32 = m[3 * 4 + 2];
-        let m33 = m[3 * 4 + 3];
+        let m00 = m.m00;
+        let m01 = m.m01;
+        let m02 = m.m02;
+        let m03 = m.m03;
+        let m10 = m.m10;
+        let m11 = m.m11;
+        let m12 = m.m12;
+        let m13 = m.m13;
+        let m20 = m.m20;
+        let m21 = m.m21;
+        let m22 = m.m22;
+        let m23 = m.m23;
+        let m30 = m.m30;
+        let m31 = m.m31;
+        let m32 = m.m32;
+        let m33 = m.m33;
+
         let tmp_0 = m22 * m33;
         let tmp_1 = m32 * m23;
         let tmp_2 = m12 * m33;

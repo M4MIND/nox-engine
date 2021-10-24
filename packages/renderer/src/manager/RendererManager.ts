@@ -9,6 +9,7 @@ import {
 } from '../_webgl_consts';
 import BaseMaterial from '../material/BaseMaterial';
 import BaseMesh from '../mesh/BaseMesh';
+import BaseShader from '../shader/BaseShader';
 
 export default class RendererManager {
     public clear() {
@@ -32,8 +33,9 @@ export default class RendererManager {
             material.active();
         }
 
-        material.use();
         mesh.use();
+        material.use();
+        BaseShader.use();
 
         RendererServer.contextManager.context.drawElements(
             GL_TRIANGLES,

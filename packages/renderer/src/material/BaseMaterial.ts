@@ -1,4 +1,3 @@
-import RendererServer from '../RendererServer';
 import BaseShader from '../shader/BaseShader';
 import BaseUniformDescriptor from './uniform/BaseUniformDescriptor';
 

@@ -14,6 +14,9 @@ const config = {
   devServer: {
     open: true,
     host: "localhost",
+    static: {
+      directory: path.join(__dirname, 'assets')
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

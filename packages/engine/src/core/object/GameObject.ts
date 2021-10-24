@@ -39,6 +39,14 @@ export default class GameObject extends BaseObject {
         this.transform = this.addComponent<TransformComponent>(TransformComponent);
     }
 
+    public static createEmpty(): GameObject {
+        let object = new GameObject();
+
+        SceneManager.activeScene.addGameObject(object);
+
+        return object;
+    }
+
     public static createPrimitive(type: PrimitiveTypes): GameObject {
         let object = new GameObject();
         object.addComponent<MeshFilterComponent>(MeshFilterComponent).mesh = new PRIMITIVE_CLASSES[type]();
