@@ -9,7 +9,7 @@ export default class Material extends BaseMaterial {
     constructor(shader: Shader) {
         super(shader);
 
-        this.addUniform(new Uniform3fv('_U_LightAmbient')).set([0.4, 0.4, 0.4]);
+        this.addUniform(new Uniform3fv('_U_LightAmbient')).set([1, 0.4, 0.4]);
         this.addUniform(new Uniform3fv('_U_LightDirectionColor')).set([1, 1, 1]);
         this.addUniform(new Uniform3fv('_U_LightDirection')).set(Vector3.normalize(new Vector3(0, 0, 1)));
 

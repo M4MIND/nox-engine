@@ -20,6 +20,13 @@ export default class MeshRendererComponent extends BaseComponent {
                 Matrix4.scale(this.transform.scale),
             ]);
 
+            let m_camera = Matrix4.multiplyFromArray([
+                Matrix4.translate(new Vector3(0, -20, -2)),
+                Matrix4.zRotation(0.0174 * 0),
+                Matrix4.yRotation(0.0174 * 0),
+                Matrix4.xRotation(0.0174 * 0),
+            ]);
+
             this.material.getUniform('_U_Color')?.set(this.material.color);
             this.material
                 .getUniform('_U_Projection')
@@ -31,7 +38,7 @@ export default class MeshRendererComponent extends BaseComponent {
                 );
 
             this.material.getUniform('_U_ModelInvertMatrix')?.set(Matrix4.transpose(Matrix4.inverse(m_model)));
-            this.material.getUniform('_U_View')?.set(Matrix4.translate(new Vector3(0, -10, -2)));
+            this.material.getUniform('_U_View')?.set(m_camera);
             this.material.getUniform('_U_Model')?.set(m_model);
 
             Graphics.drawMesh(

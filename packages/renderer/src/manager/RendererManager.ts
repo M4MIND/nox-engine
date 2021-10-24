@@ -25,10 +25,15 @@ export default class RendererManager {
     }
 
     public drawMesh(mesh: BaseMesh, material: BaseMaterial) {
-        material.active();
+        if (
+            !RendererServer.programManager.activeProgram ||
+            RendererServer.programManager.activeProgram.id !== material.getId()
+        ) {
+            material.active();
+        }
 
-        mesh.use();
         material.use();
+        mesh.use();
 
         RendererServer.contextManager.context.drawElements(
             GL_TRIANGLES,

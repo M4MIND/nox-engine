@@ -33,7 +33,6 @@ export default class BaseMaterial {
     }
 
     public active() {
-        RendererServer.programManager.activeProgram = this.shader.program;
         this.shader.use();
     }
 
