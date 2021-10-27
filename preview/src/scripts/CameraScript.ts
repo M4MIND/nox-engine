@@ -14,32 +14,37 @@ export default class CameraScript extends ScriptComponent {
     public update() {
         this.info.clear();
 
-        this.info.addInfo(`FPS: ${(1/ Time.deltaTime).toFixed(1)} \n`)
+        this.info.addInfo(`FPS: ${(1/ Time.deltaTime).toFixed(1)} \n\n`)
+        this.info.addInfo(`You can use [w a s d] for move camera by axis [X] [Z]\n\n`)
+        this.info.addInfo(`Pressed: [`)
 
         if (Input.pressUp('w')) {
             this.transform.position.z += Time.deltaTime * 4;
 
-            this.info.addInfo(`Pressed: w \n`);
+            this.info.addInfo(` w `);
         }
 
         if (Input.pressUp('s')) {
             this.transform.position.z -= Time.deltaTime * 4;
 
-            this.info.addInfo(`Pressed: s \n`);
+            this.info.addInfo(` s `);
         }
 
         if (Input.pressUp('a')) {
             this.transform.position.x += Time.deltaTime * 4;
 
-            this.info.addInfo(`Pressed: a \n`);
+            this.info.addInfo(` a `);
         }
 
         if (Input.pressUp('d')) {
             this.transform.position.x -= Time.deltaTime * 4;
 
-            this.info.addInfo(`Pressed: d \n`);
+            this.info.addInfo(` d `);
         }
 
-        this.info.addInfo(`Camera position: \nx: ${this.transform.position.x}\ny: ${this.transform.position.y}\nz:${this.transform.position.z}`);
+        this.info.addInfo(` ]\n`)
+
+        this.info.addInfo(`\nCamera position: \nx: ${this.transform.position.x}\ny: ${this.transform.position.y}\nz:${this.transform.position.z}\n`);
+        this.info.addInfo(`\nCursor position: \nx: ${Input.mousePosition.x}\ny:${Input.mousePosition.y}`);
     }
 }

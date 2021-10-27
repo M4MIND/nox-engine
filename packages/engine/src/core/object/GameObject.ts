@@ -32,10 +32,10 @@ export default class GameObject extends BaseObject {
     public readonly transform: TransformComponent;
     public parent: GameObject | undefined;
     private readonly components: Map<string, BaseComponent> = new Map<string, BaseComponent>();
-    private childrens: GameObject[] = [];
+    private children: GameObject[] = [];
 
-    constructor() {
-        super();
+    constructor(name: string = 'Game Object') {
+        super(name);
 
         this.transform = this.addComponent<TransformComponent>(TransformComponent);
     }
@@ -93,7 +93,7 @@ export default class GameObject extends BaseObject {
     }
 
     public addChildren(gameObject: GameObject) {
-        this.childrens.push(gameObject);
+        this.children.push(gameObject);
 
         gameObject.parent = this;
     }
