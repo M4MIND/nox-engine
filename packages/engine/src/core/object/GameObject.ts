@@ -1,3 +1,4 @@
+import { CameraComponent, GlobalLightComponent } from '../../..';
 import BaseComponent from '../component/BaseComponent';
 import MeshFilterComponent from '../component/mesh/MeshFilterComponent';
 import MeshRendererComponent from '../component/mesh/MeshRendererComponent';
@@ -29,9 +30,9 @@ const PRIMITIVE_CLASSES: { [index: number]: new () => Mesh } = {
 
 export default class GameObject extends BaseObject {
     public readonly transform: TransformComponent;
+    public parent: GameObject | undefined;
     private readonly components: Map<string, BaseComponent> = new Map<string, BaseComponent>();
     private childrens: GameObject[] = [];
-    private parent: GameObject | undefined;
 
     constructor() {
         super();
@@ -40,11 +41,15 @@ export default class GameObject extends BaseObject {
     }
 
     public static createEmpty(): GameObject {
-        let object = new GameObject();
+        return SceneManager.activeScene.addGameObject(new GameObject());
+    }
 
-        SceneManager.activeScene.addGameObject(object);
+    public static createCamera(): GameObject {
+        return SceneManager.activeScene.addGameObject(new GameObject().addComponent<CameraComponent>(CameraComponent).gameObject);
+    }
 
-        return object;
+    public static createGlobalLight(): GameObject {
+        return new GameObject().addComponent<GlobalLightComponent>(GlobalLightComponent).gameObject;
     }
 
     public static createPrimitive(type: PrimitiveTypes): GameObject {
@@ -85,5 +90,11 @@ export default class GameObject extends BaseObject {
         }
 
         throw new Error(`${component.name} -> is not found in game object`);
+    }
+
+    public addChildren(gameObject: GameObject) {
+        this.childrens.push(gameObject);
+
+        gameObject.parent = this;
     }
 }

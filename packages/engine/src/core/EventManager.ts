@@ -1,7 +1,9 @@
-export enum EventManagerEvents {
+export enum CoreEvents {
     START = 'onStart',
     UPDATE = 'onUpdate',
+    CAMERA = 'onCamera',
     RENDERER_OBJECT = 'onRendererObject',
+    PRE_RENDER = 'onPreRender',
     FIXED_UPDATE = 'onFixedUpdate',
 }
 
@@ -16,7 +18,7 @@ export default class EventManager {
         this.subscribers.get(event)!.push(listener);
     }
 
-    public static dispatch(event: EventManagerEvents | string): void {
+    public static dispatch(event: CoreEvents | string): void {
         if (!this.subscribers.has(event)) {
             return;
         }

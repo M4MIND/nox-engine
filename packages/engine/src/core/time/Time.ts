@@ -1,4 +1,4 @@
-import EventManager, { EventManagerEvents } from '../EventManager';
+import EventManager, { CoreEvents } from '../EventManager';
 
 export default class Time {
     private static _startTime = Date.now();
@@ -18,7 +18,7 @@ export default class Time {
     }
 
     public static startUp() {
-        EventManager.subscribe(EventManagerEvents.FIXED_UPDATE, () => {
+        EventManager.subscribe(CoreEvents.FIXED_UPDATE, () => {
             this._deltaTime = (Date.now() - this._startTime) / 1000;
             this._elapsedTime += this._deltaTime;
             this._startTime = Date.now();

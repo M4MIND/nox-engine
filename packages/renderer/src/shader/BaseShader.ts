@@ -16,9 +16,9 @@ export default class BaseShader {
         }
     }
 
-    public static addUniform(uniform: BaseUniformDescriptor): BaseUniformDescriptor {
-        if (this.hasUniform(uniform.index)) {
-            this.removeUniform(uniform.index);
+    public static addGlobalUniform(uniform: BaseUniformDescriptor): BaseUniformDescriptor {
+        if (this.hasGlobalUniform(uniform.index)) {
+            this.removeGlobalUniform(uniform.index);
         }
 
         this.uniformDescriptors.set(uniform.index, uniform);
@@ -26,15 +26,15 @@ export default class BaseShader {
         return uniform;
     }
 
-    public static hasUniform(index: string): boolean {
+    public static hasGlobalUniform(index: string): boolean {
         return this.uniformDescriptors.has(index);
     }
 
-    public static getUniform(index: string): BaseUniformDescriptor | undefined {
+    public static getGlobalUniform(index: string): BaseUniformDescriptor | undefined {
         return this.uniformDescriptors.get(index);
     }
 
-    public static removeUniform(index: string): void {
+    public static removeGlobalUniform(index: string): void {
         this.uniformDescriptors.delete(index);
     }
 

@@ -10,11 +10,6 @@ export default class Color extends Array<number> {
     public static yellow = new Color(1, 0.92, 0.016, 1);
 
     constructor(r = 0, g = 0, b = 0, a = 1) {
-        super();
-
-        this[0] = r;
-        this[1] = g;
-        this[2] = b;
-        this[3] = a;
+        super(r, g, b, a);
     }
 }

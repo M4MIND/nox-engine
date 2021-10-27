@@ -2,7 +2,7 @@ import GameObject from '../object/GameObject';
 import TransformComponent from './transform/TransformComponent';
 
 export default abstract class BaseComponent {
-    protected readonly gameObject: GameObject;
+    public readonly gameObject: GameObject;
     protected transform: TransformComponent;
 
     constructor(gameObject: GameObject) {
@@ -23,6 +23,10 @@ export default abstract class BaseComponent {
     public start(): void {}
 
     public update(): void {}
+
+    public onCamera(): void {}
+
+    public onPreRender(): void {}
 
     public onRendererObject(): void {}
 
