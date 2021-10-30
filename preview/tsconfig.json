@@ -2,7 +2,8 @@
   "compilerOptions": {
     "noEmit": false,
     "sourceMap": true,
-    "isolatedModules": false
+    "isolatedModules": false,
+    "target": "ES6"
   },
   "extends": "../tsconfig.json"
 }

@@ -6,6 +6,6 @@ export default class ParentScript extends ScriptComponent {
     public update() {
         this.angle += 30 * Time.deltaTime;
 
-        this.transform.rotation.axisAngle(new Vector3(0,1,0), Mathf.rad2deg * this.angle);
+        this.transform.rotation.axisAngle(new Vector3(0,0,1), Mathf.rad2deg * this.angle);
     }
 }

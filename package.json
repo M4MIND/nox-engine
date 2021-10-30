@@ -1,5 +1,5 @@
 {
-    "name": "GEngine",
+    "name": "nox-engine",
     "version": "1.0.0",
     "main": "index.js",
     "repository": "https://github.com/M4MIND/GEngine.git",
