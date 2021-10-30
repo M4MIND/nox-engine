@@ -1,7 +1,7 @@
 import { Matrix4, Vector3 } from '@nox-engine/mathf';
 import { RendererServer, Uniform3fv, UniformMatrix4 } from '@nox-engine/renderer';
 import { IRendererServerSettings } from '@nox-engine/renderer/src/RendererServer';
-import { BasicUniforms } from '..';
+import { BasicUniforms, Cursor } from '..';
 
 import EventManager, { CoreEvents } from './core/EventManager';
 import Graphics from './core/graphics/Graphics';
@@ -19,6 +19,7 @@ export default class Engine {
         SceneManager.startUp();
         RendererServer.startUp(settings.rendererSettings);
         Input.startUp();
+        Cursor.startUp();
         Time.startUp();
 
         Shader.addGlobalUniform(new UniformMatrix4(BasicUniforms.VIEW)).set(new Matrix4());
@@ -38,14 +39,13 @@ export default class Engine {
 
     private tick() {
         window.requestAnimationFrame(() => {
-            EventManager.dispatch(CoreEvents.FIXED_UPDATE);
             EventManager.dispatch(CoreEvents.UPDATE);
 
             Graphics.clear();
             EventManager.dispatch(CoreEvents.CAMERA);
             EventManager.dispatch(CoreEvents.PRE_RENDER);
             EventManager.dispatch(CoreEvents.RENDERER_OBJECT);
-
+            EventManager.dispatch(CoreEvents.FIXED_UPDATE);
             this.tick();
         });
     }

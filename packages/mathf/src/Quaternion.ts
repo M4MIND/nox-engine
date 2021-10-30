@@ -31,7 +31,25 @@ export default class Quaternion {
             1 - (yy + zz), xy - wz, xz + wy, 0,
             xy + wz, 1 - (xx + zz), yz - wx, 0,
             xz - wy, yz + wx, 1 - (xx + yy), 0,
-            0, 0, 0, 1
+            0, 0, 0, 1,
         );
+    }
+
+    public euler(x: number, y: number, z: number) {
+        var c1 = Math.cos(x / 2);
+        var c2 = Math.cos(y / 2);
+        var c3 = Math.cos(z / 2);
+        var s1 = Math.sin(x / 2);
+        var s2 = Math.sin(y / 2);
+        var s3 = Math.sin(z / 2);
+
+        this.y = s1 * c2 * c3 + c1 * s2 * s3;
+        this.x = c1 * s2 * c3 - s1 * c2 * s3;
+        this.z = c1 * c2 * s3 + s1 * s2 * c3;
+        this.w = c1 * c2 * c3 - s1 * s2 * s3;
+    }
+
+    public toVector() {
+        return new Vector3(this.x, this.y, this.z);
     }
 }
