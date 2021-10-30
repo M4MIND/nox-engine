@@ -1,6 +1,5 @@
-import { Engine, GameObject, Shader } from '@nox-engine/engine';
-import { Mathf, Matrix4, Quaternion, Vector3 } from '@nox-engine/mathf';
-import { UniformMatrix4, WebGL2Context } from '@nox-engine/renderer';
+import { Engine, GameObject } from '@nox-engine/engine';
+import { WebGL2Context } from '@nox-engine/renderer';
 import MainScript from './scripts/MainScript';
 
 let canvas = document.createElement('canvas');
@@ -16,5 +15,4 @@ new Engine({
     },
 }).run(() => {
     GameObject.createEmpty().addComponent(MainScript);
-
 });

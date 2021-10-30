@@ -13,6 +13,7 @@ import Color from './src/core/graphics/material/color/Color';
 import Material from './src/core/graphics/material/Material';
 import Mesh from './src/core/graphics/mesh/Mesh';
 import Shader from './src/core/graphics/shader/Shader';
+import { BasicUniforms } from './src/core/graphics/Unifroms';
 import GameObject, { PrimitiveTypes } from './src/core/object/GameObject';
 import Scene from './src/core/scene/Scene';
 import SceneManager from './src/core/scene/SceneManager';
@@ -41,4 +42,5 @@ export {
     TransformComponent,
     GlobalLightComponent,
     ScriptComponent,
+    BasicUniforms
 };

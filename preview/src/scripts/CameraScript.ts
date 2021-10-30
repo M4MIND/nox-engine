@@ -1,4 +1,4 @@
-import { GameObject, ScriptComponent, Time } from '@nox-engine/engine';
+import { CameraComponent, GameObject, ScriptComponent, Time } from '@nox-engine/engine';
 import Input from '@nox-engine/engine/src/core/input/Input';
 import { Mathf, Vector3 } from '@nox-engine/mathf';
 import InfoScript from './InfoScript';
@@ -7,6 +7,8 @@ export default class CameraScript extends ScriptComponent {
     private info: InfoScript = GameObject.createEmpty().addComponent(InfoScript);
 
     public start() {
+        this.gameObject.getComponent<CameraComponent>(CameraComponent).fieldOfView = 90;
+
         this.gameObject.transform.position = new Vector3(0, 0, -10);
         this.gameObject.transform.rotation.axisAngle(new Vector3(0, -1, 0), Mathf.rad2deg * 180);
     }
