@@ -41,11 +41,11 @@ export default class GameObject extends BaseObject {
     }
 
     public static createEmpty(): GameObject {
-        return SceneManager.activeScene.addGameObject(new GameObject());
+        return SceneManager.activeScene.addGameObject(new GameObject('Empty'));
     }
 
     public static createCamera(): GameObject {
-        return SceneManager.activeScene.addGameObject(new GameObject().addComponent<CameraComponent>(CameraComponent).gameObject);
+        return SceneManager.activeScene.addGameObject(new GameObject('Camera').addComponent<CameraComponent>(CameraComponent).gameObject);
     }
 
     public static createGlobalLight(): GameObject {
@@ -53,7 +53,11 @@ export default class GameObject extends BaseObject {
     }
 
     public static createPrimitive(type: PrimitiveTypes): GameObject {
-        let object = new GameObject();
+        if (!PrimitiveTypes[type]) {
+            throw new Error(`Can't create ${PrimitiveTypes[type]}`)
+        }
+
+        let object = new GameObject(PrimitiveTypes[type]);
         object.addComponent<MeshFilterComponent>(MeshFilterComponent).mesh = new PRIMITIVE_CLASSES[type]();
         object.addComponent<MeshRendererComponent>(MeshRendererComponent);
 
@@ -92,9 +96,10 @@ export default class GameObject extends BaseObject {
         throw new Error(`${component.name} -> is not found in game object`);
     }
 
-    public addChildren(gameObject: GameObject) {
+    public addChildren(gameObject: GameObject): this {
         this.children.push(gameObject);
 
         gameObject.parent = this;
+        return this;
     }
 }

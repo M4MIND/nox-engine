@@ -16,16 +16,9 @@ export default class CameraComponent extends BaseComponent {
         this._fieldOfView = value;
     }
 
-    public start(): void {}
-
-    public update(): void {}
-
     public onCamera() {
         Shader.getGlobalUniform(BasicUniforms.VIEW)?.set(
-            Matrix4.inverse(Matrix4.multiplyFromArray([
-                Matrix4.translate(this.transform.position),
-                this.transform.rotation.toMatrix4(),
-            ])),
+            Matrix4.inverse(this.transform.getModelMatrix()),
         );
 
         Shader.getGlobalUniform(BasicUniforms.PROJECTION)?.set(Matrix4.projection(

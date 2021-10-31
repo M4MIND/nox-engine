@@ -1,5 +1,5 @@
 export default class BaseObject {
-    private name: string;
+    public name: string;
 
     constructor(name: string = '') {
         this.name = name;

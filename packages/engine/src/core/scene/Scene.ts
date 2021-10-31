@@ -17,4 +17,8 @@ export default class Scene {
 
         return gameObject;
     }
+
+    public getObjects(): GameObject[] {
+        return this.gameObjects;
+    }
 }

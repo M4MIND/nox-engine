@@ -15,6 +15,17 @@ export default class Quaternion {
         return this;
     }
 
+    public normalize() {
+        let l = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
+
+        if (l === 0) {
+            return new Quaternion(0, 0, 0, 0);
+        } else {
+            l = 1 / l;
+            return new Quaternion(this.x * l, this.y * l, this.z * l, this.w * l);
+        }
+    }
+
     public toMatrix4(): Matrix4 {
         let w = this.w;
         let x = this.x;
@@ -35,13 +46,17 @@ export default class Quaternion {
         );
     }
 
-    public euler(x: number, y: number, z: number) {
-        var c1 = Math.cos(x / 2);
-        var c2 = Math.cos(y / 2);
-        var c3 = Math.cos(z / 2);
-        var s1 = Math.sin(x / 2);
-        var s2 = Math.sin(y / 2);
-        var s3 = Math.sin(z / 2);
+    public euler(x: number = 0, y: number = 0, z: number = 0) {
+        let half_x = x / 2;
+        let half_y = y / 2;
+        let half_z = z / 2;
+
+        let c1 = Math.cos(half_x);
+        let c2 = Math.cos(half_y);
+        let c3 = Math.cos(half_z);
+        let s1 = Math.sin(half_x);
+        let s2 = Math.sin(half_y);
+        let s3 = Math.sin(half_z);
 
         this.y = s1 * c2 * c3 + c1 * s2 * s3;
         this.x = c1 * s2 * c3 - s1 * c2 * s3;

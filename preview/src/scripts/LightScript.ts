@@ -6,4 +6,7 @@ export default class LightScript extends ScriptComponent {
         this.gameObject.transform.position.y = 0.5;
         this.gameObject.transform.position.z = -1;
     }
+
+    public update(): void {
+    }
 }

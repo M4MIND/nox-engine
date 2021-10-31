@@ -1,20 +1,44 @@
 export default class Vector3 extends Array<number> {
-    constructor(public x: number = 0, public y: number = 0, public z: number = 0) {
-        super(x, y, z);
+    public static up = new Vector3(0, 1, 0)
+    public static left = new Vector3(1, 0, 0)
+    public static forward = new Vector3(1, 0, 1)
+
+    constructor(private _x: number = 0, private _y: number = 0, private _z: number = 0) {
+        super(_x, _y, _z);
+    }
+
+    get x(): number {
+        return this._x;
+    }
+
+    set x(value: number) {
+        this._x = value;
+
+        this[0] = value;
+    }
+
+    get y(): number {
+        return this._y;
+    }
+
+    set y(value: number) {
+        this._y = value;
+
+        this[1] = value;
+    }
+
+    get z(): number {
+        return this._z;
+    }
+
+    set z(value: number) {
+        this._z = value;
+
+        this[2] = value;
     }
 
     public static normalize(v: Vector3) {
-        let l = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-        return new Vector3(v.x / l, v.y / l, v.z / l);
-    }
-
-    public normalize(): this {
-        let l = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
-
-        this.x /= l;
-        this.y /= l;
-        this.z /= l;
-
-        return this;
+        let l = Math.sqrt(v._x * v._x + v._y * v._y + v._z * v._z);
+        return new Vector3(v._x / l, v._y / l, v._z / l);
     }
 }

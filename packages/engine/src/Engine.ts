@@ -40,10 +40,9 @@ export default class Engine {
     private tick() {
         window.requestAnimationFrame(() => {
             EventManager.dispatch(CoreEvents.UPDATE);
-
-            Graphics.clear();
-            EventManager.dispatch(CoreEvents.CAMERA);
             EventManager.dispatch(CoreEvents.PRE_RENDER);
+            EventManager.dispatch(CoreEvents.CAMERA);
+            Graphics.clear();
             EventManager.dispatch(CoreEvents.RENDERER_OBJECT);
             EventManager.dispatch(CoreEvents.FIXED_UPDATE);
             this.tick();

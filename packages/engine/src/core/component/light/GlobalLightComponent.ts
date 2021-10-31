@@ -25,9 +25,6 @@ export default class GlobalLightComponent extends BaseComponent {
         this._ambient = value;
     }
 
-    public start() {
-    }
-
     public onPreRender() {
         Shader.getGlobalUniform('_U_LightAmbient')?.set([this._ambient[0], this._ambient[1], this._ambient[2]]);
         Shader.getGlobalUniform('_U_LightDirectionColor')?.set([this._color[0], this._color[1], this._color[2]]);
@@ -35,7 +32,6 @@ export default class GlobalLightComponent extends BaseComponent {
     }
 
     protected preparation(): void {
-        EventManager.subscribe(CoreEvents.START, this.start.bind(this));
         EventManager.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this));
     }
 }

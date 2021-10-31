@@ -83,7 +83,9 @@ export default class Matrix4 extends Array<number> {
     public static multiplyFromArray(a: Matrix4[]): Matrix4 {
         let m = a[0];
 
-        for (let i = 0; i < a.length - 1; i++) {
+        let l = a.length - 1;
+
+        for (let i = 0; i < l; i++) {
             m = this.multiply(m, a[i + 1]);
         }
 

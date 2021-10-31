@@ -12,10 +12,8 @@ export default class MeshRendererComponent extends BaseComponent {
 
     public onRendererObject() {
         if (this.hasComponent<MeshFilterComponent>(MeshFilterComponent) && this.material) {
-            let m = this.transform.getMatrix();
-
-            this.material.getUniform(BasicUniforms.MODEL)?.set(m);
-            this.material.getUniform(BasicUniforms.MODEL_INVERT_MATRIX)?.set(Matrix4.transpose(Matrix4.inverse(m)));
+            this.material.getUniform(BasicUniforms.MODEL)?.set(this.transform.getModelMatrix());
+            this.material.getUniform(BasicUniforms.MODEL_INVERT_MATRIX)?.set(Matrix4.transpose(Matrix4.inverse(this.transform.getModelMatrix())));
 
             Graphics.drawMesh(
                 this.getComponent<MeshFilterComponent>(MeshFilterComponent).mesh,

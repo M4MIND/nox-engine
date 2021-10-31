@@ -20,15 +20,15 @@ export default abstract class BaseComponent {
         return this.gameObject.hasComponent(component);
     }
 
-    public start(): void {}
+    protected start(): void {}
 
-    public update(): void {}
+    protected update(): void {}
 
-    public onCamera(): void {}
+    protected onCamera(): void {}
 
-    public onPreRender(): void {}
+    protected onPreRender(): void {}
 
-    public onRendererObject(): void {}
+    protected onRendererObject(): void {}
 
     protected abstract preparation(): void;
 }

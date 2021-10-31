@@ -2,6 +2,7 @@ import { ScriptComponent } from '@nox-engine/engine';
 
 export default class InfoScript extends ScriptComponent {
     private dom: HTMLDivElement = document.createElement('div');
+    private data: string = '';
 
     public start() {
         this.dom.style.position = 'fixed';
@@ -13,9 +14,17 @@ export default class InfoScript extends ScriptComponent {
 
     public clear() {
         this.dom.innerText = '';
+        this.data = '';
     }
 
     public addInfo(text: string) {
-        this.dom.innerText += text;
+        this.data += text;
+    }
+
+    public render() {
+        this.dom.innerText = this.data;
+    }
+
+    public update(): void {
     }
 }
