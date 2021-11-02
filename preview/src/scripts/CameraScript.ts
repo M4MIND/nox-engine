@@ -5,7 +5,7 @@ import InfoScript from './InfoScript';
 export default class CameraScript extends ScriptComponent {
     private info: InfoScript = GameObject.createEmpty().addComponent(InfoScript);
     private moveX: number = 180;
-    private moveY: number = 20;
+    private moveY: number = 0;
     private senseX: number = 10;
     private senseY: number = 10;
 
@@ -28,12 +28,11 @@ export default class CameraScript extends ScriptComponent {
 
         if (this.moveX > 360) {
             this.moveX = 0;
-        }
-        else if (this.moveX < -360) {
+        } else if (this.moveX < -360) {
             this.moveX = 0;
         }
 
-        this.transform.rotation.euler(this.moveX * Mathf.rad2deg, this.moveY * Mathf.rad2deg, 0);
+        this.transform.rotation.euler(this.moveY * Mathf.rad2deg, this.moveX * Mathf.rad2deg, 0);
 
         this.info.clear();
 
@@ -41,38 +40,37 @@ export default class CameraScript extends ScriptComponent {
         this.info.addInfo(`You can use [w a s d space shift] for move camera by axis [X] [Y] [Z]. Also use mouse for rotate\n\n`);
         this.info.addInfo(`Pressed: [`);
 
-        if (Input.pressUp('w')) {
-            this.transform.position.z += Time.deltaTime * 15;
+        let speed = Time.deltaTime * 45;
 
+        let cam = this.transform.rotation.forward();
+
+
+
+        if (Input.pressUp('w')) {
+            this.transform.position = new Vector3(
+                this.transform.position.x + speed * cam.x,
+                this.transform.position.y,
+                this.transform.position.z - speed * cam.z,
+            );
             this.info.addInfo(` w `);
         }
 
-        if (Input.pressUp('s')) {
-            this.transform.position.z -= Time.deltaTime * 15;
-
-            this.info.addInfo(` s `);
-        }
-
-        if (Input.pressUp('a')) {
-            this.transform.position.x += Time.deltaTime * 15;
-
-            this.info.addInfo(` a `);
-        }
-
-        if (Input.pressUp('d')) {
-            this.transform.position.x -= Time.deltaTime * 15;
-
-            this.info.addInfo(` d `);
-        }
-
         if (Input.pressUp(' ')) {
-            this.transform.position.y += Time.deltaTime * 15;
+            this.transform.position = new Vector3(
+                this.transform.position.x,
+                this.transform.position.y + 1,
+                this.transform.position.z,
+            );
 
             this.info.addInfo(' space ');
         }
 
         if (Input.pressUp('Shift')) {
-            this.transform.position.y -= Time.deltaTime * 15;
+            this.transform.position = new Vector3(
+                this.transform.position.x,
+                this.transform.position.y - 1,
+                this.transform.position.z,
+            );
 
             this.info.addInfo(' shift ');
         }
@@ -82,8 +80,8 @@ export default class CameraScript extends ScriptComponent {
         this.info.addInfo(
             `\nCamera position: \nx: ${this.transform.position.x.toFixed(2)}\ny: ${this.transform.position.y.toFixed(2)}\nz: ${this.transform.position.z.toFixed(2)}\n`);
         this.info.addInfo(`\n Camera rotation: \n`);
-        this.info.addInfo(`x: ${this.moveX.toFixed(1)} \n`);
-        this.info.addInfo(`y: ${this.moveY.toFixed(1)} \n`);
+        this.info.addInfo(`x: ${this.moveY.toFixed(1)} \n`);
+        this.info.addInfo(`y: ${this.moveX.toFixed(1)} \n`);
         this.info.addInfo(`\nCursor position: \nx: ${Cursor.position.x}\ny: ${Cursor.position.y}\n\n`);
         this.info.addInfo(`Scene Information:\n\n`);
 

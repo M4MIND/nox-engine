@@ -2,7 +2,7 @@ import Matrix4 from './Matrix4';
 import Vector3 from './Vector3';
 
 export default class Quaternion {
-    constructor(private x = 0, private y = 0, private z = 0, private w = 1) {}
+    constructor(public x = 0, public y = 0, public z = 0, private w = 1) {}
 
     public axisAngle(v: Vector3, angle: number): this {
         let s = Math.sin(angle * .5);
@@ -26,6 +26,10 @@ export default class Quaternion {
         }
     }
 
+    public inverse() {
+        return new Quaternion(-this.x, -this.y, -this.z, -this.w);
+    }
+
     public toMatrix4(): Matrix4 {
         let w = this.w;
         let x = this.x;
@@ -47,24 +51,49 @@ export default class Quaternion {
     }
 
     public euler(x: number = 0, y: number = 0, z: number = 0) {
-        let half_x = x / 2;
-        let half_y = y / 2;
-        let half_z = z / 2;
+        const cos = Math.cos;
+        const sin = Math.sin;
 
-        let c1 = Math.cos(half_x);
-        let c2 = Math.cos(half_y);
-        let c3 = Math.cos(half_z);
-        let s1 = Math.sin(half_x);
-        let s2 = Math.sin(half_y);
-        let s3 = Math.sin(half_z);
+        const c1 = cos(x / 2);
+        const c2 = cos(y / 2);
+        const c3 = cos(z / 2);
 
-        this.y = s1 * c2 * c3 + c1 * s2 * s3;
-        this.x = c1 * s2 * c3 - s1 * c2 * s3;
+        const s1 = sin(x / 2);
+        const s2 = sin(y / 2);
+        const s3 = sin(z / 2);
+
+        this.x = s1 * c2 * c3 + c1 * s2 * s3;
+        this.y = c1 * s2 * c3 - s1 * c2 * s3;
         this.z = c1 * c2 * s3 + s1 * s2 * c3;
         this.w = c1 * c2 * c3 - s1 * s2 * s3;
     }
 
     public toVector() {
         return new Vector3(this.x, this.y, this.z);
+    }
+
+    public multiple(q: Quaternion) {
+        let target = new Quaternion();
+        var w = this.w;
+
+        let va = new Vector3(this.x, this.y, this.z);
+        let vb = new Vector3(q.x, q.y, q.z);
+        target.w = w * q.w - Vector3.dot(va, vb);
+
+        let vaxvb = Vector3.cross(va, vb);
+
+        target.x = w * vb.x + q.w * va.x + vaxvb.x;
+        target.y = w * vb.y + q.w * va.y + vaxvb.y;
+        target.z = w * vb.z + q.w * va.z + vaxvb.z;
+
+        return target;
+    };
+
+    public forward(): Vector3 {
+        let x = 2 * (this.x * this.z + this.w * this.y);
+        let y = 2 * (this.y * this.z - this.w * this.x);
+        let z = 1 - 2 * (this.x * this.x + this.y * this.y);
+
+        return new Vector3(x, y, z);
     }
 }

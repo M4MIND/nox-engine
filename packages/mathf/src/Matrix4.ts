@@ -203,4 +203,17 @@ export default class Matrix4 extends Array<number> {
             m[15],
         );
     }
+
+    public static lookAt(cameraPosition: Vector3, target: Vector3, up: Vector3) {
+        let z = Vector3.normalize(Vector3.subtract(cameraPosition, target));
+        let x = Vector3.normalize(Vector3.cross(up, z));
+        let y = Vector3.normalize(Vector3.cross(z, x));
+
+        return new Matrix4(
+            x.x, x.y, x.z, 0,
+            y.x, y.y, y.z, 0,
+            z.x, z.y, z.z, 0,
+            cameraPosition.x, cameraPosition.y, cameraPosition.z, 1,
+        );
+    }
 }

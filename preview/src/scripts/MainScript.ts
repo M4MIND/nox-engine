@@ -1,14 +1,27 @@
-import { Color, Cube, Cursor, GameObject, GlobalLightComponent, MeshFilterComponent, MeshRendererComponent, PrimitiveTypes, ScriptComponent, Time } from '@nox-engine/engine';
+import {
+    Color,
+    Cube,
+    Cursor,
+    GameObject,
+    GlobalLightComponent,
+    MeshFilterComponent,
+    MeshRendererComponent,
+    PrimitiveTypes,
+    ScriptComponent,
+    Time
+} from '@nox-engine/engine';
 import { Mathf, Vector3 } from '@nox-engine/mathf';
 import CameraScript from './CameraScript';
 
+
 class Rotate extends ScriptComponent {
     private angle: number = 0;
-    private rotate: number = Math.random() > 0.5 ? Math.random() : - Math.random()
+    private rotate: number = Math.random() > 0.5 ? Math.random() : -Math.random();
 
     public start(): void {
     }
 
+    
     public update(): void {
         this.angle += this.rotate * 24 * Time.deltaTime;
 
@@ -16,7 +29,11 @@ class Rotate extends ScriptComponent {
             this.angle = 0;
         }
 
-        this.transform.rotation.euler(this.angle * Mathf.rad2deg, this.angle * Mathf.rad2deg, this.angle * Mathf.rad2deg);
+        this.transform.rotation.euler(
+            0,//this.angle * Mathf.rad2deg,
+            0,// this.angle * Mathf.rad2deg,
+            this.angle * Mathf.rad2deg
+        );
     }
 }
 
@@ -31,7 +48,7 @@ export default class MainScript extends ScriptComponent {
             for (let z = 0; z < 16; z++) {
                 let obj = GameObject.createPrimitive(PrimitiveTypes.Cube).addComponent(Rotate).gameObject;
 
-                obj.transform.position = new Vector3(x * 8, 0 ,z * 8)
+                obj.transform.position = new Vector3(x * 8, 0, z * 8);
 
                 let axisX = GameObject.createPrimitive(PrimitiveTypes.Cube);
                 let axisY = GameObject.createPrimitive(PrimitiveTypes.Cube);

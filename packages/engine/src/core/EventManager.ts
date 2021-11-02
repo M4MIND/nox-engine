@@ -1,6 +1,6 @@
 export enum CoreEvents {
-    START = 'onStart',
-    UPDATE = 'onUpdate',
+    START = 'start',
+    UPDATE = 'update',
     CAMERA = 'onCamera',
     RENDERER_OBJECT = 'onRendererObject',
     PRE_RENDER = 'onPreRender',

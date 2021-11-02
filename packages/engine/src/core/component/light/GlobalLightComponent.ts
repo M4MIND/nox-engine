@@ -3,7 +3,6 @@ import Color from '../../graphics/material/color/Color';
 import Shader from '../../graphics/shader/Shader';
 import BaseComponent from '../BaseComponent';
 import { Vector3 } from '@nox-engine/mathf';
-import { Uniform3fv } from '@nox-engine/renderer';
 
 export default class GlobalLightComponent extends BaseComponent {
     private _color: Color = Color.white;

@@ -7,6 +7,9 @@ export default class TransformComponent extends BaseComponent {
     public scale = new Vector3(1, 1, 1);
     public rotation = new Quaternion();
 
+    private forward = new Vector3(0, 0, -1);
+    private up = new Vector3(0, 1, 0);
+
     private modelMatrix: Matrix4 = new Matrix4();
     private positionMatrix: Matrix4 = new Matrix4();
     private rotationMatrix: Matrix4 = new Matrix4();
