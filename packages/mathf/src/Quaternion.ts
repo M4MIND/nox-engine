@@ -89,11 +89,25 @@ export default class Quaternion {
         return target;
     };
 
-    public forward(): Vector3 {
-        let x = 2 * (this.x * this.z + this.w * this.y);
-        let y = 2 * (this.y * this.z - this.w * this.x);
-        let z = 1 - 2 * (this.x * this.x + this.y * this.y);
+    public multipleOnVector(v: Vector3): Vector3 {
+        let x = v.x,
+            y = v.y,
+            z = v.z;
 
-        return new Vector3(x, y, z);
+        let qx = this.x,
+            qy = this.y,
+            qz = this.z,
+            qw = this.w;
+
+        let ix = qw * x + qy * z - qz * y,
+            iy = qw * y + qz * x - qx * z,
+            iz = qw * z + qx * y - qy * x,
+            iw = -qx * x - qy * y - qz * z;
+
+        return new Vector3(ix * qw + iw * -qx + iy * -qz - iz * -qy, iy * qw + iw * -qy + iz * -qx - ix * -qz, iz * qw + iw * -qz + ix * -qy - iy * -qx);
+    }
+
+    public forward(): Vector3 {
+        return new Vector3(2 * (this.x * this.z + this.w * this.y), 2 * (this.y * this.z - this.w * this.x), 1 - 2 * (this.x * this.x + this.y * this.y));
     }
 }

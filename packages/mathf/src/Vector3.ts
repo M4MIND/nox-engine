@@ -1,7 +1,8 @@
 export default class Vector3 extends Array<number> {
     public static up = new Vector3(0, 1, 0);
     public static left = new Vector3(1, 0, 0);
-    public static forward = new Vector3(1, 0, -1);
+    public static right = new Vector3(-1, 0, 0);
+    public static forward = new Vector3(0, 0, 1);
 
     constructor(private _x: number = 0, private _y: number = 0, private _z: number = 0) {
         super(_x, _y, _z);
@@ -48,24 +49,22 @@ export default class Vector3 extends Array<number> {
     public static cross(v1: Vector3, v2: Vector3) {
         var vx = v1.x, vy = v1.y, vz = v1.z, x = v2.x, y = v2.y, z = v2.z;
 
-        let target = new Vector3();
-
-        target.x = (y * vz) - (z * vy);
-        target.y = (z * vx) - (x * vz);
-        target.z = (x * vy) - (y * vx);
-
-        return target;
+        return new Vector3((y * vz) - (z * vy), (z * vx) - (x * vz), (x * vy) - (y * vx));
     }
 
     public static subtract(a: Vector3, b: Vector3): Vector3 {
         return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
     }
-    
+
     public static sum(a: Vector3, b: Vector3): Vector3 {
         return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
     }
 
     public static dot(v1: Vector3, v2: Vector3) {
         return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+    }
+
+    public static multiple(v: Vector3, n: number) {
+        return new Vector3(v.x * n, v.y * n, v.z * n);
     }
 }

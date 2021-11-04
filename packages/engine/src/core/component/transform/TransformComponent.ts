@@ -7,9 +7,6 @@ export default class TransformComponent extends BaseComponent {
     public scale = new Vector3(1, 1, 1);
     public rotation = new Quaternion();
 
-    private forward = new Vector3(0, 0, -1);
-    private up = new Vector3(0, 1, 0);
-
     private modelMatrix: Matrix4 = new Matrix4();
     private positionMatrix: Matrix4 = new Matrix4();
     private rotationMatrix: Matrix4 = new Matrix4();
@@ -29,6 +26,18 @@ export default class TransformComponent extends BaseComponent {
 
     public getScaleMatrix(): Matrix4 {
         return this.scaleMatrix;
+    }
+
+    public forward() {
+        return this.rotation.multipleOnVector(Vector3.forward);
+    }
+
+    public left() {
+        return this.rotation.multipleOnVector(Vector3.left);
+    }
+
+    public right() {
+        return this.rotation.multipleOnVector(Vector3.right);
     }
 
     public onPreRender() {
