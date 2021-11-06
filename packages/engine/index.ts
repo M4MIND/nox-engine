@@ -21,6 +21,7 @@ import Time from './src/core/time/Time';
 import Torus from './src/core/geometry/Torus';
 import TransformComponent from './src/core/component/transform/TransformComponent';
 import { BasicUniforms } from './src/core/graphics/Unifroms';
+import Physics from './src/core/physics/Physics';
 
 export {
     BasicUniforms,
@@ -47,4 +48,5 @@ export {
     Time,
     Torus,
     TransformComponent,
+    Physics
 };

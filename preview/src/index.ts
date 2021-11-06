@@ -1,5 +1,6 @@
 import { Engine, GameObject } from '@nox-engine/engine';
 import { WebGL2Context } from '@nox-engine/renderer';
+import Hash from '@nox-engine/renderer/src/utils/Hash';
 import MainScript from './scripts/MainScript';
 
 let canvas = document.createElement('canvas');
@@ -14,5 +15,7 @@ new Engine({
         },
     },
 }).run(() => {
-    GameObject.createEmpty().addComponent(MainScript);
+    GameObject.createEmpty('Main script').addComponent(MainScript);
 });
+
+console.dir(Hash.uuid());

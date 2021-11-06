@@ -1,15 +1,19 @@
+import BaseObject from '../object/BaseObject';
 import GameObject from '../object/GameObject';
 import TransformComponent from './transform/TransformComponent';
 
-export default abstract class BaseComponent {
+export default abstract class BaseComponent extends BaseObject {
     public readonly gameObject: GameObject;
     protected transform: TransformComponent;
 
     constructor(gameObject: GameObject) {
+        super();
+
         this.gameObject = gameObject;
         this.transform = gameObject.transform;
 
         this.preparation();
+
     }
 
     public getComponent<T extends BaseComponent>(component: new (...args: any[]) => T): T {
@@ -29,6 +33,8 @@ export default abstract class BaseComponent {
     protected onPreRender(): void {}
 
     protected onRendererObject(): void {}
+
+    protected onFixedUpdate(): void {}
 
     protected abstract preparation(): void;
 }

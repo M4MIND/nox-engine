@@ -22,11 +22,11 @@ export default class Matrix4 extends Array<number> {
         super(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33);
     }
 
-    static translate(v: Vector3 = new Vector3(0, 0, 0)) {
+    public static translate(v: Vector3 = new Vector3(0, 0, 0)) {
         return new Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, v.x, v.y, v.z);
     }
 
-    static scale(v: Vector3 = new Vector3(1, 1, 1)) {
+    public static scale(v: Vector3 = new Vector3(1, 1, 1)) {
         return new Matrix4(v.x, 0, 0, 0, 0, v.y, 0, 0, 0, 0, v.z, 0, 0, 0, 0, 1);
     }
 
@@ -54,7 +54,7 @@ export default class Matrix4 extends Array<number> {
     public static projection(
         fieldOfViewInRadians: number = 0,
         aspect: number = 0,
-        near: number = 1,
+        near: number = 0.1,
         far: number = 1000,
     ): Matrix4 {
         let f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
@@ -90,6 +90,14 @@ export default class Matrix4 extends Array<number> {
         }
 
         return m;
+    }
+
+    public static multipleVectorOnMatrix(v: Vector3, m: Matrix4): Vector3 {
+        return new Vector3(
+            m.m00 * v.x + m.m01 * v.y + m.m02 + v.z,
+            m.m10 * v.x + m.m11 * v.y + m.m22 + v.z,
+            m.m20 * v.x + m.m21 * v.y + m.m22 + v.z,
+        );
     }
 
     public static multiply(a: Matrix4, b: Matrix4): Matrix4 {
@@ -204,8 +212,8 @@ export default class Matrix4 extends Array<number> {
         );
     }
 
-    public static lookAt(cameraPosition: Vector3, target: Vector3, up: Vector3) {
-        let z = Vector3.normalize(Vector3.subtract(cameraPosition, target));
+    public static lookAt(position: Vector3, target: Vector3, up: Vector3) {
+        let z = Vector3.normalize(Vector3.subtract(position, target));
         let x = Vector3.normalize(Vector3.cross(up, z));
         let y = Vector3.normalize(Vector3.cross(z, x));
 
@@ -213,7 +221,7 @@ export default class Matrix4 extends Array<number> {
             x.x, x.y, x.z, 0,
             y.x, y.y, y.z, 0,
             z.x, z.y, z.z, 0,
-            cameraPosition.x, cameraPosition.y, cameraPosition.z, 1,
+            position.x, position.y, position.z, 1,
         );
     }
 }

@@ -1,3 +1,4 @@
+
 import { CameraComponent, GlobalLightComponent } from '../../..';
 import BaseComponent from '../component/BaseComponent';
 import MeshFilterComponent from '../component/mesh/MeshFilterComponent';
@@ -40,8 +41,8 @@ export default class GameObject extends BaseObject {
         this.transform = this.addComponent<TransformComponent>(TransformComponent);
     }
 
-    public static createEmpty(): GameObject {
-        return SceneManager.activeScene.addGameObject(new GameObject('Empty'));
+    public static createEmpty(name: string = 'Empty'): GameObject {
+        return SceneManager.activeScene.addGameObject(new GameObject(name));
     }
 
     public static createCamera(): GameObject {
@@ -49,7 +50,7 @@ export default class GameObject extends BaseObject {
     }
 
     public static createGlobalLight(): GameObject {
-        return new GameObject().addComponent<GlobalLightComponent>(GlobalLightComponent).gameObject;
+        return new GameObject('Global Light').addComponent<GlobalLightComponent>(GlobalLightComponent).gameObject;
     }
 
     public static createPrimitive(type: PrimitiveTypes): GameObject {
@@ -61,9 +62,7 @@ export default class GameObject extends BaseObject {
         object.addComponent<MeshFilterComponent>(MeshFilterComponent).mesh = new PRIMITIVE_CLASSES[type]();
         object.addComponent<MeshRendererComponent>(MeshRendererComponent);
 
-        SceneManager.activeScene.addGameObject(object);
-
-        return object;
+        return SceneManager.activeScene.addGameObject(object);
     }
 
     public addComponent<T extends BaseComponent>(component: new (...args: any[]) => T): T {
@@ -101,5 +100,9 @@ export default class GameObject extends BaseObject {
 
         gameObject.parent = this;
         return this;
+    }
+
+    public onCollision() {
+        console.log(`${this.name}: onCollision`);
     }
 }

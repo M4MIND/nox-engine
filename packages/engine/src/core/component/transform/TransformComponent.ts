@@ -28,16 +28,29 @@ export default class TransformComponent extends BaseComponent {
         return this.scaleMatrix;
     }
 
-    public forward() {
-        return this.rotation.multipleOnVector(Vector3.forward);
+    public lookAt(position: Vector3, target: Vector3, up: Vector3 = Vector3.up): void {
+        let m = Matrix4.lookAt(position, target, up);
+
+        let w = Math.sqrt(1.0 + m.m00 + m.m11 + m.m22) / 2.0;
+        let w4 = (4.0 * w);
+
+        let x = (m.m21 - m.m12) / w4;
+        let y = (m.m02 - m.m20) / w4;
+        let z = (m.m10 - m.m01) / w4;
+
+        this.rotation = new Quaternion(x, y, z, w);
     }
 
-    public left() {
-        return this.rotation.multipleOnVector(Vector3.left);
+    public forward() {
+        return new Vector3(this.modelMatrix[8], this.modelMatrix[9], this.modelMatrix[10])
     }
 
     public right() {
-        return this.rotation.multipleOnVector(Vector3.right);
+        return new Vector3(-this.modelMatrix[0], -this.modelMatrix[1], -this.modelMatrix[2])
+    }
+
+    public up() {
+        return new Vector3(this.modelMatrix[4], this.modelMatrix[5], this.modelMatrix[6]);
     }
 
     public onPreRender() {
@@ -46,11 +59,17 @@ export default class TransformComponent extends BaseComponent {
         this.scaleMatrix = Matrix4.scale(this.scale);
 
         this.modelMatrix = Matrix4.multiplyFromArray([
-            this.gameObject.parent ? this.gameObject.parent.transform.getModelMatrix() : new Matrix4(),
             this.positionMatrix,
             this.rotationMatrix,
             this.scaleMatrix,
         ]);
+
+        if (this.gameObject.parent) {
+            this.modelMatrix = Matrix4.multiplyFromArray([
+                this.gameObject.parent.transform.getModelMatrix(),
+                this.modelMatrix,
+            ]);
+        }
     }
 
     protected preparation(): void {
