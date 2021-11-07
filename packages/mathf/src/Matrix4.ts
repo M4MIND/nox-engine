@@ -27,14 +27,14 @@ export default class Matrix4 extends Array<number> {
     }
 
     public static scale(v: Vector3 = new Vector3(1, 1, 1)) {
-        return new Matrix4(v.x, 0, 0, 0, 0, v.y, 0, 0, 0, 0, v.z, 0, 0, 0, 0, 1);
+        return new Matrix4(v.x, 0, 0, 0, 0, v.y, 0, 0, 0, 0, v.z);
     }
 
     public static xRotation(r: number) {
         let s = Math.sin(r);
         let c = Math.cos(r);
 
-        return new Matrix4(1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1);
+        return new Matrix4(1, 0, 0, 0, 0, c, s, 0, 0, -s, c);
     }
 
     public static yRotation(r: number) {

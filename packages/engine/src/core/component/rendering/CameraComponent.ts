@@ -21,7 +21,7 @@ export default class CameraComponent extends BaseComponent {
     }
 
     public onCamera() {
-        CameraComponent.viewMatrix = Matrix4.inverse(this.transform.getModelMatrix());
+        CameraComponent.viewMatrix = Matrix4.inverse(this.transform.getWorldMatrix());
         CameraComponent.projectionMatrix = Matrix4.projection(
             Mathf.rad2deg * this.fieldOfView,
             RendererServer.canvasManager.canvas.width / RendererServer.canvasManager.canvas.height,

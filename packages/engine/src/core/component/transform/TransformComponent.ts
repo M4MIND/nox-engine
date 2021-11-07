@@ -7,13 +7,14 @@ export default class TransformComponent extends BaseComponent {
     public scale = new Vector3(1, 1, 1);
     public rotation = new Quaternion();
 
-    private modelMatrix: Matrix4 = new Matrix4();
+    public localMatrix: Matrix4 = new Matrix4();
+    public worldMatrix: Matrix4 = new Matrix4();
     private positionMatrix: Matrix4 = new Matrix4();
     private rotationMatrix: Matrix4 = new Matrix4();
     private scaleMatrix: Matrix4 = new Matrix4();
+    private child: GameObject[] = [];
 
     private _parent: TransformComponent | null = null;
-    private child: GameObject[] = [];
 
     get parent(): TransformComponent | null {
         return this._parent;
@@ -23,33 +24,27 @@ export default class TransformComponent extends BaseComponent {
         this._parent = value;
     }
 
-    public getPositionMatrix(): Matrix4 {
-        return this.positionMatrix;
-    }
-
-    public getRotationMatrix(): Matrix4 {
-        return this.rotationMatrix;
-    }
-
-    public getModelMatrix(): Matrix4 {
+    public getWorldMatrix(): Matrix4 {
         this.positionMatrix = Matrix4.translate(this.position);
         this.rotationMatrix = this.rotation.toMatrix4();
         this.scaleMatrix = Matrix4.scale(this.scale);
 
-        this.modelMatrix = Matrix4.multiplyFromArray([
+        this.localMatrix = Matrix4.multiplyFromArray([
             this.positionMatrix,
             this.rotationMatrix,
             this.scaleMatrix,
         ]);
 
         if (this.gameObject.transform.parent) {
-            this.modelMatrix = Matrix4.multiplyFromArray([
-                this.gameObject.transform.parent.getModelMatrix(),
-                this.modelMatrix,
+            this.worldMatrix = Matrix4.multiplyFromArray([
+                this.gameObject.transform.parent.getWorldMatrix(),
+                this.localMatrix,
             ]);
+        } else {
+            this.worldMatrix = this.localMatrix;
         }
 
-        return this.modelMatrix;
+        return this.worldMatrix;
     }
 
     public getScaleMatrix(): Matrix4 {
@@ -74,18 +69,33 @@ export default class TransformComponent extends BaseComponent {
     }
 
     public forward() {
-        return new Vector3(this.modelMatrix[8], this.modelMatrix[9], this.modelMatrix[10]);
+        return new Vector3(this.localMatrix[8], this.localMatrix[9], this.localMatrix[10]);
     }
 
     public right() {
-        return new Vector3(-this.modelMatrix[0], -this.modelMatrix[1], -this.modelMatrix[2]);
+        return new Vector3(-this.localMatrix[0], -this.localMatrix[1], -this.localMatrix[2]);
     }
 
     public up() {
-        return new Vector3(this.modelMatrix[4], this.modelMatrix[5], this.modelMatrix[6]);
+        return new Vector3(this.localMatrix[4], this.localMatrix[5], this.localMatrix[6]);
+    }
+
+    public getWorldPosition() {
+        return new Vector3(this.worldMatrix[8], this.worldMatrix[9], this.worldMatrix[10]);
+    }
+
+    public getLocalPosition() {
+        return new Vector3(this.localMatrix[10], this.localMatrix[11], this.localMatrix[12]);
+    }
+
+    public getGlobalPosition() {
+        return new Vector3().applyMatrix(this.worldMatrix);
+    }
+
+    public getWorldForward() {
+        return new Vector3(this.localMatrix[3], this.localMatrix[6], this.localMatrix[9]);
     }
 
     protected preparation(): void {
-        //SceneManager.activeScene.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this), this.id);
     }
 }

@@ -1,3 +1,4 @@
+import Mathf from './Mathf';
 import Matrix4 from './Matrix4';
 import Vector3 from './Vector3';
 
@@ -51,16 +52,20 @@ export default class Quaternion {
     }
 
     public euler(x: number = 0, y: number = 0, z: number = 0) {
+        x = Mathf.rad2deg * x / 2;
+        y = Mathf.rad2deg * y / 2;
+        z = Mathf.rad2deg * z / 2;
+
         const cos = Math.cos;
         const sin = Math.sin;
 
-        const c1 = cos(x / 2);
-        const c2 = cos(y / 2);
-        const c3 = cos(z / 2);
+        const c1 = cos(x);
+        const c2 = cos(y);
+        const c3 = cos(z);
 
-        const s1 = sin(x / 2);
-        const s2 = sin(y / 2);
-        const s3 = sin(z / 2);
+        const s1 = sin(x);
+        const s2 = sin(y);
+        const s3 = sin(z);
 
         this.x = s1 * c2 * c3 + c1 * s2 * s3;
         this.y = c1 * s2 * c3 - s1 * c2 * s3;

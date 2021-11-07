@@ -51,12 +51,12 @@ export default class GameObject extends BaseObject {
         return SceneManager.activeScene.addGameObject(new GameObject('Global Light').addComponent<GlobalLightComponent>(GlobalLightComponent).gameObject);
     }
 
-    public static createPrimitive(type: PrimitiveTypes): GameObject {
+    public static createPrimitive(type: PrimitiveTypes, name: string | null = null): GameObject {
         if (!PrimitiveTypes[type]) {
             throw new Error(`Can't create ${PrimitiveTypes[type]}`)
         }
 
-        let object = new GameObject(PrimitiveTypes[type]);
+        let object = new GameObject(name ?? PrimitiveTypes[type]);
         object.addComponent<MeshFilterComponent>(MeshFilterComponent).mesh = new PRIMITIVE_CLASSES[type]();
         object.addComponent<MeshRendererComponent>(MeshRendererComponent);
 
