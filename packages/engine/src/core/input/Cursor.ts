@@ -1,6 +1,7 @@
 import { Vector2 } from '@nox-engine/mathf';
 import { RendererServer } from '@nox-engine/renderer';
-import EventManager, { CoreEvents } from '../EventManager';
+import { CoreEvents } from '../EventManager';
+import SceneManager from '../scene/SceneManager';
 
 export default class Cursor {
     public static enable = true;
@@ -24,9 +25,9 @@ export default class Cursor {
             RendererServer.canvasManager.canvas.requestPointerLock();
         });
 
-        EventManager.subscribe(CoreEvents.FIXED_UPDATE, () => {
+        SceneManager.activeScene.subscribe(CoreEvents.FIXED_UPDATE, () => {
             this.position.x = this.enable ? this.position.x : 0;
             this.position.y = this.enable ? this.position.y : 0;
-        });
+        }, 'System_Cursor');
     }
 }

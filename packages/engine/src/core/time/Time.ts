@@ -1,4 +1,5 @@
 import EventManager, { CoreEvents } from '../EventManager';
+import SceneManager from '../scene/SceneManager';
 
 export default class Time {
     private static _startTime = Date.now();
@@ -18,10 +19,10 @@ export default class Time {
     }
 
     public static startUp() {
-        EventManager.subscribe(CoreEvents.FIXED_UPDATE, () => {
+        SceneManager.activeScene.subscribe(CoreEvents.FIXED_UPDATE, () => {
             this._deltaTime = (Date.now() - this._startTime) / 1000;
             this._elapsedTime += this._deltaTime;
             this._startTime = Date.now();
-        });
+        }, 'System_Timer');
     }
 }

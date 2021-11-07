@@ -32,19 +32,19 @@ export default class Engine {
     public run(preparation: () => void = () => {}) {
         preparation();
 
-        EventManager.dispatch(CoreEvents.START);
+        SceneManager.activeScene.dispatch(CoreEvents.START);
 
         this.tick();
     }
 
     private tick() {
         window.requestAnimationFrame(() => {
-            EventManager.dispatch(CoreEvents.UPDATE);
-            EventManager.dispatch(CoreEvents.PRE_RENDER);
-            EventManager.dispatch(CoreEvents.CAMERA);
             Graphics.clear();
-            EventManager.dispatch(CoreEvents.RENDERER_OBJECT);
-            EventManager.dispatch(CoreEvents.FIXED_UPDATE);
+            SceneManager.activeScene.dispatch(CoreEvents.UPDATE);
+            SceneManager.activeScene.dispatch(CoreEvents.PRE_RENDER);
+            SceneManager.activeScene.dispatch(CoreEvents.CAMERA);
+            SceneManager.activeScene.dispatch(CoreEvents.RENDERER_OBJECT);
+            SceneManager.activeScene.dispatch(CoreEvents.FIXED_UPDATE);
             this.tick();
         });
     }

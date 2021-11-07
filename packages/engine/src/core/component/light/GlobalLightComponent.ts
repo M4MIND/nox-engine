@@ -1,6 +1,7 @@
 import EventManager, { CoreEvents } from '../../EventManager';
 import Color from '../../graphics/material/color/Color';
 import Shader from '../../graphics/shader/Shader';
+import SceneManager from '../../scene/SceneManager';
 import BaseComponent from '../BaseComponent';
 import { Vector3 } from '@nox-engine/mathf';
 
@@ -31,6 +32,6 @@ export default class GlobalLightComponent extends BaseComponent {
     }
 
     protected preparation(): void {
-        EventManager.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this));
+        SceneManager.activeScene.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this), this.id);
     }
 }

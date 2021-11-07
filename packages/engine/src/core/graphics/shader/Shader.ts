@@ -24,7 +24,6 @@ let f = `
 #version 300 es
 precision highp float;
 
-in vec4 _F_Color;
 in vec3 _F_Normal;
 
 uniform vec4 _U_Color;

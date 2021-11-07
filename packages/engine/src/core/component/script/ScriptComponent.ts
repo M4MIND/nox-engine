@@ -1,4 +1,5 @@
-import EventManager, { CoreEvents } from '../../EventManager';
+import { CoreEvents } from '../../EventManager';
+import SceneManager from '../../scene/SceneManager';
 import BaseComponent from '../BaseComponent';
 
 export default abstract class ScriptComponent extends BaseComponent {
@@ -6,14 +7,18 @@ export default abstract class ScriptComponent extends BaseComponent {
 
     public abstract update(): void;
 
+    public onFixedUpdate(): void {
 
-    public onFixedUpdate() : void {
+    }
+
+    public onRaycastTrigger(): void {
 
     }
 
     protected preparation(): void {
-        EventManager.subscribe(CoreEvents.START, this.start.bind(this));
-        EventManager.subscribe(CoreEvents.UPDATE, this.update.bind(this));
-        EventManager.subscribe(CoreEvents.FIXED_UPDATE, this.onFixedUpdate.bind(this));
+        SceneManager.activeScene.subscribe(CoreEvents.START, this.start.bind(this), this.id);
+        SceneManager.activeScene.subscribe(CoreEvents.UPDATE, this.update.bind(this), this.id);
+        SceneManager.activeScene.subscribe(CoreEvents.FIXED_UPDATE, this.onFixedUpdate.bind(this), this.id);
+        SceneManager.activeScene.subscribe(CoreEvents.RAYCAST, this.onRaycastTrigger.bind(this), this.id);
     }
 }

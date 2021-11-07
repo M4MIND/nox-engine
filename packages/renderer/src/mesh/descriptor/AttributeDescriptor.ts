@@ -1,5 +1,5 @@
-import RendererServer from '../../RendererServer';
 import { GL_BUFFERS_TARGET, GL_BUFFERS_USAGE, GL_DATA_FLOAT } from '../../_webgl_consts';
+import RendererServer from '../../RendererServer';
 import BufferWrapper from '../buffer/BufferWrapper';
 
 export type AttributeDescriptorSrc =
@@ -104,6 +104,22 @@ export default class AttributeDescriptor {
             this.stride,
             this.offset,
         );
+    }
+
+    public disableVertexAttribArray() {
+        if (!this.enableVertexAttribute) {
+            return;
+        }
+
+        let attributeLocation = RendererServer.programManager.activeProgram?.getAttributeLocation(this.index);
+
+        if (attributeLocation === undefined || attributeLocation < 0) {
+            return;
+        }
+
+        RendererServer.contextManager.context.disableVertexAttribArray(attributeLocation);
+
+        this.enableVertexAttribute = false;
     }
 
     public enableVertexAttribArray() {

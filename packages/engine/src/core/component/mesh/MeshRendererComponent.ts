@@ -1,14 +1,16 @@
 import { Matrix4 } from '@nox-engine/mathf';
-import EventManager, { CoreEvents } from '../../EventManager';
+import { CoreEvents } from '../../EventManager';
 import Graphics from '../../graphics/Graphics';
 import Material from '../../graphics/material/Material';
 import Shader from '../../graphics/shader/Shader';
 import { BasicUniforms } from '../../graphics/Unifroms';
+import SceneManager from '../../scene/SceneManager';
 import BaseComponent from '../BaseComponent';
 import MeshFilterComponent from './MeshFilterComponent';
 
 export default class MeshRendererComponent extends BaseComponent {
     public material: Material = new Material(Shader.find(''));
+    public type: string = 'Mesh';
 
     public onRendererObject() {
         if (this.hasComponent<MeshFilterComponent>(MeshFilterComponent) && this.material) {
@@ -23,6 +25,6 @@ export default class MeshRendererComponent extends BaseComponent {
     }
 
     protected preparation(): void {
-        EventManager.subscribe(CoreEvents.RENDERER_OBJECT, this.onRendererObject.bind(this));
+        SceneManager.activeScene.subscribe(CoreEvents.RENDERER_OBJECT, this.onRendererObject.bind(this), this.id);
     }
 }

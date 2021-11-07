@@ -34,6 +34,10 @@ export default class GpuProgram {
         return this.attributeLocations.get(index);
     }
 
+    public getAttributeLocations(): Iterable<number> {
+        return this.attributeLocations.values();
+    }
+
     public hasAttributeLocation(index: string | number): boolean {
         return this.attributeLocations.has(index);
     }

@@ -1,7 +1,7 @@
-import { Vector3 } from '@nox-engine/mathf';
+import { Ray, Vector3 } from '@nox-engine/mathf';
+import { CoreEvents } from '../EventManager';
 import GameObject from '../object/GameObject';
 import SceneManager from '../scene/SceneManager';
-import Ray from './Ray';
 
 export default class Physics {
     public static raycast(ray: Ray, maxDistance: number = 10, callback: (gm: GameObject) => void) {
@@ -29,6 +29,10 @@ export default class Physics {
 
             if (min > max) {
                 continue;
+            }
+
+            for (let component of gm.getComponents()) {
+                SceneManager.activeScene.dispatchById(CoreEvents.RAYCAST, component.id);
             }
 
             callback(gm);

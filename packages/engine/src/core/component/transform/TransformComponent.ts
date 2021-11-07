@@ -1,5 +1,6 @@
 import { Matrix4, Quaternion, Vector3 } from '@nox-engine/mathf';
 import EventManager, { CoreEvents } from '../../EventManager';
+import SceneManager from '../../scene/SceneManager';
 import BaseComponent from '../BaseComponent';
 
 export default class TransformComponent extends BaseComponent {
@@ -73,6 +74,6 @@ export default class TransformComponent extends BaseComponent {
     }
 
     protected preparation(): void {
-        EventManager.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this));
+        SceneManager.activeScene.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this), this.id);
     }
 }

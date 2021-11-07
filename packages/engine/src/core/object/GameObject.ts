@@ -50,7 +50,7 @@ export default class GameObject extends BaseObject {
     }
 
     public static createGlobalLight(): GameObject {
-        return new GameObject('Global Light').addComponent<GlobalLightComponent>(GlobalLightComponent).gameObject;
+        return SceneManager.activeScene.addGameObject(new GameObject('Global Light').addComponent<GlobalLightComponent>(GlobalLightComponent).gameObject);
     }
 
     public static createPrimitive(type: PrimitiveTypes): GameObject {
@@ -85,6 +85,10 @@ export default class GameObject extends BaseObject {
         if (this.hasComponent(component)) {
             this.components.delete(component.name);
         }
+    }
+
+    public getComponents(): Iterable<BaseComponent> {
+        return this.components.values();
     }
 
     public getComponent<T extends BaseComponent>(component: new (...args: any[]) => T): T {

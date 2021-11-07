@@ -45,4 +45,10 @@ export default class BaseMesh {
 
         this.indicesDescriptor.bind();
     }
+
+    public unuse() {
+        for (let attr of this.attributeDescriptors.values()) {
+            attr.disableVertexAttribArray();
+        }
+    }
 }

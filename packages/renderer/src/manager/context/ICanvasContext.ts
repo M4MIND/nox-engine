@@ -67,4 +67,8 @@ export interface ICanvasContext {
     uniform3vf(index: WebGLUniformLocation, value: Float32Array): void;
 
     uniform4fv(index: WebGLUniformLocation, value: Float32Array): void;
+
+    disableVertexAttribArray(index: number): void;
+
+    lineWidth(width: number): void;
 }

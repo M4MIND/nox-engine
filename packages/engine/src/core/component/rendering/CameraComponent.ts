@@ -3,6 +3,7 @@ import { RendererServer } from '@nox-engine/renderer';
 import EventManager, { CoreEvents } from '../../EventManager';
 import Shader from '../../graphics/shader/Shader';
 import { BasicUniforms } from '../../graphics/Unifroms';
+import SceneManager from '../../scene/SceneManager';
 import BaseComponent from '../BaseComponent';
 
 export default class CameraComponent extends BaseComponent {
@@ -32,6 +33,6 @@ export default class CameraComponent extends BaseComponent {
     }
 
     public preparation(): void {
-        EventManager.subscribe(CoreEvents.CAMERA, this.onCamera.bind(this));
+        SceneManager.activeScene.subscribe(CoreEvents.CAMERA, this.onCamera.bind(this), this.id);
     }
 }

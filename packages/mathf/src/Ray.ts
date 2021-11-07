@@ -12,7 +12,7 @@ export default class  {
         return this._direction;
     }
 
-    constructor(position: Vector3, target: Vector3) {
+    constructor(position: Vector3 = Vector3.zero, target: Vector3 = Vector3.forward) {
         this._position = position;
         this._direction = Vector3.normalize(target);
     }

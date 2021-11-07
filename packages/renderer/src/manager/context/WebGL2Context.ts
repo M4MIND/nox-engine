@@ -141,4 +141,12 @@ export default class WebGL2Context implements ICanvasContext {
     public viewPort(x0: number, y0: number, x1: number, y1: number): void {
         this.context.viewport(x0, y0, x1, y1);
     }
+
+    public disableVertexAttribArray(index: GLenum): void {
+        this.context.disableVertexAttribArray(index)
+    }
+
+    lineWidth(width: number): void {
+        this.context.lineWidth(width);
+    }
 }

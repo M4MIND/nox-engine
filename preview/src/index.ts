@@ -17,5 +17,3 @@ new Engine({
 }).run(() => {
     GameObject.createEmpty('Main script').addComponent(MainScript);
 });
-
-console.dir(Hash.uuid());
