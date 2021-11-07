@@ -2,26 +2,17 @@ import EventManager from '../EventManager';
 import GameObject from '../object/GameObject';
 
 export default class Scene extends EventManager {
-    private gameObjects: GameObject[] = [];
+    private rootGameObject: GameObject = new GameObject('Scene');
+    private name: string;
 
     constructor(name: string) {
         super();
-        this._name = name;
-    }
-
-    private _name: string;
-
-    public get name(): string {
-        return this._name;
+        this.name = name;
     }
 
     public addGameObject(gameObject: GameObject): GameObject {
-        this.gameObjects.push(gameObject);
+        this.rootGameObject.transform.parent = gameObject.transform;
 
         return gameObject;
-    }
-
-    public getObjects(): GameObject[] {
-        return this.gameObjects;
     }
 }

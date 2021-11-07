@@ -31,9 +31,7 @@ const PRIMITIVE_CLASSES: { [index: number]: new () => Mesh } = {
 
 export default class GameObject extends BaseObject {
     public readonly transform: TransformComponent;
-    public parent: GameObject | undefined;
     private readonly components: Map<string, BaseComponent> = new Map<string, BaseComponent>();
-    private children: GameObject[] = [];
 
     constructor(name: string = 'Game Object') {
         super(name);
@@ -97,13 +95,6 @@ export default class GameObject extends BaseObject {
         }
 
         throw new Error(`${component.name} -> is not found in game object`);
-    }
-
-    public addChildren(gameObject: GameObject): this {
-        this.children.push(gameObject);
-
-        gameObject.parent = this;
-        return this;
     }
 
     public onCollision() {

@@ -1,6 +1,5 @@
 import { Matrix4, Quaternion, Vector3 } from '@nox-engine/mathf';
-import EventManager, { CoreEvents } from '../../EventManager';
-import SceneManager from '../../scene/SceneManager';
+import GameObject from '../../object/GameObject';
 import BaseComponent from '../BaseComponent';
 
 export default class TransformComponent extends BaseComponent {
@@ -13,6 +12,17 @@ export default class TransformComponent extends BaseComponent {
     private rotationMatrix: Matrix4 = new Matrix4();
     private scaleMatrix: Matrix4 = new Matrix4();
 
+    private _parent: TransformComponent | null = null;
+    private child: GameObject[] = [];
+
+    get parent(): TransformComponent | null {
+        return this._parent;
+    }
+
+    set parent(value: TransformComponent | null) {
+        this._parent = value;
+    }
+
     public getPositionMatrix(): Matrix4 {
         return this.positionMatrix;
     }
@@ -22,6 +32,23 @@ export default class TransformComponent extends BaseComponent {
     }
 
     public getModelMatrix(): Matrix4 {
+        this.positionMatrix = Matrix4.translate(this.position);
+        this.rotationMatrix = this.rotation.toMatrix4();
+        this.scaleMatrix = Matrix4.scale(this.scale);
+
+        this.modelMatrix = Matrix4.multiplyFromArray([
+            this.positionMatrix,
+            this.rotationMatrix,
+            this.scaleMatrix,
+        ]);
+
+        if (this.gameObject.transform.parent) {
+            this.modelMatrix = Matrix4.multiplyFromArray([
+                this.gameObject.transform.parent.getModelMatrix(),
+                this.modelMatrix,
+            ]);
+        }
+
         return this.modelMatrix;
     }
 
@@ -42,38 +69,23 @@ export default class TransformComponent extends BaseComponent {
         this.rotation = new Quaternion(x, y, z, w);
     }
 
+    public getParent(): TransformComponent | null {
+        return this._parent;
+    }
+
     public forward() {
-        return new Vector3(this.modelMatrix[8], this.modelMatrix[9], this.modelMatrix[10])
+        return new Vector3(this.modelMatrix[8], this.modelMatrix[9], this.modelMatrix[10]);
     }
 
     public right() {
-        return new Vector3(-this.modelMatrix[0], -this.modelMatrix[1], -this.modelMatrix[2])
+        return new Vector3(-this.modelMatrix[0], -this.modelMatrix[1], -this.modelMatrix[2]);
     }
 
     public up() {
         return new Vector3(this.modelMatrix[4], this.modelMatrix[5], this.modelMatrix[6]);
     }
 
-    public onPreRender() {
-        this.positionMatrix = Matrix4.translate(this.position);
-        this.rotationMatrix = this.rotation.toMatrix4();
-        this.scaleMatrix = Matrix4.scale(this.scale);
-
-        this.modelMatrix = Matrix4.multiplyFromArray([
-            this.positionMatrix,
-            this.rotationMatrix,
-            this.scaleMatrix,
-        ]);
-
-        if (this.gameObject.parent) {
-            this.modelMatrix = Matrix4.multiplyFromArray([
-                this.gameObject.parent.transform.getModelMatrix(),
-                this.modelMatrix,
-            ]);
-        }
-    }
-
     protected preparation(): void {
-        SceneManager.activeScene.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this), this.id);
+        //SceneManager.activeScene.subscribe(CoreEvents.PRE_RENDER, this.onPreRender.bind(this), this.id);
     }
 }

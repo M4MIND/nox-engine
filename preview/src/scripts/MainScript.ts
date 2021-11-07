@@ -94,7 +94,7 @@ export default class MainScript extends ScriptComponent {
         }
 
         cube1.addComponent(Rotate);
-        cube1.addChildren(camera);
+        camera.transform.parent = cube1.transform;
         cube1.getComponent(Rotate).camera = camera;
 
         let light = GameObject.createGlobalLight();
