@@ -25,21 +25,21 @@ export default class TransformComponent extends BaseComponent {
     }
 
     public getWorldMatrix(): Matrix4 {
-        this.positionMatrix = Matrix4.translate(this.position);
+        this.positionMatrix.translate(this.position);
         this.rotationMatrix = this.rotation.toMatrix4();
-        this.scaleMatrix = Matrix4.scale(this.scale);
+        this.scaleMatrix.scale(this.scale);
 
-        this.localMatrix = Matrix4.multiplyFromArray([
+        this.localMatrix = Matrix4.multiplyFromArray(
             this.positionMatrix,
             this.rotationMatrix,
             this.scaleMatrix,
-        ]);
+        );
 
         if (this.gameObject.transform.parent) {
-            this.worldMatrix = Matrix4.multiplyFromArray([
+            this.worldMatrix = Matrix4.multiplyFromArray(
                 this.gameObject.transform.parent.getWorldMatrix(),
                 this.localMatrix,
-            ]);
+            );
         } else {
             this.worldMatrix = this.localMatrix;
         }
@@ -54,12 +54,12 @@ export default class TransformComponent extends BaseComponent {
     public lookAt(position: Vector3, target: Vector3, up: Vector3 = Vector3.up): void {
         let m = Matrix4.lookAt(position, target, up);
 
-        let w = Math.sqrt(1.0 + m.m00 + m.m11 + m.m22) / 2.0;
+        let w = Math.sqrt(1.0 + m.get00() + m.get11() + m.get22()) / 2.0;
         let w4 = (4.0 * w);
 
-        let x = (m.m21 - m.m12) / w4;
-        let y = (m.m02 - m.m20) / w4;
-        let z = (m.m10 - m.m01) / w4;
+        let x = (m.get21() - m.get12()) / w4;
+        let y = (m.get02() - m.get20()) / w4;
+        let z = (m.get10() - m.get01()) / w4;
 
         this.rotation = new Quaternion(x, y, z, w);
     }

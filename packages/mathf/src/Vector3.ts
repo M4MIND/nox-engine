@@ -1,6 +1,6 @@
 import Matrix4 from './Matrix4';
 
-export default class Vector3 extends Array<number> {
+export default class Vector3 extends Array <number> {
     public static back = new Vector3(0, 0, -1);
     public static down = new Vector3(0, -1, 0);
     public static forward = new Vector3(0, 0, 1);
@@ -9,81 +9,40 @@ export default class Vector3 extends Array<number> {
     public static up = new Vector3(0, 1, 0);
     public static zero = new Vector3(0, 0, 0);
 
-    constructor(private _x: number = 0, private _y: number = 0, private _z: number = 0) {
-        super(_x, _y, _z);
+    constructor(x = 0, y = 0, z = 0) {
+        super(x, y, z);
     }
 
-    get x(): number {
-        return this._x;
+    public set(x: number, y: number, z: number) {
+        this.setX(x).setY(y).setZ(z);
     }
 
-    set x(value: number) {
-        this._x = value;
-
-        this[0] = value;
+    public getX(): number {
+        return this[0];
     }
 
-    get y(): number {
-        return this._y;
+    public setX(v: number): this {
+        this[0] = v;
+        return this;
     }
 
-    set y(value: number) {
-        this._y = value;
-
-        this[1] = value;
+    public getY(): number {
+        return this[1];
     }
 
-    get z(): number {
-        return this._z;
+    public setY(v: number): this {
+        this[1] = v;
+
+        return this;
     }
 
-    set z(value: number) {
-        this._z = value;
-
-        this[2] = value;
+    public getZ(): number {
+        return this[2];
     }
 
-    public static normalize(v: Vector3) {
-        let l = Math.sqrt(v._x * v._x + v._y * v._y + v._z * v._z);
-
-        if (l > 0.00001) {
-            return new Vector3(v._x / l, v._y / l, v._z / l);
-        }
-        return new Vector3(0, 0, 0);
-    }
-
-    public static cross(a: Vector3, b: Vector3) {
-        let vx = a.x, vy = a.y, vz = a.z, x = b.x, y = b.y, z = b.z;
-
-        return new Vector3((y * vz) - (z * vy), (z * vx) - (x * vz), (x * vy) - (y * vx));
-    }
-
-    public static subtract(a: Vector3, b: Vector3): Vector3 {
-        return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
-    }
-
-    public static add(a: Vector3, b: Vector3): Vector3 {
-        return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
-    }
-
-    public static dot(a: Vector3, b: Vector3) {
-        return a.x * b.x + a.y * b.y + a.z * b.z;
-    }
-
-    public static multiplyOnLength(v: Vector3, n: number) {
-        return new Vector3(v.x * n, v.y * n, v.z * n);
-    }
-
-    public static applyMatrix(v: Vector3, m: Matrix4): Vector3 {
-        const x = v.x, y = v.y, z = v.z;
-
-        const w = 1 / (m[3] * x + m[7] * y + m[11] * z + m[15]);
-
-        v.x = (m[0] * x + m[4] * y + m[8] * z + m[12]) * w;
-        v.y = (m[1] * x + m[5] * y + m[9] * z + m[13]) * w;
-        v.z = (m[2] * x + m[6] * y + m[10] * z + m[14]) * w;
-
-        return v;
+    public setZ(v: number): this {
+        this[2] = v;
+        return this;
     }
 
     public normalize(): Vector3 {
@@ -112,5 +71,46 @@ export default class Vector3 extends Array<number> {
 
     public applyMatrix(m: Matrix4): Vector3 {
         return Vector3.applyMatrix(this, m);
+    }
+
+    public static add(a: Vector3, b: Vector3): Vector3 {
+        return new Vector3(a.getX() + b.getX(), a.getY() + b.getY(), a.getZ() + b.getZ());
+    }
+
+    public static dot(a: Vector3, b: Vector3) {
+        return a.getX() * b.getX() + a.getY() * b.getY() + a.getZ() * b.getZ();
+    }
+
+    public static subtract(a: Vector3, b: Vector3): Vector3 {
+        return new Vector3(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ());
+    }
+
+    public static normalize(v: Vector3): Vector3 {
+        let l = Math.sqrt(v.getX() * v.getX() + v.getY() * v.getY() + v.getZ() * v.getZ());
+
+        if (l > 0.00001) {
+            return new Vector3(v.getX() / l, v.getY() / l, v.getZ() / l);
+        }
+        return new Vector3(0, 0, 0);
+    }
+
+    public static cross(a: Vector3, b: Vector3): Vector3 {
+        let vx = a.getX(), vy = a.getY(), vz = a.getZ(), x = b.getX(), y = b.getY(), z = b.getZ();
+
+        return new Vector3((y * vz) - (z * vy), (z * vx) - (x * vz), (x * vy) - (y * vx));
+    }
+
+    public static multiplyOnLength(v: Vector3, n: number): Vector3 {
+        return new Vector3(v.getX() * n, v.getY() * n, v.getZ() * n);
+    }
+
+    public static applyMatrix(v: Vector3, m: Matrix4): Vector3 {
+        const x = v.getX(), y = v.getY(), z = v.getZ();
+
+        const w = 1 / (m.get03() * x + m.get13() * y + m.get23() * z + m.get33());
+
+        return v.setX((m.get00() * x + m.get10() * y + m.get20() * z + m.get30()) * w)
+            .setY((m.get01() * x + m.get11() * y + m.get21() * z + m.get31()) * w)
+            .setZ((m.get02() * x + m.get12() * y + m.get22() * z + m.get32()) * w);
     }
 }

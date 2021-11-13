@@ -8,9 +8,9 @@ export default class Quaternion {
     public axisAngle(v: Vector3, angle: number): this {
         let s = Math.sin(angle * .5);
 
-        this.x = v.x * s;
-        this.y = v.y * s;
-        this.z = v.z * s;
+        this.x = v.getX() * s;
+        this.y = v.getY() * s;
+        this.z = v.getZ() * s;
         this.w = Math.cos(angle * .5);
 
         return this;
@@ -79,7 +79,7 @@ export default class Quaternion {
 
     public multiple(q: Quaternion) {
         let target = new Quaternion();
-        var w = this.w;
+        let w = this.w;
 
         let va = new Vector3(this.x, this.y, this.z);
         let vb = new Vector3(q.x, q.y, q.z);
@@ -87,17 +87,17 @@ export default class Quaternion {
 
         let vaxvb = Vector3.cross(va, vb);
 
-        target.x = w * vb.x + q.w * va.x + vaxvb.x;
-        target.y = w * vb.y + q.w * va.y + vaxvb.y;
-        target.z = w * vb.z + q.w * va.z + vaxvb.z;
+        target.x = w * vb.getX() + q.w * va.getX() + vaxvb.getX();
+        target.y = w * vb.getY() + q.w * va.getY() + vaxvb.getY();
+        target.z = w * vb.getZ() + q.w * va.getZ() + vaxvb.getZ();
 
         return target;
     };
 
     public multipleOnVector(v: Vector3): Vector3 {
-        let x = v.x,
-            y = v.y,
-            z = v.z;
+        let x = v.getX(),
+            y = v.getY(),
+            z = v.getZ();
 
         let qx = this.x,
             qy = this.y,
