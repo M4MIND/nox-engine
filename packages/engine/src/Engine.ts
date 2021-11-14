@@ -19,6 +19,7 @@ export default class Engine {
     constructor(settings: IEngineSettings) {
         SceneManager.startUp();
         RendererServer.startUp(settings.rendererSettings);
+        Debugger.startUp();
         Input.startUp();
         Cursor.startUp();
         Time.startUp();

@@ -86,13 +86,21 @@ class Player extends ScriptComponent {
 }
 
 export default class MainScript extends ScriptComponent {
+    private Html: HTMLDivElement = document.createElement('div')
     public update(): void {
         Debugger.drawLine(new Vector3(-100000), new Vector3(100000), Color.red);
         Debugger.drawLine(new Vector3(0, -100000), new Vector3(0, 100000), Color.blue);
         Debugger.drawLine(new Vector3(0, 0, -100000), new Vector3(0, 0, 100000), Color.green);
+        this.Html.innerText = `${(1 / Time.deltaTime).toFixed(1)}`;
     }
 
     public start() {
+        document.body.appendChild(this.Html);
+
+        this.Html.style.position = 'fixed';
+        this.Html.style.left = '1em';
+        this.Html.style.top = '1em';
+
         Cursor.enable = false;
 
         let camera = GameObject.createCamera();
@@ -136,9 +144,10 @@ export default class MainScript extends ScriptComponent {
 
         sun.transform.parent = solarSystem.transform;
 
+
         for (let x = 0; x < 64; x ++) {
-            for (let y = 0; y < 64; y ++) {
-                let obj = GameObject.createPrimitive(PrimitiveTypes.Cube);
+            for (let z = 0; z < 64; z ++) {
+                GameObject.createPrimitive(PrimitiveTypes.Cube).transform.position = new Vector3(x, 0 , z);
             }
         }
 

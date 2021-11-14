@@ -39,8 +39,6 @@ export default class RendererManager {
             GL_DATA_UNSIGNED_SHORT,
             0,
         );
-
-        mesh.unuse();
     }
 
     public drawMesh(mesh: BaseMesh, material: BaseMaterial) {
@@ -53,8 +51,6 @@ export default class RendererManager {
             GL_DATA_UNSIGNED_SHORT,
             0,
         );
-
-        mesh.unuse();
     }
 
     private useProgram(material: BaseMaterial) {
@@ -62,7 +58,9 @@ export default class RendererManager {
             !RendererServer.programManager.activeProgram ||
             RendererServer.programManager.activeProgram.id !== material.getId()
         ) {
+            RendererServer.programManager.activeProgram?.disableVertexAttributes();
             material.active();
+            RendererServer.programManager.activeProgram?.enableVertexAttributes();
         }
     }
 

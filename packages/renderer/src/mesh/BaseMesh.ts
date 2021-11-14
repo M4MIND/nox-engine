@@ -40,15 +40,8 @@ export default class BaseMesh {
         for (let attr of this.attributeDescriptors.values()) {
             attr.bind();
             attr.vertexAttribPointer();
-            attr.enableVertexAttribArray();
         }
 
         this.indicesDescriptor.bind();
-    }
-
-    public unuse() {
-        for (let attr of this.attributeDescriptors.values()) {
-            attr.disableVertexAttribArray();
-        }
     }
 }

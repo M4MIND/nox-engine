@@ -27,7 +27,7 @@ export interface ICanvasContext {
 
     linkProgram(program: WebGLProgram): void;
 
-    getProgramParameter(program: WebGLProgram, status: typeof GL_SHADERS.LINK_STATUS): boolean;
+    getProgramParameter(program: WebGLProgram, status: typeof GL_SHADERS.LINK_STATUS): any;
 
     getProgramInfoLog(program: WebGLProgram): string | null;
 
@@ -71,4 +71,6 @@ export interface ICanvasContext {
     disableVertexAttribArray(index: number): void;
 
     lineWidth(width: number): void;
+
+    getActiveAttrib(program: WebGLProgram, index: GLuint): WebGLActiveInfo | null;
 }

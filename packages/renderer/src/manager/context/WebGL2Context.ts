@@ -149,4 +149,8 @@ export default class WebGL2Context implements ICanvasContext {
     lineWidth(width: number): void {
         this.context.lineWidth(width);
     }
+
+    getActiveAttrib(program: WebGLProgram, index: GLuint): WebGLActiveInfo | null {
+        return this.context.getActiveAttrib(program, index);
+    }
 }

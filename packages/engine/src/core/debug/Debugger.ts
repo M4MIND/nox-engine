@@ -34,16 +34,21 @@ void main() {
 `;
 
 export default class Debugger {
+    private static mesh: Mesh;
+    private static material: Material;
+
+    public static startUp() {
+        this.mesh = new Mesh();
+        this.material = new Material(new Shader(v.trim(), f.trim()));
+    }
+
     public static drawLine(start: Vector3, end: Vector3, color: Color = Color.red) {
-        let mesh = new Mesh();
-        let material = new Material(new Shader(v.trim(), f.trim()));
+        this.mesh.vertices = [start, end];
+        this.mesh.normals = [start, end];
+        this.mesh.triangles = [0, 1];
 
-        mesh.vertices = [start, end];
-        mesh.normals = [start, end];
-        mesh.triangles = [0, 1];
+        this.material.color = color;
 
-        material.color = color;
-
-        Graphics.drawWireframe(mesh, material);
+        Graphics.drawWireframe(this.mesh, this.material);
     }
 }

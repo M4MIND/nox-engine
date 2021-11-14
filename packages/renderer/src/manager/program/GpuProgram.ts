@@ -1,3 +1,4 @@
+import { GL_ACTIVE_ATTRIBUTES } from '../../_webgl_consts';
 import RendererServer from '../../RendererServer';
 
 export default class GpuProgram {
@@ -5,10 +6,8 @@ export default class GpuProgram {
     private readonly _webGLProgram: WebGLProgram;
 
     private attributeLocations: Map<string | number, number> = new Map<string | number, number>();
-    private uniformLocations: Map<string, WebGLUniformLocation | undefined> = new Map<
-        string,
-        WebGLUniformLocation | undefined
-    >();
+    private uniformLocations: Map<string, WebGLUniformLocation | undefined> = new Map<string,
+        WebGLUniformLocation | undefined>();
 
     public get webGLProgram(): WebGLProgram {
         return this._webGLProgram;
@@ -17,20 +16,31 @@ export default class GpuProgram {
     constructor(id: number, program: WebGLProgram) {
         this.id = id;
         this._webGLProgram = program;
+
+        let index = RendererServer.contextManager.context.getProgramParameter(program, GL_ACTIVE_ATTRIBUTES);
+
+        for (let i = 0; i < index; i++) {
+            this.attributeLocations.set(RendererServer.contextManager.context.getActiveAttrib(program, i)!.name, i);
+        }
+    }
+
+    public enableVertexAttributes() {
+        for (let index of this.attributeLocations.values()) {
+            RendererServer.contextManager.context.enableVertexAttribArray(index);
+        }
     }
 
     public use() {
         RendererServer.contextManager.useProgram(this);
     }
 
-    public getAttributeLocation(index: string | number): number | undefined {
-        if (typeof index === 'string' && !this.hasAttributeLocation(index)) {
-            this.attributeLocations.set(
-                index,
-                RendererServer.contextManager.context.getAttribLocation(this._webGLProgram, index),
-            );
+    public disableVertexAttributes() {
+        for (let index of this.attributeLocations.values()) {
+            RendererServer.contextManager.context.disableVertexAttribArray(index);
         }
+    }
 
+    public getAttributeLocation(index: string | number): number | undefined {
         return this.attributeLocations.get(index);
     }
 
