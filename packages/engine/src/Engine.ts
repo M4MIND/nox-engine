@@ -2,6 +2,7 @@ import { Matrix4, Vector3 } from '@nox-engine/mathf';
 import { RendererServer, Uniform3fv, UniformMatrix4 } from '@nox-engine/renderer';
 import { IRendererServerSettings } from '@nox-engine/renderer/src/RendererServer';
 import { BasicUniforms, Cursor } from '..';
+import Debugger from './core/debug/Debugger';
 
 import EventManager, { CoreEvents } from './core/EventManager';
 import Graphics from './core/graphics/Graphics';
