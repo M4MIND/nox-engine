@@ -4,6 +4,7 @@ import Vector3 from './Vector3';
 
 export default class Quaternion {
     constructor(public x = 0, public y = 0, public z = 0, private w = 1) {}
+    private matrix = new Matrix4();
 
     public axisAngle(v: Vector3, angle: number): this {
         let s = Math.sin(angle * .5);
@@ -43,12 +44,19 @@ export default class Quaternion {
         let xx = s * x * x, xy = s * x * y, xz = s * x * z;
         let yy = s * y * y, yz = s * y * z, zz = s * z * z;
 
-        return new Matrix4(
-            1 - (yy + zz), xy - wz, xz + wy, 0,
-            xy + wz, 1 - (xx + zz), yz - wx, 0,
-            xz - wy, yz + wx, 1 - (xx + yy), 0,
-            0, 0, 0, 1,
-        );
+        this.matrix.set00(1 - (yy + zz));
+        this.matrix.set01(xy - wz);
+        this.matrix.set02(xz + wy);
+
+        this.matrix.set10(xy + wz)
+        this.matrix.set11(1 - (xx + zz))
+        this.matrix.set12(yz - wx)
+
+        this.matrix.set20(xz - wy)
+        this.matrix.set21(yz + wx)
+        this.matrix.set22(1 - (xx + yy))
+
+        return this.matrix;
     }
 
     public euler(x: number = 0, y: number = 0, z: number = 0) {

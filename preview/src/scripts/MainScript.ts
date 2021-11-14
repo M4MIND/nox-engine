@@ -136,5 +136,11 @@ export default class MainScript extends ScriptComponent {
 
         sun.transform.parent = solarSystem.transform;
 
+        for (let x = 0; x < 64; x ++) {
+            for (let y = 0; y < 64; y ++) {
+                let obj = GameObject.createPrimitive(PrimitiveTypes.Cube);
+            }
+        }
+
     }
 }

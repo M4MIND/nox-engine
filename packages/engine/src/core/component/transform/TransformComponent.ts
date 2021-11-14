@@ -7,11 +7,11 @@ export default class TransformComponent extends BaseComponent {
     public scale = new Vector3(1, 1, 1);
     public rotation = new Quaternion();
 
-    public localMatrix: Matrix4 = new Matrix4();
-    public worldMatrix: Matrix4 = new Matrix4();
+    private localMatrix: Matrix4 = new Matrix4();
+    private worldMatrix: Matrix4 = new Matrix4();
     private positionMatrix: Matrix4 = new Matrix4();
-    private rotationMatrix: Matrix4 = new Matrix4();
     private scaleMatrix: Matrix4 = new Matrix4();
+
     private child: GameObject[] = [];
 
     private _parent: TransformComponent | null = null;
@@ -26,17 +26,22 @@ export default class TransformComponent extends BaseComponent {
 
     public getWorldMatrix(): Matrix4 {
         this.positionMatrix.translate(this.position);
-        this.rotationMatrix = this.rotation.toMatrix4();
         this.scaleMatrix.scale(this.scale);
 
+        this.localMatrix.clear();
+
         this.localMatrix = Matrix4.multiplyFromArray(
+            this.localMatrix,
             this.positionMatrix,
-            this.rotationMatrix,
+            this.rotation.toMatrix4(),
             this.scaleMatrix,
         );
 
         if (this.gameObject.transform.parent) {
+            this.worldMatrix.clear();
+
             this.worldMatrix = Matrix4.multiplyFromArray(
+                this.worldMatrix,
                 this.gameObject.transform.parent.getWorldMatrix(),
                 this.localMatrix,
             );

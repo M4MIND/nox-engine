@@ -1,18 +1,11 @@
 import Vector3 from './Vector3';
 
-export default class Matrix4 extends Array<number>{
+export default class Matrix4 extends Array<number> {
     /*
     |get00(0),  get01(1),  get02(2),  get03(3)|
     |get10(4),  get11(5),  get12(6),  get13(7)|
     |get20(8),  get21(9),  get22(10), get23(11)|
     |get30(12), get31(13), get32(14), get33(15)|
-     */
-
-    /*
-    |get00(0),  get01(4),  get02(8),  get03(12)|
-    |get10(1),  get11(5),  get12(9),  get13(13)|
-    |get20(2),  get21(6),  get22(10), get23(14)|
-    |get30(3), get31(7), get32(11), get33(15)|
      */
 
     constructor(m00 = 1,
@@ -208,73 +201,73 @@ export default class Matrix4 extends Array<number>{
     }
 
     public multiply(b: Matrix4): this {
-        let t00 = this.get00();
-        let t01 = this.get01();
-        let t02 = this.get02();
+        let t00 = this[0];
+        let t01 = this[1];
+        let t02 = this[2];
 
-        let t10 = this.get10();
-        let t11 = this.get11();
-        let t12 = this.get12();
+        let t10 = this[4];
+        let t11 = this[5];
+        let t12 = this[6];
 
-        let t20 = this.get20();
-        let t21 = this.get21();
-        let t22 = this.get22();
+        let t20 = this[8];
+        let t21 = this[9];
+        let t22 = this[10];
 
-        let t30 = this.get30();
-        let t31 = this.get31();
-        let t32 = this.get32();
+        let t30 = this[12];
+        let t31 = this[13];
+        let t32 = this[14];
 
-        let b00 = b.get00();
-        let b01 = b.get01();
-        let b02 = b.get02();
-        let b03 = b.get03();
+        let b00 = b[0];
+        let b01 = b[1];
+        let b02 = b[2];
+        let b03 = b[3];
 
-        let b10 = b.get10();
-        let b11 = b.get11();
-        let b12 = b.get12();
-        let b13 = b.get13();
+        let b10 = b[4];
+        let b11 = b[5];
+        let b12 = b[6];
+        let b13 = b[7];
 
-        let b20 = b.get20();
-        let b21 = b.get21();
-        let b22 = b.get22();
-        let b23 = b.get23();
+        let b20 = b[8];
+        let b21 = b[9];
+        let b22 = b[10];
+        let b23 = b[11];
 
-        let b30 = b.get30();
-        let b31 = b.get31();
-        let b32 = b.get32();
-        let b33 = b.get33();
+        let b30 = b[12];
+        let b31 = b[13];
+        let b32 = b[14];
+        let b33 = b[15];
 
-        return this.set00(b00 * t01 + b01 * t11 + b02 * t21 + b03 * t31)
-            .set01(b00 * t00 + b01 * t10 + b02 * t20 + b03 * t30)
+        return this.set00(b00 * t00 + b01 * t10 + b02 * t20 + b03 * t30)
+            .set01(b00 * t01 + b01 * t11 + b02 * t21 + b03 * t31)
             .set02(b00 * t02 + b01 * t12 + b02 * t22 + b03 * t32)
             .set10(b10 * t00 + b11 * t10 + b12 * t20 + b13 * t30)
             .set11(b10 * t01 + b11 * t11 + b12 * t21 + b13 * t31)
             .set12(b10 * t02 + b11 * t12 + b12 * t22 + b13 * t32)
             .set20(b20 * t00 + b21 * t10 + b22 * t20 + b23 * t30)
-            .set20(b20 * t01 + b21 * t11 + b22 * t21 + b23 * t31)
-            .set20(b20 * t02 + b21 * t12 + b22 * t22 + b23 * t32)
+            .set21(b20 * t01 + b21 * t11 + b22 * t21 + b23 * t31)
+            .set22(b20 * t02 + b21 * t12 + b22 * t22 + b23 * t32)
             .set30(b30 * t00 + b31 * t10 + b32 * t20 + b33 * t30)
             .set31(b30 * t01 + b31 * t11 + b32 * t21 + b33 * t31)
             .set32(b30 * t02 + b31 * t12 + b32 * t22 + b33 * t32);
     }
 
     public inverse(): this {
-        let m00 = this.get00();
-        let m01 = this.get01();
-        let m02 = this.get02();
-        let m03 = this.get03();
-        let m10 = this.get10();
-        let m11 = this.get11();
-        let m12 = this.get12();
-        let m13 = this.get13();
-        let m20 = this.get20();
-        let m21 = this.get21();
-        let m22 = this.get22();
-        let m23 = this.get23();
-        let m30 = this.get30();
-        let m31 = this.get31();
-        let m32 = this.get32();
-        let m33 = this.get33();
+        let m00 = this[0];
+        let m01 = this[1];
+        let m02 = this[2];
+        let m03 = this[3];
+        let m10 = this[4];
+        let m11 = this[5];
+        let m12 = this[6];
+        let m13 = this[7];
+        let m20 = this[8];
+        let m21 = this[9];
+        let m22 = this[10];
+        let m23 = this[11];
+        let m30 = this[12];
+        let m31 = this[13];
+        let m32 = this[14];
+        let m33 = this[15];
 
         let tmp_0 = m22 * m33;
         let tmp_1 = m32 * m23;
@@ -324,6 +317,35 @@ export default class Matrix4 extends Array<number>{
             .set31(d * (tmp_20 * m32 + tmp_12 * m02 + tmp_19 * m22 - (tmp_18 * m22 + tmp_21 * m32 + tmp_13 * m02)))
             .set32(d * (tmp_18 * m12 + tmp_23 * m32 + tmp_15 * m02 - (tmp_22 * m32 + tmp_14 * m02 + tmp_19 * m12)))
             .set33(d * (tmp_22 * m22 + tmp_16 * m02 + tmp_21 * m12 - (tmp_20 * m12 + tmp_23 * m22 + tmp_17 * m02)));
+    }
+
+    public multiplyFromArray(...args: Matrix4[]) {
+        let l = args.length - 1;
+
+        for (let i = 0; i < l; i++) {
+            this.multiply(args[i + 1]);
+        }
+
+        return this;
+    }
+
+    public clear() {
+        this[0] = 1;
+        this[1] = 0;
+        this[2] = 0;
+        this[3] = 0;
+        this[4] = 0;
+        this[5] = 1;
+        this[6] = 0;
+        this[7] = 0;
+        this[8] = 0;
+        this[9] = 0;
+        this[10] = 1;
+        this[11] = 0;
+        this[12] = 0;
+        this[13] = 0;
+        this[14] = 0;
+        this[15] = 1;
     }
 
     public static translate(v: Vector3 = Vector3.zero): Matrix4 {
@@ -385,22 +407,22 @@ export default class Matrix4 extends Array<number>{
     }
 
     public static inverse(m: Matrix4) {
-        let m00 = m.get00();
-        let m01 = m.get01();
-        let m02 = m.get02();
-        let m03 = m.get03();
-        let m10 = m.get10();
-        let m11 = m.get11();
-        let m12 = m.get12();
-        let m13 = m.get13();
-        let m20 = m.get20();
-        let m21 = m.get21();
-        let m22 = m.get22();
-        let m23 = m.get23();
-        let m30 = m.get30();
-        let m31 = m.get31();
-        let m32 = m.get32();
-        let m33 = m.get33();
+        let m00 = m[0];
+        let m01 = m[1];
+        let m02 = m[2];
+        let m03 = m[3];
+        let m10 = m[4];
+        let m11 = m[5];
+        let m12 = m[6];
+        let m13 = m[7];
+        let m20 = m[8];
+        let m21 = m[9];
+        let m22 = m[10];
+        let m23 = m[11];
+        let m30 = m[12];
+        let m31 = m[13];
+        let m32 = m[14];
+        let m33 = m[15];
 
         let tmp_0 = m22 * m33;
         let tmp_1 = m32 * m23;
@@ -456,53 +478,89 @@ export default class Matrix4 extends Array<number>{
 
     public static transpose(m: Matrix4) {
         return new Matrix4(
-            m.get00(),
-            m.get10(),
-            m.get20(),
-            m.get30(),
-            m.get01(),
-            m.get11(),
-            m.get21(),
-            m.get31(),
-            m.get02(),
-            m.get12(),
-            m.get22(),
-            m.get32(),
-            m.get03(),
-            m.get13(),
-            m.get23(),
-            m.get33(),
+            m[0],
+            m[4],
+            m[8],
+            m[12],
+            m[1],
+            m[5],
+            m[9],
+            m[13],
+            m[2],
+            m[6],
+            m[10],
+            m[14],
+            m[3],
+            m[7],
+            m[11],
+            m[15],
         );
     }
 
     public static multiply(a: Matrix4, b: Matrix4): Matrix4 {
+        let t00 = a[0];
+        let t01 = a[1];
+        let t02 = a[2];
+
+        let t10 = a[4];
+        let t11 = a[5];
+        let t12 = a[6];
+
+        let t20 = a[8];
+        let t21 = a[9];
+        let t22 = a[10];
+
+        let t30 = a[12];
+        let t31 = a[13];
+        let t32 = a[14];
+
+        let b00 = b[0];
+        let b01 = b[1];
+        let b02 = b[2];
+        let b03 = b[3];
+
+        let b10 = b[4];
+        let b11 = b[5];
+        let b12 = b[6];
+        let b13 = b[7];
+
+        let b20 = b[8];
+        let b21 = b[9];
+        let b22 = b[10];
+        let b23 = b[11];
+
+        let b30 = b[12];
+        let b31 = b[13];
+        let b32 = b[14];
+        let b33 = b[15];
+
         return new Matrix4(
-            b.get00() * a.get00() + b.get01() * a.get10() + b.get02() * a.get20() + b.get03() * a.get30(),
-            b.get00() * a.get01() + b.get01() * a.get11() + b.get02() * a.get21() + b.get03() * a.get31(),
-            b.get00() * a.get02() + b.get01() * a.get12() + b.get02() * a.get22() + b.get03() * a.get32(),
+            b00 * t00 + b01 * t10 + b02 * t20 + b03 * t30,
+            b00 * t01 + b01 * t11 + b02 * t21 + b03 * t31,
+            b00 * t02 + b01 * t12 + b02 * t22 + b03 * t32,
             0,
-            b.get10() * a.get00() + b.get11() * a.get10() + b.get12() * a.get20() + b.get13() * a.get30(),
-            b.get10() * a.get01() + b.get11() * a.get11() + b.get12() * a.get21() + b.get13() * a.get31(),
-            b.get10() * a.get02() + b.get11() * a.get12() + b.get12() * a.get22() + b.get13() * a.get32(),
+            b10 * t00 + b11 * t10 + b12 * t20 + b13 * t30,
+            b10 * t01 + b11 * t11 + b12 * t21 + b13 * t31,
+            b10 * t02 + b11 * t12 + b12 * t22 + b13 * t32,
             0,
-            b.get20() * a.get00() + b.get21() * a.get10() + b.get22() * a.get20() + b.get23() * a.get30(),
-            b.get20() * a.get01() + b.get21() * a.get11() + b.get22() * a.get21() + b.get23() * a.get31(),
-            b.get20() * a.get02() + b.get21() * a.get12() + b.get22() * a.get22() + b.get23() * a.get32(),
+            b20 * t00 + b21 * t10 + b22 * t20 + b23 * t30,
+            b20 * t01 + b21 * t11 + b22 * t21 + b23 * t31,
+            b20 * t02 + b21 * t12 + b22 * t22 + b23 * t32,
             0,
-            b.get30() * a.get00() + b.get31() * a.get10() + b.get32() * a.get20() + b.get33() * a.get30(),
-            b.get30() * a.get01() + b.get31() * a.get11() + b.get32() * a.get21() + b.get33() * a.get31(),
-            b.get30() * a.get02() + b.get31() * a.get12() + b.get32() * a.get22() + b.get33() * a.get32(),
+            b30 * t00 + b31 * t10 + b32 * t20 + b33 * t30,
+            b30 * t01 + b31 * t11 + b32 * t21 + b33 * t31,
+            b30 * t02 + b31 * t12 + b32 * t22 + b33 * t32,
             1,
         );
     }
 
     public static multiplyFromArray(...args: Matrix4[]): Matrix4 {
-        let m = Matrix4.clone(args[0]);
+        let m = args[0];
 
         let l = args.length - 1;
 
         for (let i = 0; i < l; i++) {
-            m = this.multiply(m, args[i + 1]);
+            m.multiply(args[i + 1]);
         }
 
         return m;
@@ -510,9 +568,9 @@ export default class Matrix4 extends Array<number>{
 
     public static multipleVectorOnMatrix(v: Vector3, m: Matrix4): Vector3 {
         return new Vector3(
-            m.get00() * v.getX() + m.get01() * v.getY() + m.get02() + v.getZ(),
-            m.get10() * v.getX() + m.get11() * v.getY() + m.get22() + v.getZ(),
-            m.get20() * v.getX() + m.get21() * v.getY() + m.get22() + v.getZ(),
+            m[0] * v.getX() + m[1] * v.getY() + m[2] + v.getZ(),
+            m[4] * v.getX() + m[5] * v.getY() + m[10] + v.getZ(),
+            m[8] * v.getX() + m[9] * v.getY() + m[12] + v.getZ(),
         );
     }
 
@@ -529,7 +587,9 @@ export default class Matrix4 extends Array<number>{
         );
     }
 
-    public static clone(m:Matrix4) {
-        return new Matrix4(...m)
+    public static clone(m: Matrix4) {
+        return new Matrix4(
+            m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15],
+        );
     }
 }
