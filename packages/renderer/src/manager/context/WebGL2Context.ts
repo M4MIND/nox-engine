@@ -15,6 +15,10 @@ export default class WebGL2Context implements ICanvasContext {
         this.context = context as WebGL2RenderingContext;
     }
 
+    public getActiveUniform(program: WebGLProgram, index: number): WebGLActiveInfo | null {
+        return this.context.getActiveUniform(program, index);
+    }
+
     public attachShader(program: WebGLProgram, shader: WebGLShader): void {
         this.context.attachShader(program, shader);
     }

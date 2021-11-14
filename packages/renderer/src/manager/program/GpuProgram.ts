@@ -1,4 +1,4 @@
-import { GL_ACTIVE_ATTRIBUTES } from '../../_webgl_consts';
+import { GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_UNIFORMS } from '../../_webgl_consts';
 import RendererServer from '../../RendererServer';
 
 export default class GpuProgram {
@@ -17,9 +17,7 @@ export default class GpuProgram {
         this.id = id;
         this._webGLProgram = program;
 
-        let index = RendererServer.contextManager.context.getProgramParameter(program, GL_ACTIVE_ATTRIBUTES);
-
-        for (let i = 0; i < index; i++) {
+        for (let i = 0; i < RendererServer.contextManager.context.getProgramParameter(program, GL_ACTIVE_ATTRIBUTES); i++) {
             this.attributeLocations.set(RendererServer.contextManager.context.getActiveAttrib(program, i)!.name, i);
         }
     }
@@ -30,14 +28,14 @@ export default class GpuProgram {
         }
     }
 
-    public use() {
-        RendererServer.contextManager.useProgram(this);
-    }
-
     public disableVertexAttributes() {
         for (let index of this.attributeLocations.values()) {
             RendererServer.contextManager.context.disableVertexAttribArray(index);
         }
+    }
+
+    public use() {
+        RendererServer.contextManager.useProgram(this);
     }
 
     public getAttributeLocation(index: string | number): number | undefined {

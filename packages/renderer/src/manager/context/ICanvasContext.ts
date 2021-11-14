@@ -73,4 +73,6 @@ export interface ICanvasContext {
     lineWidth(width: number): void;
 
     getActiveAttrib(program: WebGLProgram, index: GLuint): WebGLActiveInfo | null;
+
+    getActiveUniform(program: WebGLProgram, index: GLuint): WebGLActiveInfo | null;
 }
