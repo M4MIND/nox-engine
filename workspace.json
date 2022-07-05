@@ -1,5 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "editor": "apps/editor",
+    "editor-api-client": "libs/editor-api-client",
+    "editor-e2e": "apps/editor-e2e",
+    "editor-ui": "libs/editor-ui"
+  }
 }
